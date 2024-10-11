@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta
+      name="description"
+      content="TODO"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lagersystem</title>
+  </head>
+  <body class="bg-dark-800 text-light-normal">
+    <noscript>
+      <div class="flex inset-0 absolute items-center justify-center">
+        <div class="mx-6 text-center">
+          <h1 class="font-bold text-white text-2xl">Welcome to Lagersystem without javascript enabled!</h1>
+          <p class="mt-6 text-lg">To view and use this site you need to have javascript enabled.</p>
+        </div>
+      </div>
+    </noscript>
+    <div id="app"></div>
+
+    <div id="modal"></div>
+
+    <div
+      id="tooltip"
+      role="tooltip"
+      class="rounded-md bg-dark-200 shadow-md py-1 px-2 transition-opacity top-0 left-0 absolute pointer-events-none"
+      style="opacity: 0"
+    >
+      <p id="tooltipContent"></p>
+      <div class="bg-dark-200 h-2 transform w-2 rotate-45 absolute" id="tooltipArrow"></div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+
+    <!-- Cloudflare Web Analytics -->
+    <!-- <script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "7c719a0a8a1d42f8a970b42bc9102a63"}'
+    ></script> -->
+    <!-- End Cloudflare Web Analytics -->
+  </body>
+</html>

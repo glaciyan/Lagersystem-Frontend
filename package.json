@@ -1,0 +1,53 @@
+{
+  "name": "lagersystem-frontend",
+  "license": "Apache-2.0",
+  "version": "1.0.0-dev",
+  "type": "module",
+  "engines": {
+    "node": "^20.10.0"
+  },
+  "scripts": {
+    "pre": "npm run gen:version",
+    "dev": "npm run pre && vite",
+    "build": "npm run pre && vue-tsc --noEmit && vite build",
+    "start": "vite preview",
+    "prod": "npm run build && npm run start",
+    "lint": "eslint ./src --ext .ts,.vue",
+    "gen:version": "node scripts/version.js",
+    "images:characters:build": "squoosh-cli --oxipng auto --webp auto --resize {width:240} -d public/images/characters/card",
+    "images:mugshot:build": "squoosh-cli --oxipng auto --webp auto --resize {width:100} -d public/images/characters/mugshot",
+    "images:items:build": "squoosh-cli --oxipng auto --webp auto --resize {width:40} -d public/images/materials",
+    "make:images": "node scripts/make_images.js"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "^1.6.11",
+    "@headlessui/vue": "^1.7.23",
+    "@vueuse/core": "^11.1.0",
+    "@vueuse/integrations": "^11.1.0",
+    "dexie": "^4.0.8",
+    "focus-trap": "^7.6.0",
+    "fuse.js": "^7.0.0",
+    "vue": "^3.5.12",
+    "vue-router": "^4.4.5",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.10",
+    "@types/node": "^22.7.5",
+    "@typescript-eslint/eslint-plugin": "^8.8.1",
+    "@typescript-eslint/parser": "^8.8.1",
+    "@vitejs/plugin-vue": "^5.1.4",
+    "eslint": "^9.12.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-vue": "^9.29.0",
+    "less": "^4.2.0",
+    "sharp": "^0.33.5",
+    "typescript": "^5.6.3",
+    "unplugin-auto-import": "^0.18.3",
+    "vite": "^5.4.8",
+    "vite-plugin-windicss": "^1.9.3",
+    "vite-svg-loader": "^5.1.0",
+    "vue-tsc": "^2.1.6",
+    "windicss": "^3.5.6"
+  }
+}
