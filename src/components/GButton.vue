@@ -14,7 +14,7 @@ export default defineComponent({
     },
     bStyle: {
       type: String,
-      default: "bg-dark-400 text-light-normal shadow-md font-semibold hover:bg-dark-300 transition-colors",
+      default: "bg-dark-400 text-light-normal shadow-md font-semibold hover:bg-dark-300",
     },
   },
   computed: {
@@ -30,7 +30,7 @@ export default defineComponent({
     type="button"
     :class="[
       bStyle,
-      'focus:outline-none focus-visible:ring h-[42px] px-4 rounded-lg disabled:bg-opacity-30 disabled:cursor-not-allowed transition-opacity',
+      'focus:outline-none focus-visible:ring h-[42px] px-4 rounded-lg disabled:bg-opacity-30 disabled:cursor-not-allowed transition-colors',
     ]"
     :disabled="off"
     :aria-disabled="off"

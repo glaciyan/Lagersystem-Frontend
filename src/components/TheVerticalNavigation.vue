@@ -28,9 +28,9 @@ const navigation: { path: string; name: string }[] = [
         px-3
         transition-all
         whitespace-nowrap
-        hover:(text-light-normal
-        bg-dark-500/50
-        shadow-sm)
+        hover:text-light-normal
+        hover:bg-dark-500/50
+        hover:shadow-sm
         "
     >
       {{ nav.name }}

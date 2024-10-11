@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import Container from "~/components/PageContainer";
+import PageContainer from "~/components/PageContainer";
 import SearchBar from "~/components/SearchBar.vue";
 import { breakpointsTailwind } from "@vueuse/core";
+import GButton from "~/components/GButton.vue";
 
 //#region Search
 const search = ref("");
@@ -15,19 +16,12 @@ const placeholder = computed(() => {
   }
 });
 //#endregion
-
-//#region Search help
-const mockSuggestClick = (newVal: string) => {
-  search.value = newVal;
-};
-//#endregion
-
-const router = useRouter();
 </script>
 
 <template>
-  <Container>
-    <SearchBar v-model.trim="search" class="mb-6 <sm:mb-2" :placeholder="placeholder" />
-    <div>Hello world!</div>
-  </Container>
+  <PageContainer>
+    <SearchBar v-model.trim="search" class="mb-6 lt-sm:mb-2" :placeholder="placeholder" />
+    <GButton>Hello World</GButton>
+    <GButton class="ml-4" :is-loading="true">Loading button</GButton>
+  </PageContainer>
 </template>

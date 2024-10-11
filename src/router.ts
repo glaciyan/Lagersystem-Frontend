@@ -1,5 +1,4 @@
 import Index from "./pages/Index.vue";
-import Privacy from "./pages/Privacy.vue"
 
 import title from "./title";
 import { createRouter, createWebHistory } from "vue-router";
@@ -11,13 +10,6 @@ const routes = [
     component: Index,
     meta: {
       title: title("Home"),
-    },
-  },
-  {
-    path: "/privacy",
-    component: Privacy,
-    meta: {
-      title: title("Privacy"),
     },
   },
   {
