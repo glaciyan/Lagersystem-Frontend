@@ -12,7 +12,7 @@
     "build": "npm run pre && vue-tsc --noEmit && vite build",
     "start": "vite preview",
     "prod": "npm run build && npm run start",
-    "lint": "eslint ./src --ext .ts,.vue",
+    "lint": "eslint ./src --max-warnings=0",
     "gen:version": "node scripts/version.js",
     "images:characters:build": "squoosh-cli --oxipng auto --webp auto --resize {width:240} -d public/images/characters/card",
     "images:mugshot:build": "squoosh-cli --oxipng auto --webp auto --resize {width:100} -d public/images/characters/mugshot",
