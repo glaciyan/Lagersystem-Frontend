@@ -1,9 +1,6 @@
 import { defineConfig, presetAttributify, presetUno, presetWind } from "unocss";
 import transformerDirectives from '@unocss/transformer-directives'
 
-const em = ['anemo', 'pyro', 'electro', 'geo', 'cryo', 'hydro', 'dendro', 'neutral', 'danger'];
-const sizes = ['sm', 'md', 'lg', 'xl', '2xl'];
-
 export default defineConfig({
   presets: [presetUno(), presetAttributify(), presetWind()],
   transformers: [transformerDirectives()],
