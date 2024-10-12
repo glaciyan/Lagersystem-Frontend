@@ -11,8 +11,6 @@ export default [
       parser: vueEslintParser,
       parserOptions: {
         parser: typescriptEslintParser,
-        sourceType: "module",
-        ecmaVersion: 2021,
         extraFileExtensions: [".vue"],
       },
       globals: {
@@ -53,7 +51,7 @@ export default [
       "@typescript-eslint/no-explicit-any": ["off"],
       "@typescript-eslint/no-empty-interface": ["off"],
       "@typescript-eslint/no-non-null-assertion": ["off"],
-      "@typescript-eslint/explicit-module-boundary-types": ["warn"],
+      "@typescript-eslint/explicit-module-boundary-types": ["off"],
 
       // Custom rules
       "no-console": "warn",

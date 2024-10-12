@@ -8,10 +8,25 @@ const shellVisible = ref(false);
 </script>
 
 <template>
-  <div v-show="shellVisible" :class="backdropClass"></div>
-  <transition :name="transition" @beforeEnter="shellVisible = true" @afterLeave="shellVisible = false">
-    <UseFocusTrap v-if="open" :class="shellClass" @keydown.esc="$emit('close')" @click.self="$emit('close')">
-      <div :class="$attrs.class" @keydown.esc.stop="$emit('close')">
+  <div
+    v-show="shellVisible"
+    :class="backdropClass"
+  />
+  <transition
+    :name="transition"
+    @beforeEnter="shellVisible = true"
+    @afterLeave="shellVisible = false"
+  >
+    <UseFocusTrap
+      v-if="open"
+      :class="shellClass"
+      @keydown.esc="$emit('close')"
+      @click.self="$emit('close')"
+    >
+      <div
+        :class="$attrs.class"
+        @keydown.esc.stop="$emit('close')"
+      >
         <slot />
       </div>
     </UseFocusTrap>

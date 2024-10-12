@@ -26,16 +26,28 @@ export default defineComponent({
     >
       <div :class="['rounded-md bg-dark-400 shadow-md mx-1 min-w-60 overflow-hidden', $attrs.class]">
         <div class="p-6">
-          <p class="font-bold text-light-important mb-1">{{ header }}</p>
+          <p class="font-bold text-light-important mb-1">
+            {{ header }}
+          </p>
           <div class="text-light-normal">
             <slot />
           </div>
         </div>
         <div class="flex bg-dark-600 border-t-2 border-dark-200 py-3 px-6 justify-end items-center">
-          <div v-if="question" class="flex-1 mr-12 text-light-normal">{{ question }}</div>
+          <div
+            v-if="question"
+            class="flex-1 mr-12 text-light-normal"
+          >
+            {{ question }}
+          </div>
           <div class="flex flex-row-reverse">
             <slot name="buttons" />
-            <EButton element="neutral" look="ghost" class="mr-2" @click="$emit('close')">
+            <EButton
+              element="neutral"
+              look="ghost"
+              class="mr-2"
+              @click="$emit('close')"
+            >
               {{ closeText }}
             </EButton>
           </div>

@@ -20,8 +20,19 @@ const placeholder = computed(() => {
 
 <template>
   <PageContainer>
-    <SearchBar v-model.trim="search" class="mb-6 lt-sm:mb-2" :placeholder="placeholder" />
-    <GButton class="mt-4">Hello World</GButton>
-    <GButton class="ml-4" :is-loading="true">Loading button</GButton>
+    <SearchBar
+      v-model.trim="search"
+      class="mb-6 lt-sm:mb-2"
+      :placeholder="placeholder"
+    />
+    <GButton class="mt-4">
+      Hello World
+    </GButton>
+    <GButton
+      class="ml-4"
+      :isLoading="true"
+    >
+      Loading button
+    </GButton>
   </PageContainer>
 </template>
