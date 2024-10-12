@@ -66,8 +66,6 @@ export default (app: App<Element>, options: TooltipOptions) => {
           bottom: "",
           [staticSide]: "-4px",
         });
-      } else if (options.tooltipArrowId) {
-        console.log("Tooltip Directive: Arrow id is defined but that id wasn't found");
       }
     });
   };
