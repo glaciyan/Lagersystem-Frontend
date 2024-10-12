@@ -30,5 +30,7 @@ jobs:
         cache: 'pnpm'
     - name: Install dependencies
       run: pnpm install
+    - name: ESLint Style and Code Faults
+      run: pnpm lint
     - name: Build Project
       run: pnpm build

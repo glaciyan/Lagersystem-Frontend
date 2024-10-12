@@ -29,6 +29,6 @@ const handleClick = () => {
       class="bg-transparent placeholder-light-ternary h-[42px] text-light-important w-full pr-4 focus:outline-none"
       :placeholder="placeholder"
       @input="$emit('update:modelValue', ($event.target as any).value)"
-    />
+    >
   </div>
 </template>

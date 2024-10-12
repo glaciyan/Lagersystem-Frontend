@@ -23,6 +23,8 @@ defineEmits(["click"]);
     @click="$emit('click', term)"
   >
     <SearchIcon class="mx-4 text-light-ternary" />
-    <p class="mr-8">{{ term }}</p>
+    <p class="mr-8">
+      {{ term }}
+    </p>
   </div>
 </template>
