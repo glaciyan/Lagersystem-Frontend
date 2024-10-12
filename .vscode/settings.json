@@ -1,3 +1,13 @@
 {
-  "eslint.probe": ["typescript", "typescriptreact", "html", "vue", "markdown"]
+  "eslint.probe": ["typescript", "typescriptreact", "html", "vue", "markdown"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.format.enable": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  }
 }
