@@ -22,7 +22,7 @@ const placeholder = computed(() => {
   <PageContainer>
     <SearchBar
       v-model.trim="search"
-      class="mb-6 lt-sm:mb-2"
+      class="lt-sm:mb-2 mb-6"
       :placeholder="placeholder"
     />
     <GButton class="mt-4">
