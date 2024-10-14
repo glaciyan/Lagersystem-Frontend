@@ -2,7 +2,7 @@
 import PageContainer from "~/components/PageContainer";
 import SearchBar from "~/components/SearchBar.vue";
 import { breakpointsTailwind } from "@vueuse/core";
-import GButton from "~/components/GButton.vue";
+import GButton from "~/components/GButton/GButton.vue";
 
 //#region Search
 const search = ref("");
