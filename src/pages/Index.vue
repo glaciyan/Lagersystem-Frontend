@@ -2,7 +2,7 @@
 import PageContainer from "~/components/PageContainer";
 import SearchBar from "~/components/SearchBar.vue";
 import { breakpointsTailwind } from "@vueuse/core";
-import GButton from "~/components/GButton/GButton.vue";
+import TestingCard from "~/components/TestingCard.vue";
 
 //#region Search
 const search = ref("");
@@ -25,14 +25,26 @@ const placeholder = computed(() => {
       class="lt-sm:mb-2 mb-6"
       :placeholder="placeholder"
     />
-    <GButton class="mt-4">
-      Hello World
-    </GButton>
-    <GButton
-      class="ml-4"
-      :isLoading="true"
+    <div
+      class="grid gap-2 lt-md:gap-2 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
     >
-      Loading button
-    </GButton>
+      <TestingCard />
+      <TestingCard />
+      <TestingCard />
+      <TestingCard />
+      <TestingCard />
+      <TestingCard />
+      <TestingCard />
+      <TestingCard />
+      <TestingCard />
+      <TestingCard />
+      <TestingCard />
+      <TestingCard />
+      <TestingCard />
+      <TestingCard />
+      <TestingCard />
+      <TestingCard />
+      <TestingCard />
+    </div>
   </PageContainer>
 </template>

@@ -1,6 +1,8 @@
 import { defineConfig, presetAttributify, presetUno, presetWind } from "unocss";
 import transformerDirectives from '@unocss/transformer-directives'
 
+const elements = ["pyro", "cryo", "geo", "anemo", "electro", "dendro"];
+
 export default defineConfig({
   presets: [presetUno(), presetAttributify(), presetWind()],
   transformers: [transformerDirectives()],
@@ -14,6 +16,9 @@ export default defineConfig({
       ],
     },
   },
+  safelist: [
+    ...elements.map(element => `ring-genshin-element-${element}`),
+  ],
   extendTheme: (theme: any) => {
     return {
       ...theme,

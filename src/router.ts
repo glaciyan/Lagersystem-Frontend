@@ -1,4 +1,5 @@
 import Index from "./pages/Index.vue";
+import MyPage from "./pages/MyPage.vue";
 
 import title from "./title";
 import { createRouter, createWebHistory } from "vue-router";
@@ -11,6 +12,10 @@ const routes = [
     meta: {
       title: title("Home"),
     },
+  },
+  {
+    path: "/my-page",
+    component: MyPage
   },
   {
     path: "/:pathMatch(.*)*",
