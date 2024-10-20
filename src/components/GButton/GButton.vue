@@ -1,5 +1,5 @@
 <script lang="ts">
-import Spinner from "./GSpinner.vue";
+import Spinner from "~/components/GSpinner.vue";
 
 export default defineComponent({
   name: "GButton",
