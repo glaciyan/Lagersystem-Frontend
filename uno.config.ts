@@ -1,8 +1,8 @@
-import { defineConfig, presetAttributify, presetUno, presetWind } from "unocss";
+import { defineConfig, presetAttributify, presetUno } from "unocss";
 import transformerDirectives from '@unocss/transformer-directives'
 
 export default defineConfig({
-  presets: [presetUno(), presetAttributify(), presetWind()],
+  presets: [presetUno(), presetAttributify()],
   transformers: [transformerDirectives()],
   content: {
     pipeline: {
