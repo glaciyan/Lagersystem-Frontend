@@ -42,6 +42,7 @@ export default [
       // Custom rules
       "no-console": "warn",
       "no-debugger": "error",
+      "semi": "warn"
     },
   },
 ];
