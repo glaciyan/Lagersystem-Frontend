@@ -18,14 +18,14 @@ export default defineComponent({
     // change this into a switch if more are needed
     let screenSize: string;
     switch (this.$props.size) {
-    case "xl":
-      screenSize = "max-w-screen-xl lt-xlp:px-4";
-      break;
-    case "2xl":
-      screenSize = "max-w-screen-2xl lt-2xlp:px-4";
-      break;
-    case "sm":
-      screenSize = "max-w-screen-sm px-4";
+      case "xl":
+        screenSize = "max-w-screen-xl lt-xlp:px-4";
+        break;
+      case "2xl":
+        screenSize = "max-w-screen-2xl lt-2xlp:px-4";
+        break;
+      case "sm":
+        screenSize = "max-w-screen-sm px-4";
     }
 
     const className = `mx-auto ${screenSize} lt-sm:px-2`;

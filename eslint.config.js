@@ -52,7 +52,6 @@ export default [
       "no-console": "warn",
       "no-debugger": "error",
       "semi": "warn",
-      "indent": ["warn", 2]
     },
   },
 ];
