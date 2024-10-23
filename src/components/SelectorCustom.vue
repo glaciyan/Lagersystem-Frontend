@@ -20,7 +20,7 @@ defineEmits(["update:modelValue"]);
     <div class="relative">
       <ListboxButton
         :class="$attrs.class"
-        class="cursor-pointer font-normal font-sans bg-dark-400 border-r-[1px] border-dark-500 text-left text-base w-max py-2 pr-0 pl-4 transition-colors text-light-900 hover:bg-dark-500 focus:outline-none focus-visible:ring"
+        class="text-light-900 w-max cursor-pointer border-r-[1px] border-dark-500 bg-dark-400 py-2 pl-4 pr-0 text-left text-base font-normal font-sans transition-colors hover:bg-dark-500 focus:outline-none focus-visible:ring"
       >
         <Center>
           <slot
@@ -35,7 +35,7 @@ defineEmits(["update:modelValue"]);
       <div class="absolute">
         <transition name="fade">
           <ListboxOptions
-            class="rounded-md list-none bg-dark-300 m-0 mt-1 text-light-normal max-h-[350px] p-0 py-1 z-1 absolute overflow-y-auto custom-scrollbar <sm:max-h-60 w-max"
+            class="custom-scrollbar absolute z-1 m-0 mt-1 max-h-[350px] w-max list-none overflow-y-auto rounded-md bg-dark-300 p-0 py-1 text-light-normal <sm:max-h-60"
           >
             <ListboxOption
               v-for="(option, index) in listItems"

@@ -8,14 +8,14 @@ import { RouterLink } from "vue-router";
 <template>
   <Container
     as="header"
-    class="flex h-28 justify-start sm:items-center lt-sm:items-center lt-sm:flex-col lt-sm:h-auto lt-sm:my-4"
+    class="h-28 flex justify-start lt-sm:my-4 lt-sm:h-auto lt-sm:flex-col lt-sm:items-center sm:items-center"
   >
-    <div class="flex justify-between sm:mr-16 lt-sm:mb-4">
+    <div class="flex justify-between lt-sm:mb-4 sm:mr-16">
       <RouterLink to="/">
         <LogoWithLabel />
       </RouterLink>
     </div>
-    <div class="flex w-full">
+    <div class="w-full flex">
       <Navigation
         orientation="verical"
         class="flex-1"

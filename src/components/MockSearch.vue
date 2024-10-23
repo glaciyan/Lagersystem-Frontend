@@ -7,18 +7,7 @@ defineEmits(["click"]);
 
 <template>
   <div
-    class="
-      rounded-lg
-      cursor-pointer
-      flex
-      bg-dark-400
-      h-[42px]
-      shadow-md
-      w-full w-max
-      transition-shadow
-      overflow-hidden
-      items-center
-    "
+    class="h-[42px] w-full w-max flex cursor-pointer items-center overflow-hidden rounded-lg bg-dark-400 shadow-md transition-shadow"
     :title="`Search for ${term}`"
     @click="$emit('click', term)"
   >

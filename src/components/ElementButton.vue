@@ -12,19 +12,19 @@ const props = withDefaults(
   {
     element: undefined,
     look: "solid",
-  }
+  },
 );
 
 const element = computed(() => props.element ?? injectedElement.value.normalizedName);
 
 const buttonStyle = computed(() => {
   switch (props.look) {
-    case "solid":
-      return `bg-genshin-element-${element.value} transition-colors hover:bg-opacity-70 active:bg-opacity-50 text-black font-semibold shadow-md`;
-    case "outline":
-      return `border-1 border-genshin-element-${element.value} text-genshin-element-${element.value} bg-dark-900 transition-colors bg-opacity-0 hover:bg-opacity-20 active:bg-opacity-40`;
-    case "ghost":
-      return `text-genshin-element-${element.value} bg-dark-900 transition-colors bg-opacity-0 hover:bg-opacity-20 active:bg-opacity-40`;
+  case "solid":
+    return `bg-genshin-element-${element.value} transition-colors hover:bg-opacity-70 active:bg-opacity-50 text-black font-semibold shadow-md`;
+  case "outline":
+    return `border-1 border-genshin-element-${element.value} text-genshin-element-${element.value} bg-dark-900 transition-colors bg-opacity-0 hover:bg-opacity-20 active:bg-opacity-40`;
+  case "ghost":
+    return `text-genshin-element-${element.value} bg-dark-900 transition-colors bg-opacity-0 hover:bg-opacity-20 active:bg-opacity-40`;
   }
 });
 </script>

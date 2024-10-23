@@ -24,7 +24,8 @@ export default defineComponent({
   render() {
     if (this.isRouter) {
       return h(RouterLink, { to: this.to, class: this.className }, this.$slots);
-    } else {
+    }
+    else {
       return h("a", { href: this.to, class: this.className }, this.$slots);
     }
   },

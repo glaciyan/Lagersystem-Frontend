@@ -6,7 +6,8 @@ export function useLoadingFunction(func: () => Promise<void>) {
 
     try {
       await func();
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   };

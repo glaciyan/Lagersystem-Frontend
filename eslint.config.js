@@ -1,9 +1,18 @@
 import vuePlugin from "eslint-plugin-vue";
-import vueTsConfig from "@vue/eslint-config-typescript"
+import vueTsConfig from "@vue/eslint-config-typescript";
+import stylistic from "@stylistic/eslint-plugin";
+import unocss from "@unocss/eslint-config/flat"
 
 export default [
+  unocss,
   ...vuePlugin.configs["flat/recommended"],
   ...vueTsConfig(),
+  stylistic.configs.customize({
+    // the following options are the default values
+    indent: 2,
+    quotes: "double",
+    semi: true,
+  }),
   {
     rules: {
       // Vue specific rules
@@ -42,7 +51,8 @@ export default [
       // Custom rules
       "no-console": "warn",
       "no-debugger": "error",
-      "semi": "warn"
+      "semi": "warn",
+      "indent": ["warn", 2]
     },
   },
 ];

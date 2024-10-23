@@ -26,7 +26,7 @@ const handleClick = () => {
     <input
       ref="searchBar"
       :value="modelValue"
-      class="bg-transparent placeholder-light-ternary h-[42px] text-light-important w-full pr-4 focus:outline-none"
+      class="h-[42px] w-full bg-transparent pr-4 text-light-important focus:outline-none placeholder-light-ternary"
       :placeholder="placeholder"
       @input="$emit('update:modelValue', ($event.target as any).value)"
     >

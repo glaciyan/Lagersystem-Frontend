@@ -16,7 +16,7 @@ const id = incrId();
   <p class="mt-2">
     Try someting like:
   </p>
-  <div class="space-y-2 my-2">
+  <div class="my-2 space-y-2">
     <MockSearch
       v-for="term in terms"
       :key="term + id"
