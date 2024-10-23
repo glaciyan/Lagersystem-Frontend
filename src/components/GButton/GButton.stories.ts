@@ -49,6 +49,5 @@ export const Disabled: Story = {
 export const Danger: Story = {
   args: {
     color: "danger",
-    disabled: false,
   },
 };
