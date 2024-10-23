@@ -9,11 +9,11 @@ defineProps<{ href: string }>();
     target="blank"
     rel="noopener"
     :title="href"
-    class="cursor-pointer w-max text-blue-400 block hover:underline"
+    class="block w-max cursor-pointer text-blue-400 hover:underline"
   >
     <div class="flex items-center">
       <slot />
-      <ExternalLinkIcon class="h-4 ml-1 w-4" />
+      <ExternalLinkIcon class="ml-1 h-4 w-4" />
     </div>
   </a>
 </template>

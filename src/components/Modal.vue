@@ -26,17 +26,17 @@ export default defineComponent({
     >
       <div :class="['rounded-md bg-dark-400 shadow-md mx-1 min-w-60 overflow-hidden', $attrs.class]">
         <div class="p-6">
-          <p class="font-bold text-light-important mb-1">
+          <p class="mb-1 text-light-important font-bold">
             {{ header }}
           </p>
           <div class="text-light-normal">
             <slot />
           </div>
         </div>
-        <div class="flex bg-dark-600 border-t-2 border-dark-200 py-3 px-6 justify-end items-center">
+        <div class="flex items-center justify-end border-t-2 border-dark-200 bg-dark-600 px-6 py-3">
           <div
             v-if="question"
-            class="flex-1 mr-12 text-light-normal"
+            class="mr-12 flex-1 text-light-normal"
           >
             {{ question }}
           </div>

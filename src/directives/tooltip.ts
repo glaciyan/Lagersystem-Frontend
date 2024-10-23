@@ -91,7 +91,7 @@ export default (app: App<Element>, options: TooltipOptions) => {
     mounted(el, binding) {
       if (!binding.arg) binding.arg = "top";
 
-      useEventListener(el, "mouseenter", (ev) => showTooltip(el, binding.arg!, ev));
+      useEventListener(el, "mouseenter", ev => showTooltip(el, binding.arg!, ev));
       useEventListener(el, "mouseleave", hideTooltip);
 
       updateContent(el, binding.value);

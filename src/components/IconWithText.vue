@@ -1,5 +1,5 @@
 <template>
-  <div class="flex space-x-1 items-center">
+  <div class="flex items-center space-x-1">
     <slot name="icon" />
     <slot />
   </div>

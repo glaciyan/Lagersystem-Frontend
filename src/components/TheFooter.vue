@@ -8,7 +8,7 @@ import version from "~/version";
 </script>
 
 <template>
-  <footer class="bg-dark-600 mt-8">
+  <footer class="mt-8 bg-dark-600">
     <PageContainer class="py-12 lt-sm:mx-5">
       <div
         grid="~ cols-1 sm:cols-2 xl:cols-4"

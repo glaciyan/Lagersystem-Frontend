@@ -14,24 +14,12 @@ const navigation: { path: string; name: string }[] = [
 </script>
 
 <template>
-  <div class="flex space-x-2 items-center">
+  <div class="flex items-center space-x-2">
     <RouterLink
       v-for="nav in navigation"
       :key="nav.path"
       :to="nav.path"
-      class="
-        border
-        rounded-lg
-        border-dark-500
-        text-light-ternary
-        py-1
-        px-3
-        transition-all
-        whitespace-nowrap
-        hover:text-light-normal
-        hover:bg-dark-500/50
-        hover:shadow-sm
-        "
+      class="whitespace-nowrap border border-dark-500 rounded-lg px-3 py-1 text-light-ternary transition-all hover:bg-dark-500/50 hover:text-light-normal hover:shadow-sm"
     >
       {{ nav.name }}
     </RouterLink>

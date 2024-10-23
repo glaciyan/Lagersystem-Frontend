@@ -4,7 +4,7 @@ defineProps<{ title: string }>();
 
 <template>
   <div>
-    <p class="font-semibold text-light-important mb-4">
+    <p class="mb-4 text-light-important font-semibold">
       {{ title }}
     </p>
     <slot />
