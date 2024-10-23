@@ -41,7 +41,7 @@ const styles: { [key in ButtonType]: ButtonTypeDefinitions } = {
 };
 
 const buttonClasses = computed(() => [
-  isTransparent.value ? styles[props.variant][props.color].disabled : styles[props.variant][props.color].base,
+  isTransparent.value ? styles[props.variant][props.color]?.disabled : styles[props.variant][props.color]?.base,
   "flex h-full py-1 px-4 rounded-md whitespace-nowrap items-center justify-center transition-colors",
   {
     "hover:cursor-no-drop": props.disabled,
