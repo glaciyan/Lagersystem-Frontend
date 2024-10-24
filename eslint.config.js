@@ -12,6 +12,9 @@ export default [
     indent: 2,
     quotes: "double",
     semi: true,
+    "max-len": {
+      code: 120,
+    }
   }),
   {
     rules: {
