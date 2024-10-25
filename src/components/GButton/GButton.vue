@@ -30,12 +30,12 @@ const isTransparent = computed(() => props.disabled || isLoading.value);
 const styles: { [key in ButtonType]: ButtonTypeDefinitions } = {
   solid: {
     primary: {
-      base: "bg-primary-5 hover:bg-primary-4 active:bg-primary-6 text-white",
+      base: "btn-solid",
       disabled: "bg-primary-3 text-white",
     },
     danger: {
-      base: "bg-rose-5 hover:bg-rose-4 active:bg-rose-6 text-white",
-      disabled: "bg-rose-3 text-white",
+      base: "bg-danger-5 hover:bg-danger-4 active:bg-danger-6 text-white",
+      disabled: "bg-danger-3 text-white",
     },
   },
 };
@@ -43,7 +43,6 @@ const styles: { [key in ButtonType]: ButtonTypeDefinitions } = {
 const buttonClasses = computed(() => [
   isTransparent.value ? styles[props.variant][props.color]?.disabled : styles[props.variant][props.color]?.base,
   "flex h-full py-1 px-4 rounded-md whitespace-nowrap items-center justify-center transition-colors",
-  "bg-[color:--button-solid-color] hover:bg-[color:--button-hover-color] active:bg-[color:--button-active-color] text-[color:--button-text-color]",
   {
     "hover:cursor-no-drop": props.disabled,
     "hover:cursor-wait": isLoading.value,
@@ -62,7 +61,10 @@ const spinnerClasses = computed(() => ({
     :disabled="isTransparent"
     :aria-disabled="isTransparent"
   >
-    <div :class="buttonClasses">
+    <div
+      btn-mine
+      :class="buttonClasses"
+    >
       <GSpinner
         v-if="props.loadingPosition === 'left' || props.loadingPosition === 'center'"
         :class="[spinnerClasses, {'inline-block absolute': props.loadingPosition === 'center' }]"

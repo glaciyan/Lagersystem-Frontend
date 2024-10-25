@@ -24,7 +24,7 @@ export const Default: Story = {};
 
 export const LoadingLeft: Story = {
   args: {
-    loadingPosition: "left",
+    "btn-primary-solid": "",
   },
 };
 
