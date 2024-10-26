@@ -26,7 +26,7 @@ export default defineComponent({
     >
       <div :class="['rounded-md bg-dark-400 shadow-md mx-1 min-w-60 overflow-hidden', $attrs.class]">
         <div class="p-6">
-          <p class="mb-1 text-light-important font-bold">
+          <p class="text-light-important mb-1 font-bold">
             {{ header }}
           </p>
           <div class="text-light-normal">
@@ -36,7 +36,7 @@ export default defineComponent({
         <div class="flex items-center justify-end border-t-2 border-dark-200 bg-dark-600 px-6 py-3">
           <div
             v-if="question"
-            class="mr-12 flex-1 text-light-normal"
+            class="text-light-normal mr-12 flex-1"
           >
             {{ question }}
           </div>

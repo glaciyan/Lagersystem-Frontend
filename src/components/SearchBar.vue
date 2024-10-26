@@ -22,11 +22,11 @@ const handleClick = () => {
     ]"
     @click="handleClick"
   >
-    <SearchIcon class="mx-4 text-light-ternary" />
+    <SearchIcon class="text-light-ternary mx-4" />
     <input
       ref="searchBar"
       :value="modelValue"
-      class="h-[42px] w-full bg-transparent pr-4 text-light-important focus:outline-none placeholder-light-ternary"
+      class="text-light-important placeholder-light-ternary h-[42px] w-full bg-transparent pr-4 focus:outline-none"
       :placeholder="placeholder"
       @input="$emit('update:modelValue', ($event.target as any).value)"
     >

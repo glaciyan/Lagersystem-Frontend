@@ -19,7 +19,7 @@ const navigation: { path: string; name: string }[] = [
       v-for="nav in navigation"
       :key="nav.path"
       :to="nav.path"
-      class="whitespace-nowrap border border-dark-500 rounded-lg px-3 py-1 text-light-ternary transition-all hover:bg-dark-500/50 hover:text-light-normal hover:shadow-sm"
+      class="text-light-ternary hover:text-light-normal whitespace-nowrap border border-dark-500 rounded-lg px-3 py-1 transition-all hover:bg-dark-500/50 hover:shadow-sm"
     >
       {{ nav.name }}
     </RouterLink>
