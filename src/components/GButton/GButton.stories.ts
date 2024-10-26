@@ -51,14 +51,14 @@ export const LoadingRight: Story = {
 
 export const DefaultOutlined: Story = {
   args: {
-    btnStyle: "btn-outlined btn-default",
+    variant: "btn-outlined",
   },
 };
 
 export const OutlinedDisabledLoading: Story = {
   args: {
     label: "Button",
-    btnStyle: "btn-outlined btn-default",
+    variant: "btn-outlined",
     disabled: true,
     loadingPosition: "left",
   },
@@ -67,7 +67,7 @@ export const OutlinedDisabledLoading: Story = {
 export const OutlinedDisabled: Story = {
   args: {
     label: "Button",
-    btnStyle: "btn-outlined btn-default",
+    variant: "btn-outlined",
     disabled: true,
   },
 };
@@ -75,19 +75,21 @@ export const OutlinedDisabled: Story = {
 export const PrimaryOutlined: Story = {
   args: {
     label: "Button",
-    btnStyle: "btn-primary btn-outlined",
+    variant: "btn-outlined",
   },
 };
 
 export const Danger: Story = {
   args: {
-    btnStyle: "btn-solid btn-danger",
+    variant: "btn-solid",
+    color: "btn-danger",
   },
 };
 
 export const DangerOutlined: Story = {
   args: {
     label: "Button",
-    btnStyle: "btn-outlined btn-danger",
+    variant: "btn-outlined",
+    color: "btn-danger",
   },
 };
