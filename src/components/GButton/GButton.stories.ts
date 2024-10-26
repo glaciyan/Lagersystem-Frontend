@@ -76,6 +76,7 @@ export const PrimaryOutlined: Story = {
   args: {
     label: "Button",
     variant: "btn-outlined",
+    color: "btn-primary",
   },
 };
 
