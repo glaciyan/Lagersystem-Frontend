@@ -1,0 +1,37 @@
+{
+  "storybook": {
+    "scope": "typescript",
+    "prefix": "sb",
+    "body": [
+      "import type { Meta, StoryObj } from \"@storybook/vue3\";",
+      "",
+      "import $1 from \"./$1.vue\";",
+      "",
+      "const meta = {",
+      "  title: \"${2:Folder/Component}\",",
+      "  component: $1,",
+      "  tags: [\"autodocs\"],",
+      "} satisfies Meta<typeof $1>;",
+      "",
+      "export default meta;",
+      "",
+      "type Story = StoryObj<typeof meta>;",
+      "",
+      "export const Default: Story = {",
+      "  args: {",
+      "  },",
+      "};",
+      "",
+    ],
+  },
+  "vue": {
+    "scope": "vue",
+    "prefix": "vue",
+    "body": [
+      "<script setup lang=\"ts\">\n</script>",
+      "",
+      "<template>\n\t$0\n</template>",
+      ""
+    ]
+  }
+}

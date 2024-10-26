@@ -33,6 +33,8 @@ export default defineConfig({
       }
     },
   ],
+  safelist: [
+  ],
   extendTheme: (theme: any) => {
     return {
       ...theme,
