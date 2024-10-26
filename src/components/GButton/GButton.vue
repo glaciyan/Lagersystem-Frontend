@@ -9,13 +9,16 @@ export interface Props {
   disabled?: boolean;
   /** This determines the Position of the loading spinner animation. `center` will hide the `label`. Options: `left`, `center`, `right`. */
   loadingPosition?: ButtonLoadingPosition;
-  /** Style classes. */
-  btnStyle?: string;
+  /** This will determine the non color visuals of the button. Variants are: `btn-solid`, `btn-outlined`. */
+  variant?: string;
+  /** This will determine the color of the button. */
+  color?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   loadingPosition: null,
-  btnStyle: "btn-solid btn-default",
+  variant: "btn-solid",
+  color: "btn-default",
 });
 
 const isLoading = computed(() => !!props.loadingPosition);
@@ -34,7 +37,7 @@ const spinnerClasses = computed(() => ({
     :disabled="isTransparent"
     :aria-disabled="isTransparent"
     :data-loading="isLoading"
-    :class="[btnStyle, 'disabled:loading:cursor-wait disabled:cursor-no-drop flex h-full py-1 px-4 rounded-md whitespace-nowrap items-center justify-center transition-colors']"
+    :class="[variant, color, 'disabled:loading:cursor-wait disabled:cursor-no-drop flex h-full py-1 px-4 rounded-md whitespace-nowrap items-center justify-center transition-colors']"
   >
     <GSpinner
       v-if="props.loadingPosition === 'left' || props.loadingPosition === 'center'"
