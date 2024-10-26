@@ -1,12 +1,16 @@
 <script setup lang="ts">
-const props = defineProps<{ rarity: number }>();
+export type Props = {
+  /** How many stars to display. Ranges from 1-5. */
+  rarity: number;
+};
+const props = defineProps<Props>();
 
 const baseWidth = 24;
 const additionalStarWidth = 8.5;
-const width = baseWidth + (props.rarity - 1) * additionalStarWidth;
-const viewBox = `0 0 ${width} 24`;
+const width = computed(() => baseWidth + (props.rarity - 1) * additionalStarWidth);
+const viewBox = computed(() => `0 0 ${width.value} 24`);
 
-const rarityColor = `text-genshin-rarity-${props.rarity}`;
+const rarityColor = computed(() => `text-genshin-rarity-${props.rarity}`);
 </script>
 
 <template>
