@@ -20,11 +20,14 @@ type Story = StoryObj<typeof meta>;
  * See https://storybook.js.org/docs/api/csf
  * to learn how to use render functions.
  */
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+  },
+};
 
 export const LoadingLeft: Story = {
   args: {
-    "btn-primary-solid": "",
+    loadingPosition: "left",
   },
 };
 
@@ -48,6 +51,6 @@ export const Disabled: Story = {
 
 export const Danger: Story = {
   args: {
-    color: "danger",
+    class: "btn-solid btn-danger btn-text-gray-1",
   },
 };

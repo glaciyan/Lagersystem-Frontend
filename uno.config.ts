@@ -1,9 +1,10 @@
 import { defineConfig, presetAttributify, presetUno } from "unocss";
 import transformerDirectives from "@unocss/transformer-directives";
 import { colors } from "./src/uno/colors";
+import ButtonPreset from "./src/components/GButton/ButtonPreset";
 
 export default defineConfig({
-  presets: [presetUno(), presetAttributify()],
+  presets: [presetUno(), presetAttributify(), ButtonPreset()],
   transformers: [transformerDirectives()],
   content: {
     pipeline: {
@@ -12,27 +13,10 @@ export default defineConfig({
         /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
         // include js/ts files
         "src/**/*.{js,ts}",
+        "src/**/*.stories.ts",
       ],
     },
   },
-  rules: [
-    [/^btn-(.*)$/, ([, themeName], { theme }) => {
-      return {
-        "--btn-normal-color": "soemthing",
-      };
-    }],
-  ],
-  shortcuts: [
-    {
-      "btn-solid":
-      `bg-[color:--btn-normal-color]
-      text-[color:--btn-text-normal-color]
-      active:bg-[color:--btn-pressed-color]
-      disabled:bg-[color:--btn-disabled-color]
-      hover:bg-[color:--btn-hover-color]
-      hover:text-[color:--btn-text-hover-color]`,
-    },
-  ],
   theme: {
     colors,
   },
