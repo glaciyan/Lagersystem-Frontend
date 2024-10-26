@@ -20,7 +20,16 @@ type Story = StoryObj<typeof meta>;
  * See https://storybook.js.org/docs/api/csf
  * to learn how to use render functions.
  */
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+};
 
 export const LoadingLeft: Story = {
   args: {
@@ -40,14 +49,45 @@ export const LoadingRight: Story = {
   },
 };
 
-export const Disabled: Story = {
+export const DefaultOutlined: Story = {
   args: {
+    btnStyle: "btn-outlined btn-default",
+  },
+};
+
+export const OutlinedDisabledLoading: Story = {
+  args: {
+    label: "Button",
+    btnStyle: "btn-outlined btn-default",
     disabled: true,
+    loadingPosition: "left",
+  },
+};
+
+export const OutlinedDisabled: Story = {
+  args: {
+    label: "Button",
+    btnStyle: "btn-outlined btn-default",
+    disabled: true,
+  },
+};
+
+export const PrimaryOutlined: Story = {
+  args: {
+    label: "Button",
+    btnStyle: "btn-primary btn-outlined",
   },
 };
 
 export const Danger: Story = {
   args: {
-    color: "danger",
+    btnStyle: "btn-solid btn-danger",
+  },
+};
+
+export const DangerOutlined: Story = {
+  args: {
+    label: "Button",
+    btnStyle: "btn-outlined btn-danger",
   },
 };

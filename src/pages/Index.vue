@@ -26,14 +26,12 @@ const placeholder = computed(() => {
       class="mb-6 lt-sm:mb-2"
       :placeholder="placeholder"
     />
-    <GButton class="mt-4">
-      Hello World
-    </GButton>
     <GButton
-      class="ml-4"
-      :isLoading="true"
-    >
-      Loading button
-    </GButton>
+      label="hello"
+    />
+    <GButton
+      label="Hello Loading"
+      loadingPosition="left"
+    />
   </PageContainer>
 </template>

@@ -11,7 +11,7 @@ defineEmits(["click"]);
     :title="`Search for ${term}`"
     @click="$emit('click', term)"
   >
-    <SearchIcon class="mx-4 text-light-ternary" />
+    <SearchIcon class="text-light-ternary mx-4" />
     <p class="mr-8">
       {{ term }}
     </p>

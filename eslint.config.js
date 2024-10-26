@@ -12,6 +12,9 @@ export default [
     indent: 2,
     quotes: "double",
     semi: true,
+    "max-len": {
+      code: 120,
+    }
   }),
   {
     rules: {
@@ -47,6 +50,7 @@ export default [
         allowObjectTypes: "always"
       }],
       "@typescript-eslint/no-empty-object-type": ["off"],
+      "@typescript-eslint/ban-ts-comment": ["off"],
 
       // Custom rules
       "no-console": "warn",
