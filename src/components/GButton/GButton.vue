@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ButtonLoadingPosition } from "./ButtonLoadingConfig";
+import { ButtonLoadingPosition } from "./ButtonLoadingPosition";
 import GSpinner from "../GSpinner.vue";
 
 export interface Props {
@@ -10,22 +10,17 @@ export interface Props {
   /** This determines the Position of the loading spinner animation. `center` will hide the `label`. Options: `left`, `center`, `right`. */
   loadingPosition?: ButtonLoadingPosition;
   /** Style classes. */
-  class?: string;
+  btnStyle?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   loadingPosition: null,
-  class: "btn-solid btn-primary btn-text-white",
+  btnStyle: "btn-solid btn-default",
 });
 
 const isLoading = computed(() => !!props.loadingPosition);
 
 const isTransparent = computed(() => props.disabled || isLoading.value);
-
-const buttonCursor = computed(() => ({
-  "hover:cursor-no-drop": props.disabled,
-  "hover:cursor-wait": isLoading.value,
-}));
 
 const spinnerClasses = computed(() => ({
   "mr-1.5": props.loadingPosition === "left",
@@ -38,7 +33,8 @@ const spinnerClasses = computed(() => ({
     type="button"
     :disabled="isTransparent"
     :aria-disabled="isTransparent"
-    :class="[props.class, buttonCursor, 'flex h-full py-1 px-4 rounded-md whitespace-nowrap items-center justify-center transition-colors']"
+    :data-loading="isLoading"
+    :class="[btnStyle, 'disabled:loading:cursor-wait disabled:cursor-no-drop flex h-full py-1 px-4 rounded-md whitespace-nowrap items-center justify-center transition-colors']"
   >
     <GSpinner
       v-if="props.loadingPosition === 'left' || props.loadingPosition === 'center'"

@@ -50,6 +50,7 @@ export default [
         allowObjectTypes: "always"
       }],
       "@typescript-eslint/no-empty-object-type": ["off"],
+      "@typescript-eslint/ban-ts-comment": ["off"],
 
       // Custom rules
       "no-console": "warn",
