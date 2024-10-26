@@ -3,6 +3,7 @@ import transformerDirectives from "@unocss/transformer-directives";
 import transformerVariantGroup from "@unocss/transformer-variant-group";
 import { colors } from "./src/uno/colors";
 import ButtonPreset from "./src/components/GButton/ButtonPreset";
+import { range } from "./src/lib/range";
 
 export default defineConfig({
   presets: [presetUno(), presetAttributify(), ButtonPreset()],
@@ -32,6 +33,9 @@ export default defineConfig({
         };
       }
     },
+  ],
+  safelist: [
+    ...range(5).map(r => `text-genshin-rarity-${r}`),
   ],
   extendTheme: (theme: any) => {
     return {

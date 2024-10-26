@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import useRandomElement from "~/composites/useRandomElement";
-import SearchIcon from "./icons/SearchIcon.vue";
+import SearchIcon from "~/icons/SearchIcon.vue";
 defineProps<{ modelValue: string; placeholder?: string }>();
 defineEmits(["update:modelValue"]);
 

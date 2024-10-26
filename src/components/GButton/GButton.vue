@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ButtonLoadingPosition } from "./ButtonLoadingPosition";
-import GSpinner from "~/components/GSpinner.vue";
+import GSpinner from "~/components/GSpinner/GSpinner.vue";
 
 export interface Props {
   /** The text that will be displayed on the button. */

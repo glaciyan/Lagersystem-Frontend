@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ExternalLinkIcon from "./icons/ExternalLinkIcon.vue";
+import ExternalLinkIcon from "~/icons/ExternalLinkIcon.vue";
 defineProps<{ href: string }>();
 </script>
 
