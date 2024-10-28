@@ -3,7 +3,7 @@ import transformerDirectives from "@unocss/transformer-directives";
 import transformerVariantGroup from "@unocss/transformer-variant-group";
 import { range } from "./src/lib/range";
 
-const gen = (configMap: { name: string; count: number }[]) => {
+const makeColors = (configMap: { name: string; count: number }[]) => {
   const colors = {};
   configMap.forEach((config) => {
     colors[config.name] = {};
@@ -21,7 +21,7 @@ export default defineConfig({
   // @ts-ignore
   transformers: [transformerDirectives(), transformerVariantGroup()],
   theme: {
-    colors: gen([
+    colors: makeColors([
       { name: "gray", count: 13 },
       { name: "primary", count: 10 },
       { name: "rarity", count: 5 },
