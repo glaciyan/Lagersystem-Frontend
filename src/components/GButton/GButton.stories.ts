@@ -9,7 +9,6 @@ const meta = {
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
   args: {
-    label: "Button",
   },
 } satisfies Meta<typeof GButton>;
 
@@ -22,75 +21,79 @@ type Story = StoryObj<typeof meta>;
  */
 export const Default: Story = {
   args: {
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    disabled: true,
-  },
-};
-
-export const LoadingLeft: Story = {
-  args: {
-    loadingPosition: "left",
-  },
-};
-
-export const LoadingCenter: Story = {
-  args: {
-    loadingPosition: "center",
-  },
-};
-
-export const LoadingRight: Story = {
-  args: {
-    loadingPosition: "right",
-  },
-};
-
-export const DefaultOutlined: Story = {
-  args: {
-    variant: "btn-outlined",
-  },
-};
-
-export const OutlinedDisabledLoading: Story = {
-  args: {
     label: "Button",
-    variant: "btn-outlined",
-    disabled: true,
-    loadingPosition: "left",
+    variant: "solid",
+    color: "primary",
+    size: "medium",
   },
 };
 
-export const OutlinedDisabled: Story = {
-  args: {
-    label: "Button",
-    variant: "btn-outlined",
-    disabled: true,
-  },
-};
+// export const Disabled: Story = {
+//   args: {
+//     disabled: true,
+//   },
+// };
 
-export const PrimaryOutlined: Story = {
-  args: {
-    label: "Button",
-    variant: "btn-outlined",
-    color: "btn-primary",
-  },
-};
+// export const LoadingLeft: Story = {
+//   args: {
+//     loadingPosition: "left",
+//   },
+// };
 
-export const Danger: Story = {
-  args: {
-    variant: "btn-solid",
-    color: "btn-danger",
-  },
-};
+// export const LoadingCenter: Story = {
+//   args: {
+//     loadingPosition: "center",
+//   },
+// };
 
-export const DangerOutlined: Story = {
-  args: {
-    label: "Button",
-    variant: "btn-outlined",
-    color: "btn-danger",
-  },
-};
+// export const LoadingRight: Story = {
+//   args: {
+//     loadingPosition: "right",
+//   },
+// };
+
+// export const DefaultOutlined: Story = {
+//   args: {
+//     variant: "btn-outlined",
+//   },
+// };
+
+// export const OutlinedDisabledLoading: Story = {
+//   args: {
+//     label: "Button",
+//     variant: "btn-outlined",
+//     disabled: true,
+//     loadingPosition: "left",
+//   },
+// };
+
+// export const OutlinedDisabled: Story = {
+//   args: {
+//     label: "Button",
+//     variant: "btn-outlined",
+//     disabled: true,
+//   },
+// };
+
+// export const PrimaryOutlined: Story = {
+//   args: {
+//     label: "Button",
+//     variant: "btn-outlined",
+//     color: "btn-primary",
+//   },
+// };
+
+// export const Danger: Story = {
+//   args: {
+//     variant: "btn-solid",
+//     color: "btn-danger",
+//   },
+// };
+
+// export const DangerOutlined: Story = {
+//   args: {
+//     label: "Button",
+//     variant: "btn-outlined",
+//     color: "btn-danger",
+//   },
+// };
