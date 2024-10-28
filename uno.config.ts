@@ -3,15 +3,37 @@ import transformerDirectives from "@unocss/transformer-directives";
 import transformerVariantGroup from "@unocss/transformer-variant-group";
 import { range } from "./src/lib/range";
 
+const gen = (configMap: { name: string; count: number }[]) => {
+  const colors = {};
+  configMap.forEach((config) => {
+    colors[config.name] = {};
+
+    range(config.count).forEach((i) => {
+      colors[config.name][i] = `var(--th-colors-${config.name}-${i})`;
+    });
+  });
+
+  return colors;
+};
+
 export default defineConfig({
   presets: [presetUno(), presetAttributify()],
   // @ts-ignore
   transformers: [transformerDirectives(), transformerVariantGroup()],
+  theme: {
+    colors: gen([
+      { name: "gray", count: 13 },
+      { name: "primary", count: 10 },
+      { name: "rarity", count: 5 },
+      { name: "rose", count: 10 },
+    ]),
+  },
   content: {
     pipeline: {
       include: [
         // the default
         /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
+        "src/**/*.ts",
         "src/**/*.stories.ts",
       ],
     },
@@ -27,9 +49,7 @@ export default defineConfig({
       }
     },
   ],
-  safelist: [
-    ...range(5).map(r => `text-genshin-rarity-${r}`),
-  ],
+  safelist: [...range(5).map(r => `text-genshin-rarity-${r}`)],
   extendTheme: (theme: any) => {
     return {
       ...theme,

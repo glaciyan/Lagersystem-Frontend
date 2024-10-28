@@ -1,0 +1,19 @@
+@import "_primary";
+@import "_gray";
+@import "_rose";
+@import "_rarity";
+
+@prefix: --th-colors;
+
+.generate-css-vars(@theme, @name) {
+    each(@theme, {
+        @{prefix}-@{name}-@{key}: @value;
+    });
+}
+
+:root {
+    .generate-css-vars(@primary, primary);
+    .generate-css-vars(@gray, gray);
+    .generate-css-vars(@rose, rose);
+    .generate-css-vars(@rarity, rarity);
+}
