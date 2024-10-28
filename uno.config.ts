@@ -1,12 +1,10 @@
 import { defineConfig, presetAttributify, presetUno } from "unocss";
 import transformerDirectives from "@unocss/transformer-directives";
 import transformerVariantGroup from "@unocss/transformer-variant-group";
-import { colors } from "./src/uno/colors";
-import ButtonPreset from "./src/components/GButton/ButtonPreset";
 import { range } from "./src/lib/range";
 
 export default defineConfig({
-  presets: [presetUno(), presetAttributify(), ButtonPreset()],
+  presets: [presetUno(), presetAttributify()],
   // @ts-ignore
   transformers: [transformerDirectives(), transformerVariantGroup()],
   content: {
@@ -14,14 +12,9 @@ export default defineConfig({
       include: [
         // the default
         /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
-        // include js/ts files
-        "src/**/*.{js,ts}",
         "src/**/*.stories.ts",
       ],
     },
-  },
-  theme: {
-    colors,
   },
   variants: [
     (matcher) => {
