@@ -9,9 +9,10 @@ export interface Props {
   disabled?: boolean;
   /** This determines the Position of the loading spinner animation. `center` will hide the `label`. Options: `left`, `center`, `right`, `null`. */
   loadingPosition?: ButtonLoadingPosition;
-  variant?: string;
-  theme?: string;
-  size?: string;
+  variant?: "solid";
+  theme?: "primary";
+  size?: "md";
+  rounding?: "full";
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -19,15 +20,17 @@ const props = withDefaults(defineProps<Props>(), {
   variant: "solid",
   theme: "primary",
   size: "md",
+  rounding: "full",
 });
 
-const theme = computed(() => {
-  return {
+const theme = computed(() => ([
+  `btn-round-${props.rounding}`,
+  {
     "btn-solid": props.variant === "solid",
     "btn-primary": props.theme === "primary",
     "btn-md": props.size === "md",
-  };
-});
+  },
+]));
 </script>
 
 <template>
@@ -50,7 +53,9 @@ const theme = computed(() => {
 
 // Defaults
 .btn {
-  @apply disabled:loading:cursor-wait disabled:cursor-no-drop flex rounded-md whitespace-nowrap items-center justify-center transition-colors;
+  @apply flex whitespace-nowrap items-center justify-center transition-colors;
+
+  --ls-cmp-button-rounding-size: 0.375rem;
 
   &:disabled {
     @apply cursor-no-drop;
@@ -62,6 +67,32 @@ const theme = computed(() => {
 
   &-md {
     @apply py-1 px-4 h-full;
+  }
+
+  &-round {
+    &-full {
+      border-radius: var(--ls-cmp-button-rounding-size);
+    }
+
+    &-right {
+      border-top-right-radius: var(--ls-cmp-button-rounding-size);
+      border-bottom-right-radius: $border-top-right-radius;
+    }
+
+    &-bottom {
+    border-bottom-right-radius: var(--ls-cmp-button-rounding-size);
+    border-bottom-left-radius: $border-bottom-right-radius;
+    }
+
+    &-left {
+      border-top-left-radius: var(--ls-cmp-button-rounding-size);
+      border-bottom-left-radius: $border-top-left-radius;
+    }
+
+    &-top {
+      border-top-right-radius: var(--ls-cmp-button-rounding-size);
+      border-top-left-radius: $border-top-right-radius;
+    }
   }
 }
 </style>
