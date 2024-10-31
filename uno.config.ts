@@ -3,30 +3,45 @@ import transformerDirectives from "@unocss/transformer-directives";
 import transformerVariantGroup from "@unocss/transformer-variant-group";
 import { range } from "./src/lib/range";
 
-const makeColors = (configMap: { name: string; count: number }[]) => {
+const makeColors = (colorConfigs: { name: string; count: number }[]) => {
   const colors = {};
-  configMap.forEach((config) => {
+  for (const config of colorConfigs) {
     colors[config.name] = {};
 
     range(config.count).forEach((i) => {
-      colors[config.name][i] = `var(--th-colors-${config.name}-${i})`;
+      colors[config.name][i] = `var(--ls-cl-colors-${config.name}-${i})`;
     });
-  });
+  }
+
+  return colors;
+};
+
+const makeTheme = (themeConfigs: string[], type: string) => {
+  const colors = {};
+  if (!colors["theme"]) {
+    colors["theme"] = {};
+  }
+
+  for (const config of themeConfigs) {
+    colors["theme"][config] = `var(--ls-${type}-${config})`;
+  }
 
   return colors;
 };
 
 export default defineConfig({
   presets: [presetUno(), presetAttributify()],
-  // @ts-ignore
   transformers: [transformerDirectives(), transformerVariantGroup()],
   theme: {
-    colors: makeColors([
-      { name: "gray", count: 13 },
-      { name: "primary", count: 10 },
-      { name: "rarity", count: 5 },
-      { name: "rose", count: 10 },
-    ]),
+    colors: {
+      ...makeColors([
+        { name: "gray", count: 13 },
+        { name: "primary", count: 10 },
+        { name: "rarity", count: 5 },
+        { name: "rose", count: 10 },
+      ]),
+      ...makeTheme(["primary", "on-primary"], "sys-color"),
+    },
   },
   content: {
     pipeline: {

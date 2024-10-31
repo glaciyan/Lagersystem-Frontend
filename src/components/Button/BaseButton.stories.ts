@@ -9,6 +9,7 @@ const meta = {
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
   args: {
+    label: "Button",
   },
 } satisfies Meta<typeof GButton>;
 
@@ -21,24 +22,20 @@ type Story = StoryObj<typeof meta>;
  */
 export const Default: Story = {
   args: {
-    label: "Button",
-    variant: "solid",
-    color: "primary",
-    size: "medium",
   },
 };
 
-// export const Disabled: Story = {
-//   args: {
-//     disabled: true,
-//   },
-// };
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+};
 
-// export const LoadingLeft: Story = {
-//   args: {
-//     loadingPosition: "left",
-//   },
-// };
+export const LoadingLeft: Story = {
+  args: {
+    loadingPosition: "left",
+  },
+};
 
 // export const LoadingCenter: Story = {
 //   args: {

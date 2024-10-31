@@ -3,11 +3,11 @@
 @import "_rose";
 @import "_rarity";
 
-@prefix: --th-colors;
+@prefix-colors: --ls-cl-colors;
 
 .generate-css-vars(@theme, @name) {
     each(@theme, {
-        @{prefix}-@{name}-@{key}: @value;
+        @{prefix-colors}-@{name}-@{key}: @value;
     });
 }
 

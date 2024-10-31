@@ -1,0 +1,22 @@
+@import "./colors/colors.less";
+
+@ls-theme: {
+    primary: @primary[6];
+    on-primary: @gray[1];
+    react-primary: @primary[5];
+    active-primary: @primary[7];
+}
+
+// Generate CSS Variables
+
+@prefix-theme: --ls-sys-color;
+
+.generate-css-vars(@theme) {
+    each(@theme, {
+        @{prefix-colors}-@{key}: @value;
+    });
+}
+
+:root {
+    .generate-css-vars(@ls-theme)
+}

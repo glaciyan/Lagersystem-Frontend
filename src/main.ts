@@ -1,6 +1,6 @@
 import "@unocss/reset/tailwind.css";
 import "virtual:uno.css";
-import "./styles/theme/default.less";
+import "./styles/theme.less";
 
 import { createApp } from "vue";
 import App from "./App.vue";
