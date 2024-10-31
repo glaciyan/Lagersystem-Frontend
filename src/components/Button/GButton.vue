@@ -7,18 +7,32 @@ export interface Props {
   label: string;
   /** Set this to `true` to disabled the button. */
   disabled?: boolean;
-  /** This determines the Position of the loading spinner animation. `center` will hide the `label`. Options: `left`, `center`, `right`. */
+  /** This determines the Position of the loading spinner animation. `center` will hide the `label`. Options: `left`, `center`, `right`, `null`. */
   loadingPosition?: ButtonLoadingPosition;
+  variant?: string;
+  theme?: string;
+  size?: string;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   loadingPosition: null,
+  variant: "solid",
+  theme: "primary",
+  size: "md",
+});
+
+const theme = computed(() => {
+  return {
+    "btn-solid": props.variant === "solid",
+    "btn-primary": props.theme === "primary",
+    "btn-md": props.size === "md",
+  };
 });
 </script>
 
 <template>
   <BaseButton
-    class="btn btn-primary"
+    :class="['btn', theme, $props.class]"
     :label="label"
     :disabled="disabled"
     :loadingPosition="loadingPosition"
@@ -27,10 +41,16 @@ withDefaults(defineProps<Props>(), {
 
 <style scoped lang="less">
 @import "~/styles/theme.less";
-@import "./primary.less";
 
+// Themes
+@import "./themes/primary.less";
+
+// Variants
+@import "./variants/solid.less";
+
+// Defaults
 .btn {
-  @apply disabled:loading:cursor-wait disabled:cursor-no-drop flex h-full py-1 px-4 rounded-md whitespace-nowrap items-center justify-center transition-colors;
+  @apply disabled:loading:cursor-wait disabled:cursor-no-drop flex rounded-md whitespace-nowrap items-center justify-center transition-colors;
 
   &:disabled {
     @apply cursor-no-drop;
@@ -38,6 +58,10 @@ withDefaults(defineProps<Props>(), {
     &[data-disabled='true'] {
       @apply cursor-wait;
     }
+  }
+
+  &-md {
+    @apply py-1 px-4 h-full;
   }
 }
 </style>

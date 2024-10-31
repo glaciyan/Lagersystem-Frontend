@@ -1,4 +1,4 @@
-import "@unocss/reset/tailwind.css";
+import "@unocss/reset/normalize.css";
 import "virtual:uno.css";
 import "./styles/theme.less";
 

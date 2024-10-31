@@ -9,14 +9,17 @@
 
 // Generate CSS Variables
 
-@prefix-theme: --ls-sys-color;
-
-.generate-css-vars(@theme) {
+.__theme_generate_css_vars(@theme, @g-prefix) {
     each(@theme, {
-        @{prefix-colors}-@{key}: @value;
+        --@{g-prefix}-@{key}: @value;
     });
 }
 
 :root {
-    .generate-css-vars(@ls-theme)
+    .__colors_generate_css_vars(@primary, primary);
+    .__colors_generate_css_vars(@gray, gray);
+    .__colors_generate_css_vars(@rose, rose);
+    .__colors_generate_css_vars(@rarity, rarity);
+
+    .__theme_generate_css_vars(@ls-theme, ls-sys-color)
 }

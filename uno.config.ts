@@ -9,7 +9,7 @@ const makeColors = (colorConfigs: { name: string; count: number }[]) => {
     colors[config.name] = {};
 
     range(config.count).forEach((i) => {
-      colors[config.name][i] = `var(--ls-cl-colors-${config.name}-${i})`;
+      colors[config.name][i] = `rgb(var(--ls-cl-colors-${config.name}-${i}))`;
     });
   }
 
@@ -17,16 +17,13 @@ const makeColors = (colorConfigs: { name: string; count: number }[]) => {
 };
 
 const makeTheme = (themeConfigs: string[], type: string) => {
-  const colors = {};
-  if (!colors["theme"]) {
-    colors["theme"] = {};
-  }
+  const themeColors = {};
 
   for (const config of themeConfigs) {
-    colors["theme"][config] = `var(--ls-${type}-${config})`;
+    themeColors[config] = `rgb(var(--ls-${type}-${config}))`;
   }
 
-  return colors;
+  return { theme: themeColors };
 };
 
 export default defineConfig({

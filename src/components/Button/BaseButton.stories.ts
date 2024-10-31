@@ -25,6 +25,13 @@ export const Default: Story = {
   },
 };
 
+export const OverrideDefaultTheme: Story = {
+  args: {
+    class: "w-20 h-20",
+    size: "none",
+  },
+};
+
 export const Disabled: Story = {
   args: {
     disabled: true,

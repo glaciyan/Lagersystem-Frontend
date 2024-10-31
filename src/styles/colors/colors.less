@@ -5,15 +5,8 @@
 
 @prefix-colors: --ls-cl-colors;
 
-.generate-css-vars(@theme, @name) {
+.__colors_generate_css_vars(@theme, @name) {
     each(@theme, {
         @{prefix-colors}-@{name}-@{key}: @value;
     });
-}
-
-:root {
-    .generate-css-vars(@primary, primary);
-    .generate-css-vars(@gray, gray);
-    .generate-css-vars(@rose, rose);
-    .generate-css-vars(@rarity, rarity);
 }

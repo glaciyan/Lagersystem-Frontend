@@ -3,11 +3,8 @@ import { ButtonLoadingPosition } from "./ButtonLoadingPosition";
 import GSpinner from "~/components/GSpinner/GSpinner.vue";
 
 export interface Props {
-  /** The text that will be displayed on the button. */
   label: string;
-  /** Set this to `true` to disabled the button. */
   disabled?: boolean;
-  /** This determines the Position of the loading spinner animation. `center` will hide the `label`. Options: `left`, `center`, `right`. */
   loadingPosition?: ButtonLoadingPosition;
 }
 
