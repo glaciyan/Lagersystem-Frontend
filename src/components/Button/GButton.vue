@@ -60,7 +60,7 @@ const theme = computed(() => ([
   &:disabled {
     @apply cursor-no-drop;
 
-    &[data-disabled='true'] {
+    &[data-loading='true'] {
       @apply cursor-wait;
     }
   }
