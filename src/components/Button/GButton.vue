@@ -66,6 +66,7 @@ const classes = computed(() => ({
   // Variants
   &--variant {
     @import "./variants/solid.less";
+    @import "./variants/outlined.less";
   }
 
   // Default styles
@@ -83,7 +84,10 @@ const classes = computed(() => ({
   // Sizes
   &--size {
     &-md {
-      @apply py-1 px-4;
+      padding-top: 0.07rem;
+      padding-bottom: $padding-top;
+      padding-left: 1rem;
+      padding-right: $padding-left;
     }
   }
 }

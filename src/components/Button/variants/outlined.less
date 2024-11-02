@@ -1,3 +1,20 @@
 &-outlined {
-    background-color: var(--);
+  background-color: var(--ls-cmp-button-transparens);
+  border: solid 1px var(--ls-cmp-button-outline-on-primary);
+  color: var(--ls-cmp-button-outline-on-primary);
+
+  &:hover {
+    border: solid 1px var(--ls-cmp-button-solid-hover);
+    color: var(--ls-cmp-button-solid-hover);
+  }
+
+  &:active {
+    border: solid 1px var(--ls-cmp-button-solid-active);
+    color: var(--ls-cmp-button-solid-active);
+  }
+
+  &:disabled {
+    border: solid 1px var(--ls-cmp-button-solid-active);
+    color: var(--ls-cmp-button-solid-active);
+  }
 }
