@@ -1,12 +1,20 @@
-.btn-solid {
-    background-color: var(--ls-cmp-button-primary);
+&-solid {
+  background-color: var(--ls-cmp-button-primary);
+  color: var(--ls-cmp-button-on-primary);
+  border: solid 2px var(--ls-cmp-button-active);
+//   box-shadow: 0px 2px 0px oklch(from $background-color l c h / 0.4);
+
+  &:hover {
+    background-color: var(--ls-cmp-button-hover);
+  }
+
+  &:active {
+    background-color: var(--ls-cmp-button-active);
+  }
+
+  &:disabled {
+    background-color: var(--ls-cmp-button-loading);
     color: var(--ls-cmp-button-on-primary);
-
-    &:hover {
-        background-color: var(--ls-cmp-button-hover);
-    }
-
-    &:active {
-        background-color: var(--ls-cmp-button-active);
-    }
+    // box-shadow: 0px 0px;
+  }
 }

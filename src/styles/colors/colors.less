@@ -2,11 +2,3 @@
 @import "_gray";
 @import "_rose";
 @import "_rarity";
-
-@prefix-colors: --ls-cl-colors;
-
-.__colors_generate_css_vars(@theme, @name) {
-    each(@theme, {
-        @{prefix-colors}-@{name}-@{key}: @value;
-    });
-}

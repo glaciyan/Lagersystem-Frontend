@@ -14,14 +14,14 @@ const props = withDefaults(defineProps<Props>(), {
 
 const isLoading = computed(() => !!props.loadingPosition);
 
-const isTransparent = computed(() => props.disabled || isLoading.value);
+const isDisabled = computed(() => props.disabled || isLoading.value);
 </script>
 
 <template>
   <button
     type="button"
-    :disabled="isTransparent"
-    :aria-disabled="isTransparent"
+    :disabled="isDisabled"
+    :aria-disabled="isDisabled"
     :data-loading="isLoading"
   >
     <GSpinner

@@ -1,6 +1,6 @@
 import "@unocss/reset/tailwind.css";
 import "virtual:uno.css";
-import "../src/styles/theme.less";
+import "~/styles/main.less";
 import type { Preview } from "@storybook/vue3";
 
 const preview: Preview = {

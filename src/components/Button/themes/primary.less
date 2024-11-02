@@ -1,8 +1,7 @@
-@import "~/styles/theme.less";
-
-.btn-primary {
+&-primary {
     --ls-cmp-button-primary: var(--ls-sys-color-primary);
     --ls-cmp-button-on-primary: var(--ls-sys-color-on-primary);
     --ls-cmp-button-hover: var(--ls-sys-color-react-primary);
-    --ls-cmp-button-active: var(--ls-sys-color-active-primary)
+    --ls-cmp-button-active: var(--ls-sys-color-active-primary);
+    --ls-cmp-button-loading: oklch(from var(--ls-cmp-button-primary) calc(l * 1.15) calc(c * 0.5) h);
 }

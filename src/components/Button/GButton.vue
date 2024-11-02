@@ -9,10 +9,16 @@ export interface Props {
   disabled?: boolean;
   /** This determines the Position of the loading spinner animation. `center` will hide the `label`. Options: `left`, `center`, `right`, `null`. */
   loadingPosition?: ButtonLoadingPosition;
+  /** The non-color styling of this button: Variants are: `solid` */
   variant?: "solid";
+  /** Sets the main color of this button. Colors are: `primary` */
   theme?: "primary";
+  /** Sizing of the button. Sizes are: `md` */
   size?: "md";
-  rounding?: "full";
+  /** Determines where the button should be rounded. Useful for button groups. Options: `full`, `top`, `bottom`, `left`, `right`, `none`. */
+  rounded?: "full";
+  /** Determins how large the rounding should be. Options: `default` */
+  roundedRadius?: "default";
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -20,43 +26,52 @@ const props = withDefaults(defineProps<Props>(), {
   variant: "solid",
   theme: "primary",
   size: "md",
-  rounding: "full",
+  rounded: "full",
+  roundedRadius: "default",
 });
 
-const theme = computed(() => ([
-  `btn-round-${props.rounding}`,
-  {
-    "btn-solid": props.variant === "solid",
-    "btn-primary": props.theme === "primary",
-    "btn-md": props.size === "md",
-  },
-]));
+const classes = computed(() => ({
+  btn: true,
+  [`btn--variant-${props.variant}`]: props.variant,
+  [`btn--theme-${props.theme}`]: props.theme,
+  [`btn--size-${props.size}`]: props.size,
+  [`btn--rounded-${props.rounded}`]: props.rounded,
+  [`btn--rounded-radius-${props.roundedRadius}`]: props.roundedRadius,
+}));
 </script>
 
 <template>
   <BaseButton
-    :class="['btn', theme, $props.class]"
+    :class="[classes, $attrs.class]"
     :label="label"
     :disabled="disabled"
     :loadingPosition="loadingPosition"
+    v-bind="$attrs"
   />
 </template>
 
 <style scoped lang="less">
-@import "~/styles/theme.less";
-
-// Themes
-@import "./themes/primary.less";
-
-// Variants
-@import "./variants/solid.less";
+@import "~/styles/main.less";
 
 // Defaults
 .btn {
+  // Button Rounding
+  @import "./rounded.less";
+
+  // Themes
+  &--theme {
+    @import "./themes/primary.less";
+  }
+
+  // Variants
+  &--variant {
+    @import "./variants/solid.less";
+  }
+
+  // Default styles
   @apply flex whitespace-nowrap items-center justify-center transition-colors;
 
-  --ls-cmp-button-rounding-size: 0.375rem;
-
+  // State based cursor
   &:disabled {
     @apply cursor-no-drop;
 
@@ -65,33 +80,10 @@ const theme = computed(() => ([
     }
   }
 
-  &-md {
-    @apply py-1 px-4 h-full;
-  }
-
-  &-round {
-    &-full {
-      border-radius: var(--ls-cmp-button-rounding-size);
-    }
-
-    &-right {
-      border-top-right-radius: var(--ls-cmp-button-rounding-size);
-      border-bottom-right-radius: $border-top-right-radius;
-    }
-
-    &-bottom {
-    border-bottom-right-radius: var(--ls-cmp-button-rounding-size);
-    border-bottom-left-radius: $border-bottom-right-radius;
-    }
-
-    &-left {
-      border-top-left-radius: var(--ls-cmp-button-rounding-size);
-      border-bottom-left-radius: $border-top-left-radius;
-    }
-
-    &-top {
-      border-top-right-radius: var(--ls-cmp-button-rounding-size);
-      border-top-left-radius: $border-top-right-radius;
+  // Sizes
+  &--size {
+    &-md {
+      @apply py-1 px-4;
     }
   }
 }

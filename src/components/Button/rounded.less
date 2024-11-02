@@ -1,0 +1,33 @@
+@import "~/styles/border-radius.less";
+
+&--rounded {
+  &-radius {
+    &-default {
+      --ls-cmp-button-rounding-size: @border-radius[default];
+    }
+  }
+
+  &-full {
+    border-radius: var(--ls-cmp-button-rounding-size);
+  }
+
+  &-right {
+    border-top-right-radius: var(--ls-cmp-button-rounding-size);
+    border-bottom-right-radius: $border-top-right-radius;
+  }
+
+  &-bottom {
+    border-bottom-right-radius: var(--ls-cmp-button-rounding-size);
+    border-bottom-left-radius: $border-bottom-right-radius;
+  }
+
+  &-left {
+    border-top-left-radius: var(--ls-cmp-button-rounding-size);
+    border-bottom-left-radius: $border-top-left-radius;
+  }
+
+  &-top {
+    border-top-right-radius: var(--ls-cmp-button-rounding-size);
+    border-top-left-radius: $border-top-right-radius;
+  }
+}

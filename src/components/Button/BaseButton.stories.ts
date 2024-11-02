@@ -20,8 +20,15 @@ type Story = StoryObj<typeof meta>;
  * See https://storybook.js.org/docs/api/csf
  * to learn how to use render functions.
  */
+
+export const Solid: Story = {
+  args: {
+  },
+};
+
 export const Default: Story = {
   args: {
+    variant: "default",
   },
 };
 
@@ -32,6 +39,8 @@ export const OverrideDefaultTheme: Story = {
   },
 };
 
+/** #### Warning
+ * It is generally bad practice to have to disable a button. */
 export const Disabled: Story = {
   args: {
     disabled: true,

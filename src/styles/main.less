@@ -1,0 +1,14 @@
+@import "./generator.less";
+
+@import "./default-theme.less";
+@import "./colors/colors.less";
+@import "./border-radius.less";
+
+:root {
+    .__colors_generate_css_vars(@primary, primary);
+    .__colors_generate_css_vars(@gray, gray);
+    .__colors_generate_css_vars(@rose, rose);
+    .__colors_generate_css_vars(@rarity, rarity);
+
+    .__theme_generate_css_vars(@ls-sys, ls-sys-color)
+}
