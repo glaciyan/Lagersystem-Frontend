@@ -1,70 +1,71 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-
 import GButton from "./GButton.vue";
 
-const meta = {
+const meta: Meta<typeof GButton> = {
   title: "General/GButton",
   component: GButton,
-  tags: ["autodocs"],
   args: {
+    theme: "default", // Default theme
     label: "Button",
   },
-} satisfies Meta<typeof GButton>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof GButton>;
 
+// Define template for all variants
 export const Default: Story = {
-  args: {},
+  render: args => ({
+    components: { GButton },
+    setup() {
+      const variants = ["solid", "outlined", "filled", "ghost", "outlined-ghost", "link"];
+      const states = [
+        { label: "Default", props: {} },
+        { label: "Disabled", props: { disabled: true } },
+        { label: "Loading (Left)", props: { loadingPosition: "left" } },
+        { label: "Loading (Right)", props: { loadingPosition: "right" } },
+        { label: "Loading", props: { loadingPosition: "center" } },
+      ];
+
+      return { args, variants, states };
+    },
+    template: `
+      <div class="p-6 bg-gray-50">
+        <h3 class="text-lg font-semibold text-gray-700">Theme: {{ args.theme }}</h3>
+        <div class="overflow-x-auto mt-4 rounded-lg border border-gray-200 shadow-sm">
+          <table class="w-full text-base text-left text-gray-600">
+            <thead class="bg-gray-100 border-b border-gray-200">
+              <tr>
+                <th v-for="variant in variants" :key="variant" class="py-3 px-4 font-semibold text-gray-700 text-center">
+                  {{ variant }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="state in states" :key="state.label" class="odd:bg-white even:bg-gray-50">
+                <td v-for="variant in variants" :key="variant" class="py-3 px-4 text-center border-b border-gray-200">
+                  <GButton
+                    :theme="args.theme"
+                    :variant="variant"
+                    :label="state.label"
+                    :disabled="state.props.disabled"
+                    :loading-position="state.props.loadingPosition"
+                  >
+                    {{ state.label }}
+                  </GButton>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div> 
+    `,
+  }),
 };
 
-export const Outlined: Story = {
+export const Primary: Story = {
+  ...Default,
   args: {
-    variant: "outlined",
-  },
-};
-
-export const Filled: Story = {
-  args: {
-    variant: "filled",
-  },
-};
-
-export const Ghost: Story = {
-  args: {
-    variant: "ghost",
-  },
-};
-
-export const OutlinedGost: Story = {
-  args: {
-    variant: "outlined-ghost",
-  },
-};
-
-export const Link: Story = {
-  args: {
-    variant: "link",
-  },
-};
-
-/** #### Warning
- * It is generally bad practice to have to disable a button. */
-export const Disabled: Story = {
-  args: {
-    disabled: true,
-  },
-};
-
-export const LoadingLeft: Story = {
-  args: {
-    loadingPosition: "left",
-  },
-};
-
-export const OverrideDefaultTheme: Story = {
-  args: {
-    class: "w-20 h-20",
-    size: "none",
+    theme: "primary", // Can be controlled in Storybook to change theme
   },
 };

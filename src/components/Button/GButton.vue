@@ -89,8 +89,7 @@ const classes = computed(() => ({
   // Sizes
   &--size {
     &-md {
-      padding-top: 0.125rem;
-      padding-bottom: $padding-top;
+      @apply h-8;
       padding-left: 1rem;
       padding-right: $padding-left;
     }

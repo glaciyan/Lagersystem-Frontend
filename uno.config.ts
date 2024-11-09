@@ -71,11 +71,11 @@ export default defineConfig({
         "2xlp": "1570px",
       },
       fontSize: {
-        "sm": [12, 20],
-        "base": [14, 22],
-        "lg": [16, 24],
-        "xl": [20, 28],
-        "2xl": [24, 32],
+        "sm": ["12px", "20px"],
+        "base": ["14px", "22px"],
+        "lg": ["16px", "24px"],
+        "xl": ["20px", "28px"],
+        "2xl": ["24px", "32px"],
       },
     };
   },

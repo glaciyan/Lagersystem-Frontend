@@ -19,6 +19,7 @@ const isDisabled = computed(() => props.disabled || isLoading.value);
 
 <template>
   <button
+    class="relative"
     type="button"
     :disabled="isDisabled"
     :aria-disabled="isDisabled"
@@ -26,7 +27,7 @@ const isDisabled = computed(() => props.disabled || isLoading.value);
   >
     <GSpinner
       v-if="props.loadingPosition === 'left' || props.loadingPosition === 'center'"
-      class="mr-1.5"
+      :class="{'absolute': props.loadingPosition === 'center', 'mr-1.5': props.loadingPosition === 'left' }"
     />
     <span :class="{ 'invisible': isLoading && props.loadingPosition === 'center' }">
       {{ label }}
