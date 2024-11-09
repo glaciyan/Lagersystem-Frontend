@@ -1,6 +1,6 @@
 import "@unocss/reset/normalize.css";
 import "virtual:uno.css";
-import "./styles/theme.less";
+import "./styles/main.less";
 
 import { createApp } from "vue";
 import App from "./App.vue";

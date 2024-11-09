@@ -1,15 +1,17 @@
-&-outlined {
-  border: solid 1px var(--ls-cmp-button-outline-primary);
+&-outlined-ghost {
+  border: solid 1px var(--ls-cmp-button-outline-on-primary);
   color: var(--ls-cmp-button-outline-on-primary);
 
   &:hover {
-    border: solid 1px var(--ls-cmp-button-outline-primary-hover);
-    color: var(--ls-cmp-button-outline-on-primary-hover);
+    background-color: var(--ls-cmp-button-ghost-primary);
+    border: solid 1px var(--ls-cmp-button-solid-hover);
+    color: var(--ls-cmp-button-solid-hover);
   }
 
   &:active {
-    border: solid 1px var(--ls-cmp-button-outline-primary-active);
-    color: var(--ls-cmp-button-outline-on-primary-active);
+    background-color: var(--ls-cmp-button-active-ghost-primary);
+    border: solid 1px var(--ls-cmp-button-solid-active);
+    color: var(--ls-cmp-button-solid-active);
   }
 
   &:disabled {

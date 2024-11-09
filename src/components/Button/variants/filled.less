@@ -1,0 +1,22 @@
+&-filled {
+  background-color: var(--ls-cmp-button-ghost-primary);
+  color: var(--ls-cmp-button-on-ghost-primary);
+
+  &:hover {
+    background-color: var(--ls-cmp-button-react-ghost-primary);
+  }
+
+  &:active {
+    background-color: var(--ls-cmp-button-active-ghost-primary);
+  }
+
+  &:disabled {
+    background-color: var(--ls-cmp-button-disabled);
+    color: var(--ls-cmp-button-on-disabled);
+
+    &[data-loading="true"] {
+      background-color: var(--ls-cmp-button-ghost-primary);
+      color: var(--ls-cmp-button-on-ghost-primary);
+    }
+  }
+}

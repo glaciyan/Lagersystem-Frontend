@@ -9,22 +9,22 @@ export interface Props {
   disabled?: boolean;
   /** This determines the Position of the loading spinner animation. `center` will hide the `label`. Options: `left`, `center`, `right`, `null`. */
   loadingPosition?: ButtonLoadingPosition;
-  /** The non-color styling of this button: Variants are: `solid` */
-  variant?: "solid";
+  /** The non-color styling of this button: Variants are: `solid`, `outlined`, `filled`, `ghost`, `link`, `outlined-ghost` */
+  variant?: "solid" | "outlined" | "filled" | "ghost" | "link" | "outlined-ghost";
   /** Sets the main color of this button. Colors are: `primary` */
-  theme?: "primary";
-  /** Sizing of the button. Sizes are: `md` */
-  size?: "md";
+  theme?: "default" | "primary";
+  /** Sizing of the button. Use `none` for your own sizes. Sizes are: `none` | `md` */
+  size?: "none" | "md";
   /** Determines where the button should be rounded. Useful for button groups. Options: `full`, `top`, `bottom`, `left`, `right`, `none`. */
   rounded?: "full";
-  /** Determins how large the rounding should be. Options: `default` */
+  /** Determines how large the rounding should be. Options: `default` */
   roundedRadius?: "default";
 }
 
 const props = withDefaults(defineProps<Props>(), {
   loadingPosition: null,
   variant: "solid",
-  theme: "primary",
+  theme: "default",
   size: "md",
   rounded: "full",
   roundedRadius: "default",
@@ -60,6 +60,7 @@ const classes = computed(() => ({
 
   // Themes
   &--theme {
+    @import "./themes/default.less";
     @import "./themes/primary.less";
   }
 
@@ -67,6 +68,10 @@ const classes = computed(() => ({
   &--variant {
     @import "./variants/solid.less";
     @import "./variants/outlined.less";
+    @import "./variants/filled.less";
+    @import "./variants/ghost.less";
+    @import "./variants/link.less";
+    @import "./variants/outlined-ghost.less";
   }
 
   // Default styles
@@ -84,7 +89,7 @@ const classes = computed(() => ({
   // Sizes
   &--size {
     &-md {
-      padding-top: 0.07rem;
+      padding-top: 0.125rem;
       padding-bottom: $padding-top;
       padding-left: 1rem;
       padding-right: $padding-left;

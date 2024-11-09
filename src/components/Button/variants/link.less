@@ -1,0 +1,20 @@
+&-link {
+  // background-color: var(--ls-cmp-button-ghost-primary);
+  color: var(--ls-cmp-button-on-ghost-primary);
+
+  &:hover {
+    color: var(--ls-cmp-button-on-react-link-primary);
+  }
+
+  &:active {
+    color: var(--ls-cmp-button-on-active-link-primary);
+  }
+
+  &:disabled {
+    color: var(--ls-cmp-button-on-disabled);
+
+    &[data-loading="true"] {
+      color: var(--ls-cmp-button-on-ghost-primary);
+    }
+  }
+}

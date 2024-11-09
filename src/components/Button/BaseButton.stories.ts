@@ -14,21 +14,37 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Solid: Story = {
-  args: {
-  },
+export const Default: Story = {
+  args: {},
 };
 
-export const Default: Story = {
+export const Outlined: Story = {
   args: {
     variant: "outlined",
   },
 };
 
-export const OverrideDefaultTheme: Story = {
+export const Filled: Story = {
   args: {
-    class: "w-20 h-20",
-    size: "none",
+    variant: "filled",
+  },
+};
+
+export const Ghost: Story = {
+  args: {
+    variant: "ghost",
+  },
+};
+
+export const OutlinedGost: Story = {
+  args: {
+    variant: "outlined-ghost",
+  },
+};
+
+export const Link: Story = {
+  args: {
+    variant: "link",
   },
 };
 
@@ -46,60 +62,9 @@ export const LoadingLeft: Story = {
   },
 };
 
-// export const LoadingCenter: Story = {
-//   args: {
-//     loadingPosition: "center",
-//   },
-// };
-
-// export const LoadingRight: Story = {
-//   args: {
-//     loadingPosition: "right",
-//   },
-// };
-
-// export const DefaultOutlined: Story = {
-//   args: {
-//     variant: "btn-outlined",
-//   },
-// };
-
-// export const OutlinedDisabledLoading: Story = {
-//   args: {
-//     label: "Button",
-//     variant: "btn-outlined",
-//     disabled: true,
-//     loadingPosition: "left",
-//   },
-// };
-
-// export const OutlinedDisabled: Story = {
-//   args: {
-//     label: "Button",
-//     variant: "btn-outlined",
-//     disabled: true,
-//   },
-// };
-
-// export const PrimaryOutlined: Story = {
-//   args: {
-//     label: "Button",
-//     variant: "btn-outlined",
-//     color: "btn-primary",
-//   },
-// };
-
-// export const Danger: Story = {
-//   args: {
-//     variant: "btn-solid",
-//     color: "btn-danger",
-//   },
-// };
-
-// export const DangerOutlined: Story = {
-//   args: {
-//     label: "Button",
-//     variant: "btn-outlined",
-//     color: "btn-danger",
-//   },
-// };
+export const OverrideDefaultTheme: Story = {
+  args: {
+    class: "w-20 h-20",
+    size: "none",
+  },
+};
