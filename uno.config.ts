@@ -1,27 +1,54 @@
 import { defineConfig, presetAttributify, presetUno } from "unocss";
 import transformerDirectives from "@unocss/transformer-directives";
 import transformerVariantGroup from "@unocss/transformer-variant-group";
-import { colors } from "./src/uno/colors";
-import ButtonPreset from "./src/components/GButton/ButtonPreset";
 import { range } from "./src/lib/range";
 
+const makeColors = (colorConfigs: { name: string; count: number }[]) => {
+  const colors = {};
+  for (const config of colorConfigs) {
+    colors[config.name] = {};
+
+    range(config.count).forEach((i) => {
+      colors[config.name][i] = `rgb(var(--ls-cl-colors-${config.name}-${i}))`;
+    });
+  }
+
+  return colors;
+};
+
+const makeTheme = (themeConfigs: string[], type: string) => {
+  const themeColors = {};
+
+  for (const config of themeConfigs) {
+    themeColors[config] = `rgb(var(--ls-${type}-${config}))`;
+  }
+
+  return { theme: themeColors };
+};
+
 export default defineConfig({
-  presets: [presetUno(), presetAttributify(), ButtonPreset()],
-  // @ts-ignore
+  presets: [presetUno(), presetAttributify()],
   transformers: [transformerDirectives(), transformerVariantGroup()],
+  theme: {
+    colors: {
+      ...makeColors([
+        { name: "gray", count: 13 },
+        { name: "primary", count: 10 },
+        { name: "rarity", count: 5 },
+        { name: "rose", count: 10 },
+      ]),
+      ...makeTheme(["primary", "on-primary"], "sys-color"),
+    },
+  },
   content: {
     pipeline: {
       include: [
         // the default
         /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
-        // include js/ts files
-        "src/**/*.{js,ts}",
+        "src/**/*.ts",
         "src/**/*.stories.ts",
       ],
     },
-  },
-  theme: {
-    colors,
   },
   variants: [
     (matcher) => {
@@ -34,9 +61,7 @@ export default defineConfig({
       }
     },
   ],
-  safelist: [
-    ...range(5).map(r => `text-genshin-rarity-${r}`),
-  ],
+  safelist: [...range(5).map(r => `text-genshin-rarity-${r}`)],
   extendTheme: (theme: any) => {
     return {
       ...theme,
@@ -46,11 +71,11 @@ export default defineConfig({
         "2xlp": "1570px",
       },
       fontSize: {
-        "sm": [12, 20],
-        "base": [14, 22],
-        "lg": [16, 24],
-        "xl": [20, 28],
-        "2xl": [24, 32],
+        "sm": ["12px", "20px"],
+        "base": ["14px", "22px"],
+        "lg": ["16px", "24px"],
+        "xl": ["20px", "28px"],
+        "2xl": ["24px", "32px"],
       },
     };
   },

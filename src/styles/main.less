@@ -1,0 +1,18 @@
+@import "./generator.less";
+
+@import "./light-theme.less";
+@import "./colors/colors.less";
+@import "./border-radius.less";
+
+@import "~/assets/fonts/OpenSans.css";
+
+:root {
+    .__colors_generate_css_vars(@primary, primary);
+    .__colors_generate_css_vars(@gray, gray);
+    .__colors_generate_css_vars(@rose, rose);
+    .__colors_generate_css_vars(@rarity, rarity);
+
+    .__theme_generate_css_vars(@ls-sys, ls-sys-color);
+
+    font-family: 'Open Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}

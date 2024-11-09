@@ -1,0 +1,37 @@
+@import "./default-disabled.less";
+
+&-primary {
+    .default-disabled();
+    @primary: var(--ls-sys-color-primary);
+    @react-primary: var(--ls-sys-color-react-primary);
+    @active-primary: var(--ls-sys-color-active-primary);
+
+    // Solid Button
+    --ls-cmp-button-solid-primary: @primary;
+    --ls-cmp-button-solid-on-primary: var(--ls-sys-color-on-primary);
+    --ls-cmp-button-solid-hover: @react-primary;
+    --ls-cmp-button-solid-active: @active-primary;
+    --ls-cmp-button-solid-loading: oklch(from @primary calc(l * 0.8) c h / 0.4);
+
+    // Outlined Button
+    --ls-cmp-button-outline-primary: @primary;
+    --ls-cmp-button-outline-on-primary: @primary;
+    --ls-cmp-button-outline-primary-hover: @react-primary;
+    --ls-cmp-button-outline-on-primary-hover: @react-primary;
+    --ls-cmp-button-outline-primary-active: @active-primary;
+    --ls-cmp-button-outline-on-primary-active: @active-primary;
+
+    // Ghost Button
+    --ls-cmp-button-ghost-primary: oklch(from @primary l c h / 0.1);
+    --ls-cmp-button-on-ghost-primary: @primary;
+
+    --ls-cmp-button-react-ghost-primary: oklch(from @primary l c h / 0.2);
+    --ls-cmp-button-on-react-ghost-primary: @react-primary;
+
+    --ls-cmp-button-active-ghost-primary: oklch(from @primary l c h / 0.3);
+    --ls-cmp-button-on-active-ghost-primary: @active-primary;
+
+    // Link Button
+    --ls-cmp-button-on-react-link-primary: @react-primary;
+    --ls-cmp-button-on-active-link-primary: @active-primary;
+}

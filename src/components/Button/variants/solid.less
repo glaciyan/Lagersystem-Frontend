@@ -1,0 +1,25 @@
+&-solid {
+  background-color: var(--ls-cmp-button-solid-primary);
+  color: var(--ls-cmp-button-solid-on-primary);
+  border: solid 1px var(--ls-cmp-button-solid-active);
+
+  &:hover {
+    background-color: var(--ls-cmp-button-solid-hover);
+  }
+
+  &:active {
+    background-color: var(--ls-cmp-button-solid-active);
+  }
+
+  &:disabled {
+    background-color: var(--ls-cmp-button-disabled);
+    color: var(--ls-cmp-button-on-disabled);
+    border: solid 1px var(--ls-cmp-button-disabled-border);
+
+    &[data-loading='true'] {
+      background-color: var(--ls-cmp-button-solid-loading);
+      color: var(--ls-cmp-button-solid-on-primary);
+      border: solid 1px var(--ls-cmp-button-solid-loading);
+    }
+  }
+}

@@ -1,0 +1,26 @@
+&-outlined {
+  border: solid 1px var(--ls-cmp-button-outline-primary);
+  color: var(--ls-cmp-button-outline-on-primary);
+
+  &:hover {
+    border: solid 1px var(--ls-cmp-button-outline-primary-hover);
+    color: var(--ls-cmp-button-outline-on-primary-hover);
+  }
+
+  &:active {
+    border: solid 1px var(--ls-cmp-button-outline-primary-active);
+    color: var(--ls-cmp-button-outline-on-primary-active);
+  }
+
+  &:disabled {
+    background-color: var(--ls-cmp-button-disabled);
+    color: var(--ls-cmp-button-on-disabled);
+    border: solid 1px var(--ls-cmp-button-disabled-border);
+
+    &[data-loading="true"] {
+      background-color: transparent;
+      color: var(--ls-cmp-button-outline-on-primary);
+      border: solid 1px var(--ls-cmp-button-outline-on-primary);
+    }
+  }
+}

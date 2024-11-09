@@ -1,0 +1,44 @@
+@import "./default-disabled.less";
+
+&-default {
+    .default-disabled();
+    @default: var(--ls-sys-color-inverted-surface);
+    @on-default: var(--ls-sys-color-on-inverted-surface);
+    --ls-cmp-button-default-react-default: oklch(from var(--ls-sys-color-inverted-surface) calc(l + 0.1) c h);
+    --ls-cmp-button-default-active-default: oklch(from var(--ls-sys-color-inverted-surface) l c h / 0.45);
+    @react-default: var(--ls-cmp-button-default-react-default);
+    @active-default: var(--ls-cmp-button-default-active-default);
+
+    @react-primary: var(--ls-sys-color-react-primary);
+    @active-primary: var(--ls-sys-color-active-primary);
+
+    // Solid Button
+    --ls-cmp-button-solid-primary: @default;
+    --ls-cmp-button-solid-on-primary: @on-default;
+    --ls-cmp-button-solid-hover: @react-default;
+    --ls-cmp-button-solid-active: @default;
+    --ls-cmp-button-solid-loading: @active-default;
+
+    // Outlined Button
+    --ls-cmp-button-outline-primary: oklch(from @default calc(l + 0.6) c h);
+    --ls-cmp-button-outline-on-primary: @default;
+
+    --ls-cmp-button-outline-primary-hover: @react-primary;
+    --ls-cmp-button-outline-on-primary-hover: @react-primary;
+    --ls-cmp-button-outline-primary-active: @active-primary;
+    --ls-cmp-button-outline-on-primary-active: @active-primary;
+
+    // Ghost Button
+    --ls-cmp-button-ghost-primary: oklch(from @default l c h / 0.1);
+    --ls-cmp-button-on-ghost-primary: @default;
+
+    --ls-cmp-button-react-ghost-primary: oklch(from @default l c h / 0.2);
+    --ls-cmp-button-on-react-ghost-primary: @default;
+
+    --ls-cmp-button-active-ghost-primary: oklch(from @default l c h / 0.3);
+    --ls-cmp-button-on-active-ghost-primary: @default;
+
+    // Link
+    --ls-cmp-button-on-react-link-primary: @react-primary;
+    --ls-cmp-button-on-active-link-primary: @active-primary;
+}
