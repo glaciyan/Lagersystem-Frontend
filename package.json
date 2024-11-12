@@ -43,7 +43,7 @@
     "@stylistic/eslint-plugin": "^2.10.1",
     "@types/node": "^22.9.0",
     "@typescript-eslint/eslint-plugin": "^8.13.0",
-    "@typescript-eslint/parser": "^8.13.0",
+    "@typescript-eslint/parser": "^8.14.0",
     "@unocss/eslint-config": "^0.64.0",
     "@unocss/transformer-directives": "^0.64.0",
     "@unocss/transformer-variant-group": "^0.64.0",
