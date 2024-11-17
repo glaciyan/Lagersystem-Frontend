@@ -4,7 +4,7 @@ import { useRoute } from "vue-router";
 import { useStorageStore } from "~/stores/storageStore.ts";
 
 const route = useRoute();
-const depotId = ref(route.params.id as string); 
+const depotId = ref(route.params.id as string); // ID aus der Route
 
 const storageStore = useStorageStore();
 
@@ -12,7 +12,8 @@ const depot = computed(() => storageStore.storages.find(item => item.id === depo
 
 onMounted(async () => {
   if (!depot.value) {
-    await storageStore.fetchStorages(); 
+    await storageStore.fetchStorages(); // Abruf aller Daten, falls noch nicht geladen
+  }
 });
 </script>
 

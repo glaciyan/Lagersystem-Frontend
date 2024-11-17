@@ -15,27 +15,24 @@ onMounted(() => {
 });
 
 const toggleCreateDepot = () => {
-  showCreateDepot.value = true; // Setzt die Sichtbarkeit auf true
+  showCreateDepot.value = true;
 };
 const closeCreateDepot = () => {
-  showCreateDepot.value = false; // Schließen
+  showCreateDepot.value = false;
 };
 watch(showCreateDepot, (newValue) => {
   if (!newValue) {
-    storageStore.refreshStorages(); // Aktualisiere, wenn das Modal geschlossen wird
-  }
+    storageStore.refreshStorages();
 });
 </script>
 
 <template>
   <PageContainer>
-    <!-- Button zum Öffnen -->
     <GButton
       label="Create Depot"
       @click="toggleCreateDepot"
     />
 
-    <!-- Bedingte Anzeige des CreateDepot-Elements -->
     <CreateDepot
       v-if="showCreateDepot"
       placeholder="Please enter your depot name"
@@ -43,17 +40,6 @@ watch(showCreateDepot, (newValue) => {
     />
   </PageContainer>
   <DepotsViewGrid :depots="storageStore.storages" />
-
-  <!-- <DepotsViewGrid :titles="storageStore.storages.map(storage => storage.name)" /> -->
-  <p v-if="storageStore.isLoading">
-    Lädt...
-  </p>
-  <p
-    v-if="storageStore.error"
-    class="error"
-  >
-    {{ storageStore.error }}
-  </p>
 </template>
 
 <style scoped>

@@ -1,3 +1,64 @@
+<script lang="ts" setup>
+import { ref, defineProps, defineEmits } from "vue";
+import DividerHo from "~/components/LSy/DividerHo.vue";
+
+const props = defineProps<{
+  placeholder: string;
+}>();
+
+const emit = defineEmits<{
+  (e: "close"): void;
+}>();
+const closeDepot = () => {
+  emit("close");
+};
+
+const placeholderValue = props.placeholder || "Geben Sie etwas ein";
+
+const inputValue = ref<string>("");
+const isLoading = ref<boolean>(false);
+const handleSubmit = async () => {
+  if (!inputValue.value) {
+    alert("Bitte geben Sie einen Namen ein.");
+    return;
+  }
+
+  isLoading.value = true;
+  try {
+    const response = await fetch("http://localhost:8080/storages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: inputValue.value,
+        description: "Default Description",
+        parentId: null,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Fehler beim Erstellen: ${response.statusText}`);
+    }
+
+    const result = await response.json();
+
+    console.log("Erfolgreich erstellt:", result);
+    alert("Storage erfolgreich erstellt!");
+    inputValue.value = "";
+    closeDepot();
+  }
+  catch (error: any) {
+    console.error("Fehler beim Erstellen des Storages:", error);
+    alert("Fehler beim Erstellen des Storages.");
+  }
+  finally {
+    isLoading.value = false; // Ladezustand deaktivieren
+  }
+};
+
+</script>
+
 <template>
   <div class="form-container">
     <DividerHo />
@@ -29,72 +90,6 @@
     <DividerHo />
   </div>
 </template>
-
-<script lang="ts" setup>
-// Props deklarieren
-import { ref, defineProps, defineEmits } from "vue";
-import DividerHo from "~/components/LSy/DividerHo.vue";
-
-// Props: Übergabe des Platzhalters
-const props = defineProps<{
-  placeholder: string; // Platzhalter-Prop für das Eingabefeld
-}>();
-
-const emit = defineEmits<{
-  (e: "close"): void; // Definiert das Event "close"
-}>();
-
-// Standardwert für den Platzhalter verwenden, falls kein Wert übergeben wird
-const placeholderValue = props.placeholder || "Geben Sie etwas ein";
-
-// Eingabewert und Ladezustand
-const inputValue = ref<string>("");
-const isLoading = ref<boolean>(false); // Ladezustand
-
-// Funktion für den Submit-Button
-const handleSubmit = async () => {
-  if (!inputValue.value) {
-    alert("Bitte geben Sie einen Namen ein.");
-    return;
-  }
-
-  isLoading.value = true; // Ladezustand aktivieren
-  try {
-    const response = await fetch("http://localhost:8080/storages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: inputValue.value,
-        description: "Default Description", // Beispiel für zusätzliche Felder
-        parentId: null, // Beispiel für ParentID
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Fehler beim Erstellen: ${response.statusText}`);
-    }
-
-    const result = await response.json();
-    console.log("Erfolgreich erstellt:", result);
-    alert("Storage erfolgreich erstellt!");
-    inputValue.value = ""; // Eingabe zurücksetzen
-  }
-  catch (error: any) {
-    console.error("Fehler beim Erstellen des Storages:", error);
-    alert("Fehler beim Erstellen des Storages.");
-  }
-  finally {
-    isLoading.value = false; // Ladezustand deaktivieren
-  }
-};
-
-// Funktion für den Schließen-Button
-const closeDepot = () => {
-  emit("close"); // Event auslösen, um den Bereich zu schließen
-};
-</script>
 
 <style scoped>
 .form-container {

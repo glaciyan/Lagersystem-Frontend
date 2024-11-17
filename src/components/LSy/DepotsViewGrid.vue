@@ -2,7 +2,6 @@
 import { defineProps, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStorageStore } from "~/stores/storageStore.ts";
-// import { defineStore } from "pinia";
 
 const props = defineProps<{
   depots: { id: string; name: string }[];
@@ -72,4 +71,5 @@ const deleteDepot = async (id: string) => {
 
 .delete-icon:hover {
   color: darkred;
+}
 </style>
