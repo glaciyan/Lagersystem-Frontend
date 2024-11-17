@@ -3,9 +3,9 @@ import { defineStore } from "pinia";
 
 export const useStorageStore = defineStore("storage", {
   state: () => ({
-    storages: [] as Array<{ id: string; name: string; description: string }>, // Liste der Storages
-    error: null as string | null, // Fehlernachricht
-    isLoading: false, // Ladezustand
+    storages: [] as Array<{ id: string; name: string; description: string }>,
+    error: null as string | null,
+    isLoading: false,
   }),
   actions: {
     async fetchStorages() {
@@ -52,10 +52,9 @@ export const useStorageStore = defineStore("storage", {
           throw new Error(`Fehler beim Löschen: ${response.statusText}`);
         }
 
-        // Entferne das Depot aus der lokalen Liste
         this.storages = this.storages.filter(storage => storage.id !== id);
         const result = await response.json();
-        console.log(result.message); // Optional: Erfolgsmeldung in der Konsole
+        console.log(result.message);
       }
       catch (error: any) {
         this.error = error.message || "Fehler beim Löschen des Depots.";

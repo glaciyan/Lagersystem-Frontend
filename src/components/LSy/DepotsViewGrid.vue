@@ -2,9 +2,8 @@
 import { defineProps, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStorageStore } from "~/stores/storageStore.ts";
-import { defineStore } from "pinia";
+// import { defineStore } from "pinia";
 
-// Props: Array von Depots
 const props = defineProps<{
   depots: { id: string; name: string }[];
 }>();
@@ -12,15 +11,12 @@ const props = defineProps<{
 const router = useRouter();
 const storageStore = useStorageStore();
 
-// Computed-Wert für die Liste
 const dataItems = computed(() => props.depots);
 
-// Navigiere zur Depot-Seite
 const navigateToDepot = (id: string) => {
   router.push(`/depot/${id}`);
 };
 
-// Lösche ein Depot
 const deleteDepot = async (id: string) => {
   const confirmDelete = confirm("Möchten Sie dieses Depot wirklich löschen?");
   if (confirmDelete) {
@@ -40,12 +36,9 @@ const deleteDepot = async (id: string) => {
           <div
             class="card-header"
           >
-            <!-- Name des Depots -->
-
             <span>
               {{ item.name }}
             </span>
-            <!-- Rotes X-Symbol -->
             <span
               class="delete-icon"
               @click.stop="deleteDepot(item.id)"
@@ -54,7 +47,7 @@ const deleteDepot = async (id: string) => {
             </span>
           </div>
           <div>
-            Card content Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic accusamus, adipisci nihil, natus quidem optio id, sit doloremque maiores expedita repellat perspiciatis. Laborum dolorem vero quis commodi. Soluta, deleniti sunt!
+            {{ item.description }}
           </div>
         </a-card>
       </a-list-item>
@@ -78,6 +71,5 @@ const deleteDepot = async (id: string) => {
 }
 
 .delete-icon:hover {
-  color: darkred; /* Optional: Hover-Effekt */
-}
+  color: darkred;
 </style>
