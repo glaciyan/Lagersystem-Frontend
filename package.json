@@ -24,7 +24,7 @@
     "@vueuse/core": "^11.2.0",
     "@vueuse/integrations": "^11.2.0",
     "ant-design-vue": "^4.2.6",
-    "dexie": "^4.0.9",
+    "dexie": "^4.0.10",
     "focus-trap": "^7.6.1",
     "fuse.js": "^7.0.0",
     "pinia": "^2.2.6",
