@@ -42,7 +42,7 @@
     "@storybook/vue3": "^8.4.4",
     "@storybook/vue3-vite": "^8.4.4",
     "@stylistic/eslint-plugin": "^2.11.0",
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.9.3",
     "@typescript-eslint/eslint-plugin": "^8.15.0",
     "@typescript-eslint/parser": "^8.15.0",
     "@unocss/eslint-config": "^0.64.1",
