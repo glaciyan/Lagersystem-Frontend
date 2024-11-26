@@ -1,4 +1,5 @@
 import Index from "./pages/Index.vue";
+import TestPage from "./pages/TestPage.vue";
 
 import title from "./title";
 import { createRouter, createWebHistory } from "vue-router";
@@ -18,6 +19,13 @@ const routes = [
     component: () => import("./pages/NotFound.vue"),
     meta: {
       title: title("Not Found"),
+    },
+  },
+  {
+    path: "/test",
+    component: TestPage,
+    meta: {
+      title: title("Test"),
     },
   },
 ];
