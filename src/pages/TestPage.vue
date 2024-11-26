@@ -11,11 +11,11 @@ import LinkedForm from "~/components/Form/LinkedForm.vue";
   >
     <LinkedForm>
       <FormInput
-        name="title"
+        for="title"
         type="text"
       />
       <FormInput
-        name="num"
+        for="num"
         type="number"
       />
       <button type="submit">
