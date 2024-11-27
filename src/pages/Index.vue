@@ -4,7 +4,7 @@ import GButton from "~/components/Button/BaseButton.vue";
 import CreateDepot from "~/components/LSy/CreateDepot.vue";
 import DepotsViewGrid from "~/components/LSy/DepotsViewGrid.vue";
 
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useStorageStore } from "~/stores/storageStore.ts";
 
 const showCreateDepot = ref(false);
@@ -23,7 +23,9 @@ const closeCreateDepot = () => {
 watch(showCreateDepot, (newValue) => {
   if (!newValue) {
     storageStore.refreshStorages();
+  }
 });
+
 </script>
 
 <template>
