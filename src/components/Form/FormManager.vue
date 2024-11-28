@@ -28,8 +28,8 @@ const validationHandler = () => {
     // const errors: any = {};
     Object.keys(props.initialValues).forEach(k => errors.value[k] = "");
     props.validation(values.value, errors.value);
-    for (const value of Object.values(errors)) {
-      if (value) {
+    for (const obj of Object.values(errors.value)) {
+      if (obj) {
         // do not emit submit when there are errors present
         return;
       }

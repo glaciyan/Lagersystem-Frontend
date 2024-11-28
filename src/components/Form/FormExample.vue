@@ -7,6 +7,8 @@ import LinkedForm from "~/components/Form/LinkedForm.vue";
 // Initialize form data
 const init = { title: "", num: 0, picked: "" };
 const inputForm = form<typeof init>();
+
+const submitted = ref("");
 </script>
 
 <template>
@@ -19,7 +21,7 @@ const inputForm = form<typeof init>();
           errors.title = 'Title is too short!';
         }
       }"
-      @submit="(values) => console.log(values)"
+      @submit="(values) => { console.log(values); submitted = JSON.stringify(values) }"
     >
       <div class="mb-4 text-gray-700">
         <strong>Current Title Value:</strong> {{ inputForm.values?.title }}
@@ -40,7 +42,6 @@ const inputForm = form<typeof init>();
         </div>
         <div>
           <label
-            for="num"
             class="mb-1 block text-sm text-gray-700 font-medium"
           >
             Number
@@ -56,24 +57,26 @@ const inputForm = form<typeof init>();
             Pick an option:
           </legend>
           <div class="flex items-center">
-            <FormInput
-              for="picked"
-              type="radio"
-              value="One"
-              name="group1"
-              class="mr-2"
-            />
-            <label class="text-gray-700">One</label>
+            <label class="text-gray-700">
+              <FormInput
+                for="picked"
+                type="radio"
+                value="One"
+                name="group1"
+                class="mr-2"
+              />
+              One</label>
           </div>
           <div class="flex items-center">
-            <FormInput
-              for="picked"
-              type="radio"
-              value="Two"
-              name="group1"
-              class="mr-2"
-            />
-            <label class="text-gray-700">Two</label>
+            <label class="text-gray-700">
+              <FormInput
+                for="picked"
+                type="radio"
+                value="Two"
+                name="group1"
+                class="mr-2"
+              />
+              Two</label>
           </div>
         </fieldset>
         <button
@@ -88,6 +91,9 @@ const inputForm = form<typeof init>();
         class="mt-4 text-sm text-red-600"
       >
         {{ inputForm.errors.title }}
+      </div>
+      <div class="mt-4 text-sm text-gray-700">
+        Sent data: {{ submitted.length > 0 ? submitted : "Nothing." }}
       </div>
     </FormManager>
   </div>
