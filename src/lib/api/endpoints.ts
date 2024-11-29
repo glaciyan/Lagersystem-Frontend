@@ -1,4 +1,4 @@
-import { glue } from "./core";
+import { endpoint } from "./core";
 import { z } from "zod";
 
 const Storage = z.object({
@@ -10,5 +10,5 @@ const Storage = z.object({
 });
 
 export const endpoints = {
-  getStorages: glue("GET", "/storages").withQuery<{ depth: number }>().returns(Storage),
+  getStorages: endpoint("GET", "/storages").withQuery<{ depth: number }>().returns(Storage),
 };

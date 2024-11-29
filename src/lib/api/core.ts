@@ -39,7 +39,7 @@ export interface BasicEndpoint<
   applyBody?: (body?: B) => void;
 }
 
-export function glue(method: Methods, base: string): BasicEndpoint {
+export function endpoint(method: Methods, base: string): BasicEndpoint {
   return {
     method,
     base,
