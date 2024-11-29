@@ -14,7 +14,6 @@ export interface Body {
 
 export type Methods = "GET" | "POST" | "PUT" | "DELETE";
 
-// The BasicEndpoint interface with improved generics
 export interface BasicEndpoint<
   Q extends QueryMap = {},
   P extends Params = {},
@@ -30,19 +29,16 @@ export interface BasicEndpoint<
    */
   schema?: Zod;
 
-  // Add query, params, or body to the endpoint
   withQuery: <QNew extends QueryMap>() => BasicEndpoint<QNew, P, B, Ret, Zod>;
   withParams: <PNew extends Params>() => BasicEndpoint<Q, PNew, B, Ret, Zod>;
   withBody: <BNew extends Body>() => BasicEndpoint<Q, P, BNew, Ret, Zod>;
   returns: <Z>(schema: ZodSchema<Z>) => BasicEndpoint<Q, P, B, z.infer<typeof schema>, typeof schema>;
 
-  // Applied values
   applyQuery?: (query?: Q) => void;
   applyParams?: (params?: P) => void;
   applyBody?: (body?: B) => void;
 }
 
-// Implementation of the BasicEndpoint
 export function glue(method: Methods, base: string): BasicEndpoint {
   return {
     method,
