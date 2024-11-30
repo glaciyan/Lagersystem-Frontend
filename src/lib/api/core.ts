@@ -1,27 +1,24 @@
 import { z, ZodSchema, ZodTypeAny } from "zod";
+import { ErrorSchema } from "./types";
 
-export interface QueryMap {
-  [key: string]: string | number | boolean | undefined;
-}
+export const BASE_URL = import.meta.env.API_ENDPOINT_URL;
 
-export interface Params {
-  [key: string]: string | number | undefined;
-}
-
-export interface Body {
-  [key: string]: any;
-}
+export type Query = Record<string, string | number | boolean>;
+export type Params = Record<string, string | number>;
+export type Body = Record<string, any>;
 
 export type Methods = "GET" | "POST" | "PUT" | "DELETE";
+export type Path<P extends Params> = string | ((p: P) => string);
 
 export interface BasicEndpoint<
-  Q extends QueryMap = {},
-  P extends Params = {},
-  B extends Body = {},
-  Ret = {},
+  Q extends Query,
+  P extends Params,
+  B extends Body,
+  Ret,
   Zod extends ZodSchema = ZodTypeAny,
 > {
   method: Methods;
+  path: Path<P>;
   base: string;
 
   /**
@@ -29,45 +26,48 @@ export interface BasicEndpoint<
    */
   schema?: Zod;
 
-  withQuery: <QNew extends QueryMap>() => BasicEndpoint<QNew, P, B, Ret, Zod>;
-  withParams: <PNew extends Params>() => BasicEndpoint<Q, PNew, B, Ret, Zod>;
+  withQuery: <QNew extends Query>() => BasicEndpoint<QNew, P, B, Ret, Zod>;
+  // withParams: <PNew extends Params>() => BasicEndpoint<Q, PNew, B, Ret, Zod>;
   withBody: <BNew extends Body>() => BasicEndpoint<Q, P, BNew, Ret, Zod>;
   returns: <Z>(schema: ZodSchema<Z>) => BasicEndpoint<Q, P, B, z.infer<typeof schema>, typeof schema>;
 
-  applyQuery?: (query?: Q) => void;
-  applyParams?: (params?: P) => void;
-  applyBody?: (body?: B) => void;
+  applyQuery?: (query: Q, req: EndpointRequest) => void;
+  // applyParams?: (params: P, req: EndpointRequest) => void;
+  applyBody?: (body: B, req: EndpointRequest) => void;
 }
 
-export function endpoint(method: Methods, base: string): BasicEndpoint {
+const applyQuery = <Q extends Query>(query: Q, req: EndpointRequest) => {
+  for (const [name, value] of Object.entries(query)) {
+    req.url.searchParams.append(name, String(value));
+  }
+};
+
+export function endpoint<P extends Params = {}>(method: Methods, path: Path<P>): BasicEndpoint<{}, P, {}, {}> {
   return {
     method,
-    base,
+    path,
+    base: BASE_URL,
 
-    withQuery<QNew extends QueryMap>() {
-      const applyQuery = (query?: QNew) => {
-        console.log("Applied query:", query);
-      };
-
+    withQuery<QNew extends Query>() {
       return {
         ...this,
-        applyQuery,
+        applyQuery: applyQuery<QNew>,
       };
     },
 
-    withParams<PNew extends Params>() {
-      const applyParams = (params?: PNew) => {
-        console.log("Applied params:", params);
-      };
+    // withParams<PNew extends Params>() {
+    //   const applyParams = (params: PNew, req: EndpointRequest) => {
+    //     console.log("Applied params:", params);
+    //   };
 
-      return {
-        ...this,
-        applyParams,
-      };
-    },
+    //   return {
+    //     ...this,
+    //     applyParams,
+    //   };
+    // },
 
     withBody<BNew extends Body>() {
-      const applyBody = (body?: BNew) => {
+      const applyBody = (body: BNew) => {
         console.log("Applied body:", body);
       };
 
@@ -85,3 +85,67 @@ export function endpoint(method: Methods, base: string): BasicEndpoint {
     },
   };
 }
+
+interface EndpointRequest {
+  url: URL;
+  method: Methods;
+  body?: Body;
+}
+
+export type ApiError = z.infer<typeof ErrorSchema>;
+
+export interface ApiResult<T, E> {
+  data?: T;
+  error?: E;
+}
+
+type PickRequired<T> = {
+  [K in keyof T as undefined extends T[K] ? never : K]: T[K];
+};
+
+type InputFields = "query" | "params" | "body";
+
+// check if T has fields and if yes, make it required if it has any required fields inside of it
+type HasRequired<T, S extends InputFields> = keyof T extends never ? {} : (keyof PickRequired<T> extends never ? { [K in S]?: T } : { [K in S]: T });
+
+type Input<Q, P, B> = HasRequired<Q, "query"> & HasRequired<P, "params"> & HasRequired<B, "body">;
+
+export const api = {
+  exec: async <Q extends Query = {},
+    P extends Params = {},
+    B extends Body = {},
+    Ret = {},
+    Zod extends ZodSchema = ZodTypeAny>
+  (endpoint: BasicEndpoint<Q, P, B, Ret, Zod>, input: Input<Q, P, B>): Promise<ApiResult<Ret, ApiError>> => {
+    const request: EndpointRequest = { url: new URL(endpoint.base), method: endpoint.method };
+
+    if ("query" in input && endpoint.applyQuery && input.query) {
+      endpoint.applyQuery(input.query, request);
+    }
+
+    if (typeof (endpoint.path) === "string") {
+      request.url.pathname = endpoint.path;
+    }
+    else if ("params" in input && input.params) {
+      const dynamicPath = endpoint.path(input.params);
+      if (dynamicPath) {
+        request.url.pathname = dynamicPath;
+      }
+    }
+
+    if ("body" in input && endpoint.applyBody && input.body) {
+      endpoint.applyBody(input.body, request);
+    }
+
+    const result = await fetch(request.url, {
+      method: request.method,
+      body: JSON.stringify(request.body),
+    });
+
+    const content = await result.json();
+
+    const parsed = (await endpoint.schema?.parseAsync(content)) as Ret;
+
+    return { data: parsed };
+  },
+};
