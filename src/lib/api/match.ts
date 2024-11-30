@@ -1,9 +1,8 @@
 import { ApiResult } from "./core";
 
-
 export const match = <T, E>(
   result: ApiResult<T, E>,
-  handlers: { ok: (data: T) => void; error: (error: E) => void; }
+  handlers: { ok: (data: T) => void; error: (error: E) => void },
 ) => {
   if ("error" in result && result.error) {
     handlers.error(result.error);

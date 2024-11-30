@@ -71,7 +71,6 @@ function millify(value: number, options?: Partial<Options>): string {
     suffix = opts.lowercase ? unit.toLowerCase() : unit;
   }
   else {
-    // eslint-disable-next-line no-console
     console.warn(
       "[millify] `options.units` array is of insufficient length. Add another unit to silence this warning.",
     );
