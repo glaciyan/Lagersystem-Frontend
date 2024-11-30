@@ -1,7 +1,11 @@
 import { z, ZodSchema, ZodTypeAny } from "zod";
 import { ErrorSchema } from "./types";
 
-export const BASE_URL = import.meta.env.API_ENDPOINT_URL;
+export const BASE_URL = import.meta.env.VITE_API_ENDPOINT_URL;
+
+if (!BASE_URL) {
+  console.error("No valid API URL found");
+}
 
 export type Query = Record<string, string | number | boolean>;
 export type Params = Record<string, string | number>;
@@ -42,6 +46,10 @@ const applyQuery = <Q extends Query>(query: Q, req: EndpointRequest) => {
   }
 };
 
+const applyBody = <B extends Body>(body: B, req: EndpointRequest) => {
+  req.body = body;
+};
+
 export function endpoint<P extends Params = {}>(method: Methods, path: Path<P>): BasicEndpoint<{}, P, {}, {}> {
   return {
     method,
@@ -67,13 +75,9 @@ export function endpoint<P extends Params = {}>(method: Methods, path: Path<P>):
     // },
 
     withBody<BNew extends Body>() {
-      const applyBody = (body: BNew) => {
-        console.log("Applied body:", body);
-      };
-
       return {
         ...this,
-        applyBody,
+        applyBody: applyBody<BNew>,
       };
     },
 

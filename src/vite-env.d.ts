@@ -2,7 +2,7 @@
 /// <reference types="vite-svg-loader" />
 
 interface ImportMetaEnv {
-  readonly API_ENDPOINT_URL: string;
+  readonly VITE_API_ENDPOINT_URL: string;
 }
 
 interface ImportMeta {
