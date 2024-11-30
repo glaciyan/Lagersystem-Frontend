@@ -90,7 +90,7 @@ export function endpoint<P extends Params = {}>(method: Methods, path: Path<P>):
   };
 }
 
-interface EndpointRequest {
+export interface EndpointRequest {
   url: URL;
   method: Methods;
   body?: Body;
@@ -98,10 +98,7 @@ interface EndpointRequest {
 
 export type ApiError = z.infer<typeof ErrorSchema>;
 
-export interface ApiResult<T, E> {
-  data?: T;
-  error?: E;
-}
+export type ApiResult<T, E> = { data?: T } | { error?: E };
 
 type PickRequired<T> = {
   [K in keyof T as undefined extends T[K] ? never : K]: T[K];
@@ -112,44 +109,4 @@ type InputFields = "query" | "params" | "body";
 // check if T has fields and if yes, make it required if it has any required fields inside of it
 type HasRequired<T, S extends InputFields> = keyof T extends never ? {} : (keyof PickRequired<T> extends never ? { [K in S]?: T } : { [K in S]: T });
 
-type Input<Q, P, B> = HasRequired<Q, "query"> & HasRequired<P, "params"> & HasRequired<B, "body">;
-
-export const api = {
-  exec: async <Q extends Query = {},
-    P extends Params = {},
-    B extends Body = {},
-    Ret = {},
-    Zod extends ZodSchema = ZodTypeAny>
-  (endpoint: BasicEndpoint<Q, P, B, Ret, Zod>, input: Input<Q, P, B>): Promise<ApiResult<Ret, ApiError>> => {
-    const request: EndpointRequest = { url: new URL(endpoint.base), method: endpoint.method };
-
-    if ("query" in input && endpoint.applyQuery && input.query) {
-      endpoint.applyQuery(input.query, request);
-    }
-
-    if (typeof (endpoint.path) === "string") {
-      request.url.pathname = endpoint.path;
-    }
-    else if ("params" in input && input.params) {
-      const dynamicPath = endpoint.path(input.params);
-      if (dynamicPath) {
-        request.url.pathname = dynamicPath;
-      }
-    }
-
-    if ("body" in input && endpoint.applyBody && input.body) {
-      endpoint.applyBody(input.body, request);
-    }
-
-    const result = await fetch(request.url, {
-      method: request.method,
-      body: JSON.stringify(request.body),
-    });
-
-    const content = await result.json();
-
-    const parsed = (await endpoint.schema?.parseAsync(content)) as Ret;
-
-    return { data: parsed };
-  },
-};
+export type Input<Q, P, B> = HasRequired<Q, "query"> & HasRequired<P, "params"> & HasRequired<B, "body">;

@@ -5,13 +5,21 @@ import "./styles/main.less";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import { api } from "./lib/api/core";
 import { endpoints } from "./lib/api/endpoints";
+import { api } from "./lib/api/api";
+import { match } from "./lib/api/match";
 
 const app = createApp(App);
 
 app.use(router);
 app.mount("#app");
 
-const result = await api.exec(endpoints.getStorages, {});
-console.log(result.data?.data);
+const result = await api(endpoints.getStorages, {});
+match(result, {
+  ok: (data) => {
+    console.log(data);
+  },
+  error: (err) => {
+    console.log(err);
+  },
+});
