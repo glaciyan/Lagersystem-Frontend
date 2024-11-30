@@ -1,11 +1,11 @@
 import { ZodSchema, ZodTypeAny } from "zod";
 import { Query, Params, Body, BasicEndpoint, Input, ApiResult, ApiError, EndpointRequest } from "./core";
 
-export const api = async <Q extends Query = {},
+export async function api<Q extends Query = {},
   P extends Params = {},
   B extends Body = {},
   Ret = {},
-  Zod extends ZodSchema = ZodTypeAny>(endpoint: BasicEndpoint<Q, P, B, Ret, Zod>, input: Input<Q, P, B>): Promise<ApiResult<Ret, ApiError>> => {
+  Zod extends ZodSchema = ZodTypeAny>(endpoint: BasicEndpoint<Q, P, B, Ret, Zod>, input: Input<Q, P, B>): Promise<ApiResult<Ret, ApiError>> {
   const request: EndpointRequest = { url: new URL(endpoint.base), method: endpoint.method };
 
   if ("query" in input && endpoint.applyQuery && input.query) {
