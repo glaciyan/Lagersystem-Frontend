@@ -6,8 +6,7 @@
 version: 2
 updates:
   - package-ecosystem: "npm" # See documentation for possible values
-    open-pull-requests-limit: 3
-    update-types: version-update:semver-minor
+    open-pull-requests-limit: 1
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
