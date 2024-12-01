@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { endpoint } from "./core";
-import { Storage } from "./types.ts";
+import { endpoint } from "../endpoint.ts";
+import { Storage } from "../types.ts";
 
 export const endpoints = {
   getStorages: endpoint("GET", "/storages").withQuery<{ depth?: number }>().returns(z.array(Storage)),

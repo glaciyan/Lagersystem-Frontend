@@ -31,69 +31,28 @@ export interface BasicEndpoint<
   schema?: Zod;
 
   withQuery: <QNew extends Query>() => BasicEndpoint<QNew, P, B, Ret, Zod>;
-  // withParams: <PNew extends Params>() => BasicEndpoint<Q, PNew, B, Ret, Zod>;
   withBody: <BNew extends Body>() => BasicEndpoint<Q, P, BNew, Ret, Zod>;
   returns: <Z>(schema: ZodSchema<Z>) => BasicEndpoint<Q, P, B, z.infer<typeof schema>, typeof schema>;
 
   applyQuery?: (query: Q, req: EndpointRequest) => void;
-  // applyParams?: (params: P, req: EndpointRequest) => void;
   applyBody?: (body: B, req: EndpointRequest) => void;
 }
 
-const applyQuery = <Q extends Query>(query: Q, req: EndpointRequest) => {
+export const applyQuery = <Q extends Query>(query: Q, req: EndpointRequest) => {
   for (const [name, value] of Object.entries(query)) {
     req.url.searchParams.append(name, String(value));
   }
 };
 
-const applyBody = <B extends Body>(body: B, req: EndpointRequest) => {
+export const applyBody = <B extends Body>(body: B, req: EndpointRequest) => {
   req.body = body;
 };
-
-export function endpoint<P extends Params = {}>(method: Methods, path: Path<P>): BasicEndpoint<{}, P, {}, {}> {
-  return {
-    method,
-    path,
-    base: BASE_URL,
-
-    withQuery<QNew extends Query>() {
-      return {
-        ...this,
-        applyQuery: applyQuery<QNew>,
-      };
-    },
-
-    // withParams<PNew extends Params>() {
-    //   const applyParams = (params: PNew, req: EndpointRequest) => {
-    //     console.log("Applied params:", params);
-    //   };
-
-    //   return {
-    //     ...this,
-    //     applyParams,
-    //   };
-    // },
-
-    withBody<BNew extends Body>() {
-      return {
-        ...this,
-        applyBody: applyBody<BNew>,
-      };
-    },
-
-    returns<Z>(schema: ZodSchema<Z>) {
-      return {
-        ...this,
-        schema,
-      };
-    },
-  };
-}
 
 export interface EndpointRequest {
   url: URL;
   method: Methods;
   body?: Body;
+  extras?: RequestInit;
 }
 
 export type ApiError = z.infer<typeof ErrorResponse>;

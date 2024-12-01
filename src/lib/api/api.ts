@@ -1,13 +1,13 @@
 import { ZodSchema, ZodTypeAny } from "zod";
 import { Query, Params, Body, BasicEndpoint, Input, ApiResult, EndpointRequest } from "./core";
-import { Errors } from "./errors";
+import { Errors } from "./config/errors";
 import { ErrorResponse } from "./types";
 
 export async function api<Q extends Query = {},
   P extends Params = {},
   B extends Body = {},
   Ret = {},
-  Zod extends ZodSchema = ZodTypeAny>(endpoint: BasicEndpoint<Q, P, B, Ret, Zod>, input: Input<Q, P, B>): Promise<ApiResult<Ret>> {
+  Zod extends ZodSchema = ZodTypeAny>(endpoint: BasicEndpoint<Q, P, B, Ret, Zod>, input: Input<Q, P, B>, init?: RequestInit): Promise<ApiResult<Ret>> {
   const request: EndpointRequest = { url: new URL(endpoint.base), method: endpoint.method };
 
   if ("query" in input && endpoint.applyQuery && input.query) {
@@ -29,7 +29,9 @@ export async function api<Q extends Query = {},
   }
 
   try {
+    if (!init) init = {};
     const result = await fetch(request.url, {
+      ...init,
       method: request.method,
       body: JSON.stringify(request.body),
     });
