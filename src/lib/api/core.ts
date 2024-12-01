@@ -1,5 +1,5 @@
 import { z, ZodSchema, ZodTypeAny } from "zod";
-import { ErrorSchema } from "./types";
+import { ErrorResponse } from "./types";
 
 export const BASE_URL = import.meta.env.VITE_API_ENDPOINT_URL;
 
@@ -96,9 +96,11 @@ export interface EndpointRequest {
   body?: Body;
 }
 
-export type ApiError = z.infer<typeof ErrorSchema>;
+export type ApiError = z.infer<typeof ErrorResponse>;
 
-export type ApiResult<T, E> = { data?: T } | { error?: E };
+export type Result<T, E> = { data: T } | { error: E };
+
+export type ApiResult<T> = Result<T, ApiError>;
 
 type PickRequired<T> = {
   [K in keyof T as undefined extends T[K] ? never : K]: T[K];

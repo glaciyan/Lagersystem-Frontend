@@ -6,10 +6,7 @@ export const ErrorSchema = z.object({
   context: z.nullable(z.string()),
 });
 
-export const ApiResponse = <T extends z.ZodTypeAny>(data: T) => z.object({
-  message: z.string(),
-  data,
-});
+export const ErrorResponse = z.array(ErrorSchema);
 
 export const Storage = z.object({
   id: z.string(),
@@ -18,6 +15,3 @@ export const Storage = z.object({
   spaces: z.array(z.any()),
   subStorages: z.array(z.any()),
 });
-
-export const StoragesResponse = ApiResponse(z.array(Storage));
-export const StorageResponse = ApiResponse(Storage);

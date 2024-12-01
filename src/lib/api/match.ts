@@ -1,7 +1,7 @@
-import { ApiResult } from "./core";
+import { Result } from "./core";
 
 export const match = <T, E>(
-  result: ApiResult<T, E>,
+  result: Result<T, E>,
   handlers: { ok: (data: T) => void; error: (error: E) => void },
 ) => {
   if ("error" in result && result.error) {
@@ -11,6 +11,6 @@ export const match = <T, E>(
     handlers.ok(result.data);
   }
   else {
-    throw new Error("Invalid ApiResult: both data and error are undefined.");
+    throw new Error("Invalid Result: both data and error are undefined.");
   }
 };
