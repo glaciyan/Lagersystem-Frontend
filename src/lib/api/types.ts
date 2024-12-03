@@ -6,7 +6,7 @@ export const ErrorSchema = z.object({
   context: z.nullable(z.string()),
 });
 
-export const ErrorResponse = z.array(ErrorSchema);
+export const ErrorResponse = z.object({ errors: z.array(ErrorSchema) });
 
 export const Storage = z.object({
   id: z.string(),

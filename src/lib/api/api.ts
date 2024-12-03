@@ -38,9 +38,9 @@ export async function api<Q extends Query = {},
 
     try {
       if (result.ok) {
-        if ("schema" in endpoint && endpoint.schema) {
+        if ("returnSchema" in endpoint && endpoint.returnSchema) {
           const apiData = await result.json();
-          const apiDataParse = await endpoint.schema.safeParseAsync(apiData);
+          const apiDataParse = await endpoint.returnSchema.safeParseAsync(apiData);
           if (apiDataParse.success) {
             return {
               data: apiDataParse.data,
@@ -48,12 +48,12 @@ export async function api<Q extends Query = {},
           }
           else {
             return {
-              error: [Errors.FR_API_INVALID_FORMAT],
+              errors: [Errors.FR_API_INVALID_FORMAT],
             };
           }
         }
         else {
-        // no schema => no return from api
+          // no schema => no return from api
           return {
             data: {} as Ret,
           };
@@ -64,14 +64,12 @@ export async function api<Q extends Query = {},
         // see if api returned errors
         const apiErrorParse = await ErrorResponse.safeParseAsync(data);
         if (apiErrorParse.success) {
-          return {
-            error: apiErrorParse.data,
-          };
+          return apiErrorParse.data;
         }
         else {
         // maybe api returned data but gave non ok
-          if ("schema" in endpoint && endpoint.schema) {
-            const dataParse = await endpoint.schema.safeParseAsync(data);
+          if ("schema" in endpoint && endpoint.returnSchema) {
+            const dataParse = await endpoint.returnSchema.safeParseAsync(data);
             if (dataParse.success) {
               return {
                 data: dataParse.data,
@@ -79,7 +77,7 @@ export async function api<Q extends Query = {},
             }
           }
           return {
-            error: [Errors.FR_API_INVALID_FORMAT],
+            errors: [Errors.FR_API_INVALID_FORMAT],
           };
         }
       }
@@ -87,22 +85,22 @@ export async function api<Q extends Query = {},
     catch (error) {
       if (error instanceof DOMException) {
         return {
-          error: [Errors.FE_API_REQUEST_ABORT],
+          errors: [Errors.FE_API_REQUEST_ABORT],
         };
       }
       else if (error instanceof TypeError) {
         return {
-          error: [Errors.FE_API_REQUEST_TYPE_ERROR],
+          errors: [Errors.FE_API_REQUEST_TYPE_ERROR],
         };
       }
       else if (error instanceof SyntaxError) {
         return {
-          error: [Errors.FE_API_REQUEST_SYNTAX_ERROR],
+          errors: [Errors.FE_API_REQUEST_SYNTAX_ERROR],
         };
       }
       else {
         return {
-          error: [Errors.FR_API_UNKNOWN],
+          errors: [Errors.FR_API_UNKNOWN],
         };
       }
     }
@@ -110,17 +108,17 @@ export async function api<Q extends Query = {},
   catch (err) {
     if (err instanceof DOMException) {
       return {
-        error: [Errors.FR_API_FETCH_ENVIRONMENT_INVALID],
+        errors: [Errors.FR_API_FETCH_ENVIRONMENT_INVALID],
       };
     }
     else if (err instanceof TypeError) {
       return {
-        error: [Errors.FR_API_FETCH_FAILED],
+        errors: [Errors.FR_API_FETCH_FAILED],
       };
     }
     else {
       return {
-        error: [Errors.FR_API_UNKNOWN],
+        errors: [Errors.FR_API_UNKNOWN],
       };
     }
   }

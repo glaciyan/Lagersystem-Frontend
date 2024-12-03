@@ -1,5 +1,5 @@
 import { ZodSchema } from "zod";
-import { Params, Body, Methods, Path, BasicEndpoint, BASE_URL, Query, applyQuery, applyBody } from "./core";
+import { BASE_URL, BasicEndpoint, Body, Methods, Params, Path, Query, applyBody, applyQuery } from "./core";
 
 export function endpoint<P extends Params = {}>(method: Methods, path: Path<P>): BasicEndpoint<{}, P, {}, {}> {
   return {
@@ -24,7 +24,7 @@ export function endpoint<P extends Params = {}>(method: Methods, path: Path<P>):
     returns<Z>(schema: ZodSchema<Z>) {
       return {
         ...this,
-        schema,
+        returnSchema: schema,
       };
     },
   };

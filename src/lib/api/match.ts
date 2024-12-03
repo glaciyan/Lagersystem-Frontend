@@ -1,11 +1,11 @@
-import { Result } from "./core";
+import { ApiError, ApiResult } from "./core";
 
-export const match = <T, E>(
-  result: Result<T, E>,
-  handlers: { ok: (data: T) => void; error: (error: E) => void },
+export const match = <T>(
+  result: ApiResult<T>,
+  handlers: { ok: (data: T) => void; error: (error: ApiError[]) => void },
 ) => {
-  if ("error" in result && result.error) {
-    handlers.error(result.error);
+  if ("errors" in result && result.errors) {
+    handlers.error(result.errors);
   }
   else if ("data" in result && result.data) {
     handlers.ok(result.data);

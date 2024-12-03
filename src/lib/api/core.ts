@@ -1,5 +1,5 @@
 import { z, ZodSchema, ZodTypeAny } from "zod";
-import { ErrorResponse } from "./types";
+import { ErrorResponse, ErrorSchema } from "./types";
 
 export const BASE_URL = import.meta.env.VITE_API_ENDPOINT_URL;
 
@@ -19,7 +19,7 @@ export interface BasicEndpoint<
   P extends Params,
   B extends Body,
   Ret,
-  Zod extends ZodSchema = ZodTypeAny,
+  RetZod extends ZodSchema = ZodTypeAny,
 > {
   method: Methods;
   path: Path<P>;
@@ -28,10 +28,10 @@ export interface BasicEndpoint<
   /**
    * Schema will determine if the endpoint is going to return a value
    */
-  schema?: Zod;
+  returnSchema?: RetZod;
 
-  withQuery: <QNew extends Query>() => BasicEndpoint<QNew, P, B, Ret, Zod>;
-  withBody: <BNew extends Body>() => BasicEndpoint<Q, P, BNew, Ret, Zod>;
+  withQuery: <QNew extends Query>() => BasicEndpoint<QNew, P, B, Ret, RetZod>;
+  withBody: <BNew extends Body>() => BasicEndpoint<Q, P, BNew, Ret, RetZod>;
   returns: <Z>(schema: ZodSchema<Z>) => BasicEndpoint<Q, P, B, z.infer<typeof schema>, typeof schema>;
 
   applyQuery?: (query: Q, req: EndpointRequest) => void;
@@ -55,11 +55,12 @@ export interface EndpointRequest {
   extras?: RequestInit;
 }
 
-export type ApiError = z.infer<typeof ErrorResponse>;
+export type ApiError = z.infer<typeof ErrorSchema>;
+export type ApiErrors = z.infer<typeof ErrorResponse>;
 
-export type Result<T, E> = { data: T } | { error: E };
+export type ApiResult<T> = { data: T } | ApiErrors;
 
-export type ApiResult<T> = Result<T, ApiError>;
+// export type ApiResult<T> = Result<T, ApiError>;
 
 type PickRequired<T> = {
   [K in keyof T as undefined extends T[K] ? never : K]: T[K];
