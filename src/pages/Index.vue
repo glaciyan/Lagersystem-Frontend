@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import PageContainer from "~/components/PageContainer";
 import GButton from "~/components/Button/BaseButton.vue";
+import PageContainer from "~/components/PageContainer";
 </script>
 
 <template>

@@ -53,7 +53,6 @@ export default [
       "@typescript-eslint/ban-ts-comment": ["off"],
 
       // Custom rules
-      "no-console": "warn",
       "no-debugger": "error",
       "semi": "warn",
     },
