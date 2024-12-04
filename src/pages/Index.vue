@@ -25,7 +25,6 @@ watch(showCreateDepot, (newValue) => {
     storageStore.refreshStorages();
   }
 });
-
 </script>
 
 <template>
