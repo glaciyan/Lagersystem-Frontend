@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T extends {}">
-type Errors = Record<keyof T, string | undefined>;
+type Errors = Record<keyof T, { message: string; type: string }>;
 const model = defineModel<{ values: T; errors: Errors }>();
 
 const props = defineProps<{
