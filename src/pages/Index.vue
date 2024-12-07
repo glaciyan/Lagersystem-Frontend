@@ -4,6 +4,6 @@ import PageContainer from "~/components/PageContainer";
 
 <template>
   <PageContainer>
-    // Example Code
+    Hello world.
   </PageContainer>
 </template>
