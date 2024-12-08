@@ -1,60 +1,17 @@
 <script lang="ts" setup>
-import { ref, defineProps, defineEmits } from "vue";
 import DividerHo from "~/components/LSy/DividerHo.vue";
+import ApiForm from "~/components/Form/ApiForm.vue";
+import { endpoints } from "~/lib/api/config/endpoints";
+import FormInputTextArea from "~/components/Form/FormInputTextArea.vue";
+import FormInput from "~/components/Form/FormInput.vue";
+import { useIndexState } from "~/stores/IndexState.ts";
 
-const props = defineProps<{
-  placeholder: string;
-}>();
+const indexStore = useIndexState();
 
-const emit = defineEmits<{
-  (e: "close"): void;
-}>();
-const closeDepot = () => {
-  emit("close");
-};
-
-const placeholderValue = props.placeholder || "Geben Sie etwas ein";
-
-const inputValue = ref<string>("");
-const isLoading = ref<boolean>(false);
-const handleSubmit = async () => {
-  if (!inputValue.value) {
-    alert("Bitte geben Sie einen Namen ein.");
-    return;
-  }
-
-  isLoading.value = true;
-  try {
-    const response = await fetch("http://localhost:8080/storages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: inputValue.value,
-        description: "Default Description",
-        parentId: null,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Fehler beim Erstellen: ${response.statusText}`);
-    }
-
-    const result = await response.json();
-
-    console.log("Erfolgreich erstellt:", result);
-    alert("Storage erfolgreich erstellt!");
-    inputValue.value = "";
-    closeDepot();
-  }
-  catch (error: any) {
-    console.error("Fehler beim Erstellen des Storages:", error);
-    alert("Fehler beim Erstellen des Storages.");
-  }
-  finally {
-    isLoading.value = false; // Ladezustand deaktivieren
-  }
+// Funktion, um die Komponente zu aktualisieren
+const triggerUpdate = () => {
+  indexStore.triggerUpdate();
+  indexStore.toggleCreateDepot();
 };
 
 </script>
@@ -63,30 +20,35 @@ const handleSubmit = async () => {
   <div class="form-container">
     <DividerHo />
     <div class="header">
-      <!-- Schließen-Button -->
       <a-button
         type="text"
         class="close-button"
-        @click="closeDepot"
+        @click="indexStore.toggleCreateDepot"
       >
         ✕
       </a-button>
     </div>
-    <a-input-group compact>
-      <a-input
-        v-model:value="inputValue"
-        :placeholder="placeholderValue"
-        style="width: calc(100% - 100px)"
-      />
+    <ApiForm
+      :endpoint="endpoints.postStorage"
+      :initialState="{ name: '', description: '' }"
+      @success="(data) => {triggerUpdate(); console.log(data);}"
+      @failure="(err) => console.log(err)"
+    >
+      <a-divider>
+        Name des Depots:
+      </a-divider>
+      <FormInput for="name" />
+      <a-divider>
+        Description
+      </a-divider>
+      <FormInputTextArea for="description" />
       <a-button
+        htmlType="submit"
         type="primary"
-        :disabled="isLoading"
-        @click="handleSubmit"
       >
-        >
-        {{ isLoading ? "Loading..." : "Submit" }}
+        Submit
       </a-button>
-    </a-input-group>
+    </ApiForm>
     <DividerHo />
   </div>
 </template>

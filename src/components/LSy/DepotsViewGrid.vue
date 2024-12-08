@@ -1,14 +1,15 @@
 <script lang="ts" setup>
 import { defineProps, computed } from "vue";
 import { useRouter } from "vue-router";
-import { useStorageStore } from "~/stores/storageStore.ts";
-
+import { useIndexState } from "~/stores/IndexState.ts";
+import { useApi } from "~/lib/api/useApi";
+import { endpoints } from "~/lib/api/config/endpoints";
+const indexStore = useIndexState();
 const props = defineProps<{
-  depots: { id: string; name: string }[];
+  depots: { id: string; name: string; description: string; spaces: any[]; subStorages: any[] }[];
 }>();
 
 const router = useRouter();
-const storageStore = useStorageStore();
 
 const dataItems = computed(() => props.depots);
 
@@ -19,9 +20,21 @@ const navigateToDepot = (id: string) => {
 const deleteDepot = async (id: string) => {
   const confirmDelete = confirm("Möchten Sie dieses Depot wirklich löschen?");
   if (confirmDelete) {
-    await storageStore.deleteStorage(id);
+    try {
+      const response = await useApi(endpoints.deleteStorage, {
+        params: {
+          id,
+        },
+      });
+      console.log("Depot wurde gelöscht:", response);
+    }
+    catch (error) {
+      console.error("Fehler beim Löschen des Depots:", error);
+    }
   }
+  indexStore.triggerUpdate();
 };
+
 </script>
 <template>
   <a-list

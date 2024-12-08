@@ -1,33 +1,47 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { useStorageStore } from "~/stores/storageStore.ts";
+import { endpoints } from "~/lib/api/config/endpoints";
+import { useApi } from "~/lib/api/useApi";
 
 const route = useRoute();
 const depotId = ref(route.params.id as string); // ID aus der Route
 
-const storageStore = useStorageStore();
+const { data: storage, errors, loading, refetch } = useApi(endpoints.getStorage, {
+  params: {
+    id: depotId.value,
+  },
+});
 
-const depot = computed(() => storageStore.storages.find(item => item.id === depotId.value));
+watch(
+  () => route.params.id,
+  (newId) => {
+    depotId.value = newId; // Depot-ID aktualisieren
+    refetch(); // API erneut abrufen
+  },
+);
 
-onMounted(async () => {
-  if (!depot.value) {
-    await storageStore.fetchStorages(); // Abruf aller Daten, falls noch nicht geladen
-  }
+onMounted(() => {
+  console.log("Depot wird geladen...");
 });
 </script>
 
 <template>
   <div>
     <h1>Depot Details</h1>
-    <p v-if="depot">
-      <strong>Name:</strong> {{ depot.name }}
-    </p>
-    <p v-if="depot">
-      <strong>Beschreibung:</strong> {{ depot.description }}
-    </p>
-    <p v-else>
-      Lädt oder Depot nicht gefunden...
-    </p>
+    <div v-if="loading">
+      Lädt...
+    </div>
+    <div v-else-if="storage">
+      <p>
+        <strong>Name:</strong> {{ storage.name }}
+      </p>
+      <p>
+        <strong>Beschreibung:</strong> {{ storage.description }}
+      </p>
+    </div>
+    <div v-else>
+      <p>Depot nicht gefunden oder Fehler beim Laden der Daten...</p>
+    </div>
   </div>
 </template>
