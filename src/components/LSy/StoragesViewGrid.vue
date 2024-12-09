@@ -1,34 +1,26 @@
 <script lang="ts" setup>
-import { computed } from "vue";
+import { defineProps, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useIndexState } from "~/stores/IndexState.ts";
-
 const indexStore = useIndexState();
 
 const props = defineProps<{
-  depots: { id: string; name: string; description: string; spaces: any[]; subStorages: any[] }[];
+  storages: { id: string; name: string; description: string; spaces: any[]; subStorages: any[] }[];
 }>();
 
 const router = useRouter();
 
-// Computed-Eigenschaft direkt aus den Props
-const dataItems = computed(() => props.depots);
+const dataItems = computed(() => props.storages);
 
 const navigateToDepot = (id: string) => {
   router.push(`/depot/${id}`);
 };
 
 const handleDelete = async (id: string) => {
-  const confirmDelete = confirm("Möchten Sie dieses Depot wirklich löschen?");
-  if (confirmDelete) {
-    // Lösche den Eintrag direkt aus den Props (falls es vom Elternteil unterstützt wird)
-    props.depots.splice(props.depots.findIndex(depot => depot.id === id), 1);
-    // Optional: API-Aufruf zum Löschen
-    await indexStore.deleteStorage(id);
-  }
+  await indexStore.deleteStorage(id);
 };
-</script>
 
+</script>
 <template>
   <a-list
     :grid="{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }"
@@ -38,8 +30,12 @@ const handleDelete = async (id: string) => {
     <template #renderItem="{ item }">
       <a-list-item @click="navigateToDepot(item.id)">
         <a-card style="cursor: pointer;">
-          <div class="card-header">
-            <span>{{ item.name }}</span>
+          <div
+            class="card-header"
+          >
+            <span>
+              {{ item.name }}
+            </span>
             <span
               class="delete-icon"
               @click.stop="handleDelete(item.id)"
@@ -47,7 +43,9 @@ const handleDelete = async (id: string) => {
               ✕
             </span>
           </div>
-          <div>{{ item.description }}</div>
+          <div>
+            {{ item.description }}
+          </div>
         </a-card>
       </a-list-item>
     </template>
