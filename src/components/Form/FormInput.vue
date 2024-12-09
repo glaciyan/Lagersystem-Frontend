@@ -10,6 +10,6 @@ const values = inject("values") as Ref<any>;
   <Input
     v-model:value="values[props.for]"
     v-bind="$attrs"
-    placeholder="Please enter your depot name"
+    placeholder="Please enter your input"
   />
 </template>

@@ -10,6 +10,6 @@ const values = inject("values") as Ref<any>;
   <a-textarea
     v-model:value="values[props.for]"
     v-bind="$attrs"
-    placeholder="Please enter your depot description"
+    placeholder="Please enter your description"
   />
 </template>

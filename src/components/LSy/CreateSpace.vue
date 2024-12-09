@@ -9,7 +9,7 @@ const depotStore = useDepotState();
 
 // Define props
 const props = defineProps({
-  parentId: {
+  storageId: {
     type: String,
     required: true,
   },
@@ -22,8 +22,9 @@ const triggerUpdate = () => {
 
 const initialState = {
   name: "",
+  size: 0.1,
   description: "",
-  parentId: props.parentId, // message wird hier als parentID gesetzt
+  storageId: props.storageId, // message wird hier als parentID gesetzt
 };
 
 console.log("Initial State:", initialState);
@@ -36,19 +37,19 @@ console.log("Initial State:", initialState);
       <a-button
         type="text"
         class="close-button"
-        @click="depotStore.toggleCreateStorage"
+        @click="depotStore.toggleCreateSpace"
       >
         ✕
       </a-button>
     </div>
     <ApiForm
-      :endpoint="endpoints.postStorage"
+      :endpoint="endpoints.postSpace"
       :initialState="initialState"
       @success="(data) => {triggerUpdate(); console.log(data);}"
       @failure="(err) => console.log(err)"
     >
       <a-divider>
-        Name for the storage:
+        Name for the space:
       </a-divider>
       <FormInput for="name" />
       <a-divider>

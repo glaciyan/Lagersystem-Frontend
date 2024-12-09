@@ -1,5 +1,5 @@
 import Index from "./pages/Index.vue";
-import Depot from "./pages/Depot.vue"; // Importiere die Seite
+import Depot from "./pages/DepotDisplay.vue"; // Importiere die Seite
 
 import title from "./title";
 import { createRouter, createWebHistory } from "vue-router";
