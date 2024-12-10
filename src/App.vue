@@ -11,7 +11,3 @@ import TheHeader from "~/components/TheHeader.vue";
   </main>
   <TheFooter />
 </template>
-
-<style>
-/* @import url(./assets/fonts/OpenSans.css); */
-</style>
