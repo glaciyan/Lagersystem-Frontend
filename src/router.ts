@@ -1,15 +1,23 @@
 import Index from "./pages/Index.vue";
+import Depot from "./pages/DepotDisplay.vue"; // Importiere die Seite
 
 import title from "./title";
 import { createRouter, createWebHistory } from "vue-router";
 
-// Define all routes here
 const routes = [
   {
     path: "/",
     component: Index,
     meta: {
       title: title("Home"),
+    },
+  },
+  {
+    path: "/depot/:id",
+    name: "Depot",
+    component: Depot, // Depot-Seite
+    meta: {
+      title: title("Depot"),
     },
   },
   {
@@ -31,7 +39,6 @@ const router = createRouter({
 });
 
 router.afterEach((to) => {
-  // Take the optional title value from the route and set it as the page title
   if (to.meta.title) {
     document.title = to.meta.title as string;
   }
