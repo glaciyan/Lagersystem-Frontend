@@ -88,8 +88,8 @@ importers:
         specifier: ^0.64.1
         version: 0.64.1
       '@unocss/transformer-variant-group':
-        specifier: ^0.64.1
-        version: 0.64.1
+        specifier: ^0.65.1
+        version: 0.65.1
       '@vitejs/plugin-vue':
         specifier: ^5.2.1
         version: 5.2.1(vite@5.4.11(@types/node@22.10.1)(less@4.2.1)(sass-embedded@1.80.4))(vue@3.5.13(typescript@5.7.2))
@@ -1323,6 +1323,9 @@ packages:
 
   '@unocss/transformer-variant-group@0.64.1':
     resolution: {integrity: sha512-wQkD1x69YSiIXvSvNNTN6hTZXHVzbVY+xmfoXL3bi/1cDMzRmE9C2Gk/Rzm/BSQxsLusLfDDL0NuhxWoFmvWPA==}
+
+  '@unocss/transformer-variant-group@0.65.1':
+    resolution: {integrity: sha512-LdSPDVpVCrMfgTKtGyWz0KkBXiJqFO8FRhiL4/9Hyaf+ECoWQ7RODgO6dKWyFIZEBjkLFK2toeZZvM+KYQlBlw==}
 
   '@unocss/vite@0.64.1':
     resolution: {integrity: sha512-DIvl7Mofc5Q6kKElMRALbH33xBYb5w3Yf7TQ860lmi3DOwjEcg+OWE1HD+iDf7IxZeqPsdF17NvJJaSdmr0m5Q==}
@@ -4150,6 +4153,10 @@ snapshots:
   '@unocss/transformer-variant-group@0.64.1':
     dependencies:
       '@unocss/core': 0.64.1
+
+  '@unocss/transformer-variant-group@0.65.1':
+    dependencies:
+      '@unocss/core': 0.65.1
 
   '@unocss/vite@0.64.1(rollup@4.28.1)(vite@5.4.11(@types/node@22.10.1)(less@4.2.1)(sass-embedded@1.80.4))(vue@3.5.13(typescript@5.7.2))':
     dependencies:
