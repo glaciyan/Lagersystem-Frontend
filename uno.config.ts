@@ -37,13 +37,13 @@ export default defineConfig({
         "xlp": "1320px",
         "2xlp": "1570px",
       },
-      // fontSize: {
-      //   "sm": ["12px", "20px"],
-      //   "base": ["14px", "22px"],
-      //   "lg": ["16px", "24px"],
-      //   "xl": ["20px", "28px"],
-      //   "2xl": ["24px", "32px"],
-      // },
+      fontSize: {
+        "sm": ["12px", "20px"],
+        "base": ["14px", "22px"],
+        "lg": ["16px", "24px"],
+        "xl": ["20px", "28px"],
+        "2xl": ["24px", "32px"],
+      },
     };
   },
 });
