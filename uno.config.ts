@@ -3,10 +3,7 @@ import transformerDirectives from "@unocss/transformer-directives";
 import transformerVariantGroup from "@unocss/transformer-variant-group";
 
 export default defineConfig({
-  presets: [presetUno({
-    preflight: true,
-
-  }), presetAttributify()],
+  presets: [presetUno(), presetAttributify()],
   transformers: [transformerDirectives(), transformerVariantGroup()],
   content: {
     pipeline: {
