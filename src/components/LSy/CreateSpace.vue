@@ -7,13 +7,9 @@ import { useDepotState } from "~/stores/DepotState.ts";
 
 const depotStore = useDepotState();
 
-// Define props
-const props = defineProps({
-  storageId: {
-    type: String,
-    required: true,
-  },
-});
+const props = defineProps<{
+  storafeId: string; // Pflichtprop (weil kein `?` verwendet wird)
+}>();
 
 const triggerUpdate = () => {
   depotStore.triggerUpdate();

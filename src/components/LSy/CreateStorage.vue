@@ -8,12 +8,9 @@ import { useDepotState } from "~/stores/DepotState.ts";
 const depotStore = useDepotState();
 
 // Define props
-const props = defineProps({
-  parentId: {
-    type: String,
-    required: true,
-  },
-});
+const props = defineProps<{
+  parentId: string; // Pflichtprop (weil kein `?` verwendet wird)
+}>();
 
 const triggerUpdate = () => {
   depotStore.triggerUpdate();
