@@ -55,7 +55,7 @@ const onSubmit = (values: B) => {
     :initialValues="props.initialState"
     @submit="onSubmit"
   >
-    <LinkedForm>
+    <LinkedForm v-bind="$attrs">
       <slot />
     </LinkedForm>
   </FormManager>
