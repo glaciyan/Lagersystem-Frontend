@@ -22,7 +22,6 @@ export default defineConfig({
       dts: true,
     }),
     visualizer({
-      open: true,
       filename: "status.html",
     }),
   ],
