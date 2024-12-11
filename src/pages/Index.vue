@@ -11,7 +11,7 @@ import { useApi } from "~/lib/api/useApi";
 
 const indexStore = useIndexState();
 
-const reactiveStorages = computed(() => storages.value);
+const reactiveDepots = computed(() => depots.value);
 
 const { data: storages, errors, loading, refetch } = useApi(endpoints.getStorages, {
   query: {
@@ -45,7 +45,7 @@ watch(
     />
   </PageContainer>
   <DepotsViewGrid
-    :depots="reactiveStorages ?? []"
+      :depots="reactiveDepots ?? []"
     @success="(data) => console.log(data)"
     @failure="(err) => console.log(err)"
   />

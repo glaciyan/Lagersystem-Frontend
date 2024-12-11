@@ -32,7 +32,10 @@ console.log("Initial State:", initialState);
 </script>
 
 <template>
-  <div class="form-container">
+  <div
+    class="form-container"
+    style="padding-top: 0px"
+  >
     <div class="header">
       <a-button
         type="text"

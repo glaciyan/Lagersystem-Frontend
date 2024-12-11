@@ -5,19 +5,25 @@ import { endpoints } from "~/lib/api/config/endpoints";
 import FormInputTextArea from "~/components/Form/FormInputTextArea.vue";
 import FormInput from "~/components/Form/FormInput.vue";
 import { useIndexState } from "~/stores/IndexState.ts";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const indexStore = useIndexState();
 
 // Funktion, um die Komponente zu aktualisieren
 const triggerUpdate = () => {
-  indexStore.triggerUpdate();
+  router.go(0);
   indexStore.toggleCreateDepot();
 };
 
 </script>
 
 <template>
-  <div class="form-container">
+  <div
+    class="form-container"
+    style="padding: 0px"
+  >
     <DividerHo />
     <div class="header">
       <a-button

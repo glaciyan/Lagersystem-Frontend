@@ -14,7 +14,7 @@ export const endpoints = {
   postSpace: endpoint("POST", "/spaces")
     .withBody<{ name: string; size: number; description: string; storageId: string }>()
     .returns(z.object({
-      id: z.string(), // Rückgabeobjekt mit einer ID oder weiteren Feldern
+      id: z.string(),
       name: z.string(),
       size: z.number(),
       description: z.string(),

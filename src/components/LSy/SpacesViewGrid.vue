@@ -32,12 +32,12 @@ const handleDelete = async (id: string) => {
     <a-list
       :grid="{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }"
       :data-source="storages"
-      bordered
+      style="border: 3px solid #f0f0f0; border-radius: 8px;"
     >
       <template #renderItem="{ item }">
         <a-list-item>
           <a-card
-            style="cursor: pointer; border: 2px solid #ccc; border-radius: 8px; transition: transform 0.2s;"
+            style="margin-top: 10px; cursor: pointer; border: 2px solid #ccc; border-radius: 8px; transition: transform 0.2s;"
             hoverable
             @click="showDetails(item)"
           >
@@ -48,11 +48,13 @@ const handleDelete = async (id: string) => {
                 @click.stop="handleDelete(item.id)"
               >✕</span>
             </div>
-            <div>
-              <strong>Größe:</strong> {{ item.size }} m²
-            </div>
-            <div>
-              <strong>Produkte:</strong> {{ item.products.length }}
+            <div class="card-content">
+              <div>
+                <strong>Größe:</strong> {{ item.size }} m²
+              </div>
+              <div>
+                <strong>Produkte:</strong> {{ item.products.length }}
+              </div>
             </div>
           </a-card>
         </a-list-item>
@@ -86,7 +88,7 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -98,6 +100,9 @@ h2 {
 
 .delete-icon:hover {
   color: darkred;
+}
+.card-content {
+  font-size: 10px;
 }
 
 a-card:hover {

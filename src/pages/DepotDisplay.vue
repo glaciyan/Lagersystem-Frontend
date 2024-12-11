@@ -18,6 +18,7 @@ const depotId = ref(route.params.id as string); // ID aus der Route
 
 onMounted(() => {
   storageStore.showCreateStorage = false;
+  storageStore.showCreateSpace = false;
 });
 
 const { data: storage, errors, loading, refetch } = useApi(endpoints.getStorage, {
