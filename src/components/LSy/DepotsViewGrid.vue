@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import { useRouter } from "vue-router";
+import { z } from "zod";
+import { Storage } from "~/lib/api/types";
 import { useIndexState } from "~/stores/IndexState.ts";
 
 const indexStore = useIndexState();
 
 const props = defineProps<{
-  depots: { id: string; name: string; description: string; spaces: any[]; subStorages: any[] }[];
+  depots: z.infer<typeof Storage>[];
 }>();
 
 const router = useRouter();
