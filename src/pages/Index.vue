@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import LayoutVertical from "~/components/LayoutVertical.vue";
 import PageContainer from "~/components/PageContainer";
+import DepotsViewGrid from "~/components/LSy/DepotsViewGrid.vue";
 import { endpoints } from "~/lib/api/config/endpoints";
 import { Button } from "ant-design-vue";
 import { useApi } from "~/lib/api/useApi";
@@ -67,23 +68,21 @@ const { data, loading, errors, aborted, abort, refetch } = useApi(endpoints.getS
         Retry
       </Button>
       <div v-if="data?.length">
-        <div
+        <!-- <div
           v-for="storage in data"
           :key="storage.id"
         >
           {{ storage.name }} - {{ storage.id }}
-        </div>
+        </div> -->
+        <DepotsViewGrid
+          :depots="data ?? []"
+        />
       </div>
       <div v-else>
         No storage data available.
       </div>
     </LayoutVertical>
   </PageContainer>
-  <!-- <DepotsViewGrid
-    :depots="reactiveDepots ?? []"
-    @success="(data) => console.log(data)"
-    @failure="(err) => console.log(err)"
-  /> -->
 </template>
 
 <style scoped>
