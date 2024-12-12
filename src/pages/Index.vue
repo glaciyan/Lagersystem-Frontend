@@ -45,7 +45,7 @@ watch(
     />
   </PageContainer>
   <DepotsViewGrid
-      :depots="reactiveDepots ?? []"
+    :depots="reactiveDepots ?? []"
     @success="(data) => console.log(data)"
     @failure="(err) => console.log(err)"
   />

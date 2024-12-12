@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { r } from "node_modules/@storybook/vue3/dist/render-0377a2e9";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { useIndexState } from "~/stores/IndexState.ts";

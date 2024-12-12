@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { InputProps } from "ant-design-vue";
-import { Textarea } from "ant-design-vue";
 
 const props = defineProps<{ for: string } & InputProps>();
 const values = inject("values") as Ref<any>;
