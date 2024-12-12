@@ -1,5 +1,4 @@
 import Index from "./pages/Index.vue";
-import Depot from "./pages/DepotDisplay.vue"; // Importiere die Seite
 
 import title from "./title";
 import { createRouter, createWebHistory } from "vue-router";
@@ -14,8 +13,7 @@ const routes = [
   },
   {
     path: "/depot/:id",
-    name: "Depot",
-    component: Depot, // Depot-Seite
+    component: () => import("./pages/DepotDisplay.vue"), // Depot-Seite
     meta: {
       title: title("Depot"),
     },
