@@ -5,7 +5,7 @@ import SVGLoader from "vite-svg-loader";
 import AutoImport from "unplugin-auto-import/vite";
 import UnoCSS from "unocss/vite";
 
-// https://vitejs.dev/config/
+// https://vitejs.dev/config
 export default defineConfig({
   resolve: {
     alias: {
