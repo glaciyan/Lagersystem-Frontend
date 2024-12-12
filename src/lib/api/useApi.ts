@@ -13,9 +13,20 @@ export function useApi<Q extends Query = {},
   const errors = ref<ApiError[] | null>(null);
   const loading = ref(true);
 
-  api(endpoint, input, init).then((out) => {
+  const controller = new AbortController();
+
+  const doFetch = () => (api(endpoint, input, init, controller).then((out) => {
     result.value = out;
-  });
+  })).catch(() => console.error("Unexpected error from useApi"));
+
+  const abort = controller.abort;
+
+  doFetch();
+
+  const refetch = () => {
+    abort();
+    doFetch();
+  };
 
   watchEffect(() => {
     if (result.value) {
@@ -30,5 +41,5 @@ export function useApi<Q extends Query = {},
     }
   });
 
-  return { data, errors, loading };
+  return { data, errors, loading, abort, refetch };
 }
