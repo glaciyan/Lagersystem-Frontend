@@ -7,7 +7,7 @@ export async function api<Q extends Query = {},
   P extends Params = {},
   B extends Body = {},
   Ret = {},
-  Zod extends ZodSchema = ZodTypeAny>(endpoint: BasicEndpoint<Q, P, B, Ret, Zod>, input: Input<Q, P, B>, init?: RequestInit): Promise<ApiResult<Ret>> {
+  Zod extends ZodSchema = ZodTypeAny>(endpoint: BasicEndpoint<Q, P, B, Ret, Zod>, input: Input<Q, P, B>, init?: RequestInit, controller?: AbortController): Promise<ApiResult<Ret>> {
   const request: EndpointRequest = { url: new URL(endpoint.base), method: endpoint.method };
 
   if ("query" in input && endpoint.applyQuery && input.query) {
@@ -34,6 +34,7 @@ export async function api<Q extends Query = {},
       ...init,
       method: request.method,
       body: JSON.stringify(request.body),
+      signal: controller?.signal,
     });
 
     try {

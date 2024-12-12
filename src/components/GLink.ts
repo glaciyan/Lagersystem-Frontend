@@ -17,7 +17,7 @@ export default defineComponent({
   computed: {
     className() {
       let className = "block w-max hover:underline ";
-      className += this.gray ? "text-light-normal" : "text-blue-400";
+      className += this.gray ? "!text-light-7" : "text-blue-400";
       return className;
     },
   },

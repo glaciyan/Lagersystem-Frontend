@@ -12,23 +12,32 @@ export function useApi<Q extends Query = {},
   const data = ref<Ret | null>(null);
   const errors = ref<ApiError[] | null>(null);
   const loading = ref(true);
+  const aborted = ref(false);
 
-  api(endpoint, input, init).then((out) => {
-    result.value = out;
-  });
+  let controller = new AbortController();
 
-  const fetchData = async () => {
-    loading.value = true;
-    try {
-      const out = await api(endpoint, input, init);
-      result.value = out;
-    }
-    catch (error) {
-      console.error("API request failed", error);
-    }
+  const internalAbort = (setAbort: boolean = true) => {
+    controller.abort();
+    controller = new AbortController();
+    data.value = null;
+    errors.value = null;
+    aborted.value = setAbort;
   };
 
-  fetchData();
+  const abort = () => internalAbort();
+
+  const doFetch = () => {
+    aborted.value = false;
+    loading.value = true;
+    api(endpoint, input, init, controller).then((out) => {
+      result.value = out;
+    }).catch(() => console.error("Unexpected error from useApi"));
+  };
+
+  const refetch = () => {
+    internalAbort(false);
+    doFetch();
+  };
 
   watchEffect(() => {
     if (result.value) {
@@ -43,5 +52,7 @@ export function useApi<Q extends Query = {},
     }
   });
 
-  return { data, errors, loading, refetch: fetchData };
+  doFetch();
+
+  return { data, errors, loading, aborted, abort, refetch };
 }
