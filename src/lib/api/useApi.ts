@@ -17,19 +17,6 @@ export function useApi<Q extends Query = {},
     result.value = out;
   });
 
-  const fetchData = async () => {
-    loading.value = true;
-    try {
-      const out = await api(endpoint, input, init);
-      result.value = out;
-    }
-    catch (error) {
-      console.error("API request failed", error);
-    }
-  };
-
-  fetchData();
-
   watchEffect(() => {
     if (result.value) {
       loading.value = false;
@@ -43,5 +30,5 @@ export function useApi<Q extends Query = {},
     }
   });
 
-  return { data, errors, loading, refetch: fetchData };
+  return { data, errors, loading };
 }
