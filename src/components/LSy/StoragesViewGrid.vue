@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { Card, List, ListItem } from "ant-design-vue";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 const props = defineProps<{
@@ -22,14 +23,14 @@ const handleDelete = async (id: string) => {
   <div>
     <h2>Storages</h2>
 
-    <a-list
+    <List
       :grid="{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }"
       :data-source="dataItems"
       style="border: 3px solid #f0f0f0; border-radius: 8px;"
     >
       <template #renderItem="{ item }">
-        <a-list-item>
-          <a-card
+        <ListItem>
+          <Card
             style="margin-top: 10px; cursor: pointer; border: 2px solid #ccc; border-radius: 8px;"
             @click="navigateToDepot(item.id)"
           >
@@ -43,10 +44,10 @@ const handleDelete = async (id: string) => {
             <div class="card-content">
               <p>{{ item.description }}</p>
             </div>
-          </a-card>
-        </a-list-item>
+          </Card>
+        </ListItem>
       </template>
-    </a-list>
+    </List>
   </div>
 </template>
 

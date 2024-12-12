@@ -4,6 +4,7 @@ import { endpoints } from "~/lib/api/config/endpoints";
 import FormInputTextArea from "~/components/Form/FormInputTextArea.vue";
 import FormInput from "~/components/Form/FormInput.vue";
 import { useDepotState } from "~/stores/DepotState.ts";
+import { Button, Divider } from "ant-design-vue";
 
 const depotStore = useDepotState();
 
@@ -33,13 +34,13 @@ console.log("Initial State:", initialState);
     style="padding-top: 0px"
   >
     <div class="header">
-      <a-button
+      <Button
         type="text"
         class="close-button"
         @click="depotStore.toggleCreateStorage"
       >
         ✕
-      </a-button>
+      </Button>
     </div>
     <ApiForm
       :endpoint="endpoints.postStorage"
@@ -47,20 +48,20 @@ console.log("Initial State:", initialState);
       @success="(data) => {triggerUpdate(); console.log(data);}"
       @failure="(err) => console.log(err)"
     >
-      <a-divider>
+      <Divider>
         Name for the storage:
-      </a-divider>
+      </Divider>
       <FormInput for="name" />
-      <a-divider>
+      <Divider>
         Description
-      </a-divider>
+      </Divider>
       <FormInputTextArea for="description" />
-      <a-button
+      <Button
         htmlType="submit"
         type="primary"
       >
         Submit
-      </a-button>
+      </Button>
     </ApiForm>
   </div>
 </template>

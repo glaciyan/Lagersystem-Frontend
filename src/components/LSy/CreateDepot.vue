@@ -6,6 +6,7 @@ import FormInputTextArea from "~/components/Form/FormInputTextArea.vue";
 import FormInput from "~/components/Form/FormInput.vue";
 import { useIndexState } from "~/stores/IndexState.ts";
 import { useRouter } from "vue-router";
+import { Button, Divider } from "ant-design-vue";
 
 const router = useRouter();
 
@@ -26,13 +27,13 @@ const triggerUpdate = () => {
   >
     <DividerHo />
     <div class="header">
-      <a-button
+      <Button
         type="text"
         class="close-button"
         @click="indexStore.toggleCreateDepot"
       >
         ✕
-      </a-button>
+      </Button>
     </div>
     <ApiForm
       :endpoint="endpoints.postStorage"
@@ -40,20 +41,20 @@ const triggerUpdate = () => {
       @success="(data) => {triggerUpdate(); console.log(data);}"
       @failure="(err) => console.log(err)"
     >
-      <a-divider>
+      <Divider>
         Name des Depots:
-      </a-divider>
+      </Divider>
       <FormInput for="name" />
-      <a-divider>
+      <Divider>
         Description
-      </a-divider>
+      </Divider>
       <FormInputTextArea for="description" />
-      <a-button
+      <Button
         htmlType="submit"
         type="primary"
       >
         Submit
-      </a-button>
+      </Button>
     </ApiForm>
     <DividerHo />
   </div>

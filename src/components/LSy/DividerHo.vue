@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { Divider } from "ant-design-vue";
+</script>
+
 <template>
-  <a-divider style="height: 2px; background-color: #000000" />
+  <Divider style="height: 2px; background-color: #000000" />
 </template>

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { Card, List, ListItem, Modal } from "ant-design-vue";
 import { ref } from "vue";
 
 defineProps<{
@@ -26,14 +27,14 @@ const handleDelete = async (id: string) => {
   <div>
     <h2>Spaces</h2>
 
-    <a-list
+    <List
       :grid="{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }"
       :data-source="storages"
       style="border: 3px solid #f0f0f0; border-radius: 8px;"
     >
       <template #renderItem="{ item }">
-        <a-list-item>
-          <a-card
+        <ListItem>
+          <Card
             style="margin-top: 10px; cursor: pointer; border: 2px solid #ccc; border-radius: 8px; transition: transform 0.2s;"
             hoverable
             @click="showDetails(item)"
@@ -53,13 +54,13 @@ const handleDelete = async (id: string) => {
                 <strong>Produkte:</strong> {{ item.products.length }}
               </div>
             </div>
-          </a-card>
-        </a-list-item>
+          </Card>
+        </ListItem>
       </template>
-    </a-list>
+    </List>
 
     <!-- Modal für Details -->
-    <a-modal
+    <Modal
       v-model:visible="isModalVisible"
       title="Space Details"
       :footer="null"
@@ -69,7 +70,7 @@ const handleDelete = async (id: string) => {
       <p><strong>Beschreibung:</strong> {{ selectedSpace?.description }}</p>
       <p><strong>Produkte:</strong> {{ selectedSpace?.products.length }}</p>
       <p><strong>Storage ID:</strong> {{ selectedSpace?.storageId }}</p>
-    </a-modal>
+    </Modal>
   </div>
 </template>
 
