@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 
 defineProps<{
   storages: { id: string; name: string; size: number; description: string; products: any[]; storageId: string }[];
