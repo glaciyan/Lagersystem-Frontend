@@ -12,19 +12,30 @@ export function useApi<Q extends Query = {},
   const data = ref<Ret | null>(null);
   const errors = ref<ApiError[] | null>(null);
   const loading = ref(true);
+  const aborted = ref(false);
 
-  const controller = new AbortController();
+  let controller = new AbortController();
 
-  const doFetch = () => (api(endpoint, input, init, controller).then((out) => {
-    result.value = out;
-  })).catch(() => console.error("Unexpected error from useApi"));
+  const internalAbort = (setAbort: boolean = true) => {
+    controller.abort();
+    controller = new AbortController();
+    data.value = null;
+    errors.value = null;
+    aborted.value = setAbort;
+  };
 
-  const abort = controller.abort;
+  const abort = () => internalAbort();
 
-  doFetch();
+  const doFetch = () => {
+    aborted.value = false;
+    loading.value = true;
+    api(endpoint, input, init, controller).then((out) => {
+      result.value = out;
+    }).catch(() => console.error("Unexpected error from useApi"));
+  };
 
   const refetch = () => {
-    abort();
+    internalAbort(false);
     doFetch();
   };
 
@@ -41,5 +52,7 @@ export function useApi<Q extends Query = {},
     }
   });
 
-  return { data, errors, loading, abort, refetch };
+  doFetch();
+
+  return { data, errors, loading, aborted, abort, refetch };
 }
