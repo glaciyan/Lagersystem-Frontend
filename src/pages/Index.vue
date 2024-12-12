@@ -13,7 +13,8 @@ const indexStore = useIndexState();
 
 const reactiveDepots = computed(() => depots.value);
 
-const { data: storages, errors, loading, refetch } = useApi(endpoints.getStorages, {
+// TODO: do proper typing
+const { refetch } = useApi(endpoints.getStorages, {
   query: {
     depth: 1,
   },

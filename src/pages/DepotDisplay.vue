@@ -21,7 +21,7 @@ onMounted(() => {
   storageStore.showCreateSpace = false;
 });
 
-const { data: storage, errors, loading, refetch } = useApi(endpoints.getStorage, {
+const { data: storage, loading, refetch } = useApi(endpoints.getStorage, {
   params: {
     id: depotId.value,
   },
@@ -32,8 +32,11 @@ const reactiveStorages = computed(() => storage.value);
 watch(
   () => route.params.id,
   (newId) => {
-    depotId.value = newId;
-    refetch();
+    // TODO: do proper typing and checks
+    if (typeof (newId) === "string") {
+      depotId.value = newId;
+      refetch();
+    }
   },
 );
 

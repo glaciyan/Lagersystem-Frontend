@@ -11,6 +11,8 @@ const props = defineProps<{
 
 const router = useRouter();
 
+const depots = ref(props.depots);
+
 // Computed-Eigenschaft direkt aus den Props
 const dataItems = computed(() => props.depots);
 
@@ -22,7 +24,7 @@ const navigateToDepot = async (id: string) => {
 const handleDelete = async (id: string) => {
   const confirmDelete = confirm("Möchten Sie dieses Depot wirklich löschen?");
   if (confirmDelete) {
-    props.depots.splice(props.depots.findIndex(depot => depot.id === id), 1);
+    depots.value.splice(depots.value.findIndex(depot => depot.id === id), 1);
     await indexStore.deleteStorage(id);
   }
 };

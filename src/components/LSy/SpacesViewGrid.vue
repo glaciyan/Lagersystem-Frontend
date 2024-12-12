@@ -1,18 +1,15 @@
 <script lang="ts" setup>
 import { defineProps, ref } from "vue";
-import { useIndexState } from "~/stores/IndexState.ts";
-import { Modal } from "ant-design-vue";
 
-const indexStore = useIndexState();
-
-const props = defineProps<{
+defineProps<{
   storages: { id: string; name: string; size: number; description: string; products: any[]; storageId: string }[];
 }>();
 
 const selectedSpace = ref(null); // Ausgewählter Space für Details
 const isModalVisible = ref(false); // Steuert die Sichtbarkeit des Modals
 
-const showDetails = (space) => {
+// TODO: use correct type
+const showDetails = (space: any) => {
   selectedSpace.value = space;
   isModalVisible.value = true;
 };
