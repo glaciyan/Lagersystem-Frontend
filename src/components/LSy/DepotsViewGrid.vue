@@ -1,34 +1,38 @@
-<script lang="ts" setup>
-import { Card, List, ListItem } from "ant-design-vue";
+<script setup lang="ts">
 import { computed } from "vue";
-import { useRouter } from "vue-router";
+import CardComponent from "~/components/LSy/DepotCard.vue";
 import { z } from "zod";
 import { Storage } from "~/lib/api/types";
-import { useIndexState } from "~/stores/IndexState.ts";
+import { useRouter } from "vue-router";
+import { useApi } from "~/lib/api/useApi";
+import { endpoints } from "~/lib/api/config/endpoints";
 
-const indexStore = useIndexState();
-
+// Props mit den Depots
 const props = defineProps<{
   depots: z.infer<typeof Storage>[];
 }>();
 
 const router = useRouter();
 
-const depots = ref(props.depots);
+// Computed-Eigenschaft für die Depots
+const depots = computed(() => props.depots);
 
-// Computed-Eigenschaft direkt aus den Props
-const dataItems = computed(() => props.depots);
-
-const navigateToDepot = async (id: string) => {
-  await router.push(`/depot/${id}`);
-  // router.go(0);
+// Navigationsfunktion
+const navigateToDepot = (id: string) => {
+  router.push(`/depot/${id}`);
 };
 
+// Löschfunktion
 const handleDelete = async (id: string) => {
   const confirmDelete = confirm("Möchten Sie dieses Depot wirklich löschen?");
   if (confirmDelete) {
-    depots.value.splice(depots.value.findIndex(depot => depot.id === id), 1);
-    await indexStore.deleteStorage(id);
+    try {
+      await useApi(endpoints.deleteStorage, { params: { id } });
+      console.log(`Depot ${id} wurde gelöscht.`);
+    }
+    catch (error) {
+      console.error("Fehler beim Löschen des Depots:", error);
+    }
   }
 };
 </script>
@@ -36,32 +40,20 @@ const handleDelete = async (id: string) => {
 <template>
   <div>
     <h2>Depots</h2>
-
-    <List
-      :grid="{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }"
-      :data-source="dataItems"
-      style="border: 3px solid #f0f0f0; border-radius: 8px;"
-    >
-      <template #renderItem="{ item }">
-        <ListItem>
-          <Card
-            style="margin-top: 10px; cursor: pointer; border: 2px solid #ccc; border-radius: 8px;"
-            @click="navigateToDepot(item.id)"
-          >
-            <div class="card-header">
-              <span>{{ item.name }}</span>
-              <span
-                class="delete-icon"
-                @click.stop="handleDelete(item.id)"
-              >✕</span>
-            </div>
-            <div class="card-content">
-              <p>{{ item.description }}</p>
-            </div>
-          </Card>
-        </ListItem>
-      </template>
-    </List>
+    <div class="depot-list">
+      <!-- Dynamisches Rendering der Karten -->
+      <CardComponent
+        v-for="depot in depots"
+        :id="depot.id"
+        :key="depot.id"
+        :name="depot.name"
+        :description="depot.description"
+        :maxNameLength="10"
+        :maxDescriptionLength="20"
+        @navigate="navigateToDepot"
+        @delete="handleDelete"
+      />
+    </div>
   </div>
 </template>
 
@@ -70,28 +62,12 @@ h2 {
   text-align: center;
   font-size: 24px;
   margin-bottom: 20px;
-  color: #333;
 }
 
-.card-header {
+.depot-list {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 12px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.delete-icon {
-  color: red;
-  cursor: pointer;
-}
-
-.delete-icon:hover {
-  color: darkred;
-}
-
-.card-content {
-  font-size: 10px;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
 }
 </style>

@@ -1,29 +1,25 @@
 <script setup lang="ts">
 import LayoutVertical from "~/components/LayoutVertical.vue";
+import LayoutHorizontal from "~/components/LayoutHorizontal.vue";
 import PageContainer from "~/components/PageContainer";
 import DepotsViewGrid from "~/components/LSy/DepotsViewGrid.vue";
+import CreateDepot from "~/components/LSy/CreateDepot.vue";
 import { endpoints } from "~/lib/api/config/endpoints";
 import { Button } from "ant-design-vue";
 import { useApi } from "~/lib/api/useApi";
+import { useRouter } from "vue-router";
 
-// const indexStore = useIndexState();
+const showCreateDepot = ref(false);
+const triggerUpdate = () => {
+  console.log("triggerUpdate");
+  toggleShowCreateDepot();
+  refetch();
+};
 
-// const reactiveDepots = computed(() => depots.value);
-
-// TODO: do proper typing
-// const { refetch } = useApi(endpoints.getStorages, {
-//   query: {
-//     depth: 1,
-//   },
-// });
-
-// watch(
-//   () => indexStore.updateDepots,
-//   () => {
-//     console.log("Depots wurden aktualisiert, API wird neu abgerufen...");
-//     refetch();
-//   },
-// );
+function toggleShowCreateDepot() {
+  showCreateDepot.value = !showCreateDepot.value;
+  // router.go(0);
+}
 
 const { data, loading, errors, aborted, abort, refetch } = useApi(endpoints.getStorages, {});
 
@@ -36,21 +32,34 @@ const { data, loading, errors, aborted, abort, refetch } = useApi(endpoints.getS
       <Button @click="refetch">
         Retry
       </Button>
+
       <div>Request was aborted.</div>
     </LayoutVertical>
+    <CreateDepot
+      v-if="showCreateDepot"
+      @triggerUpdate="triggerUpdate"
+    />
 
-    <!-- Loading state with option to abort -->
-    <LayoutVertical v-else-if="loading">
-      <Button
-        danger
-        @click="abort"
-      >
-        Abort
-      </Button>
-      <div>Loading data, please wait...</div>
-    </LayoutVertical>
+    <!--
+      Loading
+      state
+      with
+      option
+      to
+      abort
+      --
+    >
+      <LayoutVertical v-else-if="loading">
+        <Button
+          danger
+          @click="abort"
+        >
+          Abort
+        </Button>
+        <div>Loading data, please wait...</div>
+      </LayoutVertical>
 
-    <!-- Error state with retry option -->
+      <!-- Error state with retry option -->
     <LayoutVertical v-else-if="errors">
       <Button @click="refetch">
         Retry
@@ -62,11 +71,18 @@ const { data, loading, errors, aborted, abort, refetch } = useApi(endpoints.getS
 
     <!-- Render data -->
     <LayoutVertical v-else>
-      <Button
-        @click="refetch"
-      >
-        Retry
-      </Button>
+      <LayoutHorizontal>
+        <Button
+          @click="refetch"
+        >
+          Retry
+        </Button>
+
+        <Button @click="toggleShowCreateDepot">
+          Add Depot
+        </Button>
+      </LayoutHorizontal>
+
       <div v-if="data?.length">
         <!-- <div
           v-for="storage in data"

@@ -3,29 +3,16 @@ import ApiForm from "~/components/Form/ApiForm.vue";
 import { endpoints } from "~/lib/api/config/endpoints";
 import FormInputTextArea from "~/components/Form/FormInputTextArea.vue";
 import FormInput from "~/components/Form/FormInput.vue";
-import { useDepotState } from "~/stores/DepotState.ts";
 import { Button, Divider } from "ant-design-vue";
-
-const depotStore = useDepotState();
 
 const props = defineProps<{
   storageId: string; // Pflichtprop (weil kein `?` verwendet wird)
 }>();
 
-const triggerUpdate = () => {
-  depotStore.triggerUpdate();
-  depotStore.toggleCreateStorage();
-};
-
-const initialState = {
-  name: "",
-  size: 0.1,
-  description: "",
-  storageId: props.storageId, // message wird hier als parentID gesetzt
-};
-
-console.log("Initial State:", initialState);
-
+const emit = defineEmits(["triggerUpdate"]);
+function triggerUpdate() {
+  emit("triggerUpdate");
+}
 </script>
 
 <template>
@@ -37,15 +24,15 @@ console.log("Initial State:", initialState);
       <Button
         type="text"
         class="close-button"
-        @click="depotStore.toggleCreateSpace"
+        @click="triggerUpdate"
       >
         ✕
       </Button>
     </div>
     <ApiForm
       :endpoint="endpoints.postSpace"
-      :initialState="initialState"
-      @success="(data) => {triggerUpdate(); console.log(data);}"
+      :initialState="{ name: '', size: 0.1, description: '', storageId: props.storageId }"
+      @success="(data) => { triggerUpdate(); console.log(data); }"
       @failure="(err) => console.log(err)"
     >
       <Divider>

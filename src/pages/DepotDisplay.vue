@@ -1,45 +1,67 @@
 <script lang="ts" setup>
 import { Button } from "ant-design-vue";
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import CreateStorage from "~/components/LSy/CreateStorage.vue";
 import CreateSpace from "~/components/LSy/CreateSpace.vue";
 import PageContainer from "~/components/PageContainer";
 import { endpoints } from "~/lib/api/config/endpoints";
 import { useApi } from "~/lib/api/useApi";
-import { useDepotState } from "~/stores/DepotState";
 import StoragesViewGrid from "~/components/LSy/StoragesViewGrid.vue";
 import SpacesViewGrid from "~/components/LSy/SpacesViewGrid.vue";
-
-const storageStore = useDepotState();
 
 const route = useRoute();
 const depotId = ref(route.params.id as string); // ID aus der Route
 
+// Lokale State-Variablen, ersetzen den Pinia-Store
+const showCreateStorage = ref(false);
+const showCreateSpace = ref(false);
+
 onMounted(() => {
-  storageStore.showCreateStorage = false;
-  storageStore.showCreateSpace = false;
+  showCreateStorage.value = false;
+  showCreateSpace.value = false;
 });
 
+// API-Aufruf für das Depot
 const { data: storage, loading, refetch } = useApi(endpoints.getStorage, {
   params: {
     id: depotId.value,
   },
 });
 
+// Reaktive Berechnung der Storages
 const reactiveStorages = computed(() => storage.value);
 
+// Watcher zur Aktualisierung des depots bei Routenwechsel
 watch(
   () => route.params.id,
   (newId) => {
-    // TODO: do proper typing and checks
-    if (typeof (newId) === "string") {
+    if (typeof newId === "string") {
       depotId.value = newId;
       refetch();
     }
   },
 );
 
+function toggleCreateStorage() {
+  if (showCreateSpace.value) {
+    showCreateSpace.value = false;
+  }
+  showCreateStorage.value = !showCreateStorage.value;
+}
+
+function toggleCreateSpace() {
+  if (showCreateStorage.value) {
+    showCreateStorage.value = false;
+  }
+  showCreateSpace.value = !showCreateSpace.value;
+}
+
+function triggerUpdate() {
+  showCreateStorage.value = false;
+  showCreateSpace.value = false;
+  refetch();
+}
 </script>
 
 <template>
@@ -65,36 +87,38 @@ watch(
       <Button
         htmlType="submit"
         type="primary"
-        @click="storageStore.toggleCreateStorage"
+        @click="toggleCreateStorage"
       >
         Add storage
       </Button>
       <Button
         htmlType="submit"
         type="primary"
-        @click="storageStore.toggleCreateSpace"
+        @click="toggleCreateSpace"
       >
         Add space
       </Button>
     </div>
     <CreateStorage
-      v-if="storageStore.showCreateStorage"
+      v-if="showCreateStorage"
       :parentId="storage?.id"
-      @close="storageStore.toggleCreateStorage"
+      @close="toggleCreateStorage"
+      @triggerUpdate="triggerUpdate"
     />
     <CreateSpace
-      v-if="storageStore.showCreateSpace"
+      v-if="showCreateSpace"
       :storageId="storage?.id"
-      @close="storageStore.toggleCreateSpace"
+      @close="toggleCreateSpace"
+      @triggerUpdate="triggerUpdate"
     />
     <StoragesViewGrid
       :storages="reactiveStorages?.subStorages ?? []"
-      @success="(data) => console.log(data)"
+      @success="triggerUpdate"
       @failure="(err) => console.log(err)"
     />
     <SpacesViewGrid
       :storages="reactiveStorages?.spaces ?? []"
-      @success="(data) => console.log(data)"
+      @success="triggerUpdate"
       @failure="(err) => console.log(err)"
     />
   </PageContainer>
@@ -107,7 +131,6 @@ watch(
   align-items: center;
   gap: 0; /* Buttons berühren sich */
   margin-top: 20px;
-
 }
 
 button {

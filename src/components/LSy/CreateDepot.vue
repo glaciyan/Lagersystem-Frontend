@@ -1,22 +1,14 @@
 <script lang="ts" setup>
-import DividerHo from "~/components/LSy/DividerHo.vue";
 import ApiForm from "~/components/Form/ApiForm.vue";
 import { endpoints } from "~/lib/api/config/endpoints";
 import FormInputTextArea from "~/components/Form/FormInputTextArea.vue";
 import FormInput from "~/components/Form/FormInput.vue";
-import { useIndexState } from "~/stores/IndexState.ts";
-import { useRouter } from "vue-router";
 import { Button, Divider } from "ant-design-vue";
 
-const router = useRouter();
-
-const indexStore = useIndexState();
-
-// Funktion, um die Komponente zu aktualisieren
-const triggerUpdate = () => {
-  router.go(0);
-  indexStore.toggleCreateDepot();
-};
+const emit = defineEmits(["triggerUpdate"]);
+function handleButtonCLick() {
+  emit("triggerUpdate");
+}
 
 </script>
 
@@ -25,12 +17,11 @@ const triggerUpdate = () => {
     class="form-container"
     style="padding: 0px"
   >
-    <DividerHo />
     <div class="header">
       <Button
         type="text"
         class="close-button"
-        @click="indexStore.toggleCreateDepot"
+        @click="handleButtonCLick"
       >
         ✕
       </Button>
@@ -38,7 +29,7 @@ const triggerUpdate = () => {
     <ApiForm
       :endpoint="endpoints.postStorage"
       :initialState="{ name: '', description: '' }"
-      @success="(data) => {triggerUpdate(); console.log(data);}"
+      @success="(data) => {handleButtonCLick(); console.log(data);}"
       @failure="(err) => console.log(err)"
     >
       <Divider>
@@ -56,7 +47,6 @@ const triggerUpdate = () => {
         Submit
       </Button>
     </ApiForm>
-    <DividerHo />
   </div>
 </template>
 
