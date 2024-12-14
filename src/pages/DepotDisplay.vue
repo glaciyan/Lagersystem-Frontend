@@ -2,13 +2,13 @@
 import { Button } from "ant-design-vue";
 import { ref, watch, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import CreateStorage from "~/components/LSy/CreateStorage.vue";
-import CreateSpace from "~/components/LSy/CreateSpace.vue";
+import CreateStorage from "~/components/Create/CreateStorage.vue";
+import CreateSpace from "~/components/Create/CreateSpace.vue";
 import PageContainer from "~/components/PageContainer";
 import { endpoints } from "~/lib/api/config/endpoints";
 import { useApi } from "~/lib/api/useApi";
-import StoragesViewGrid from "~/components/LSy/StoragesViewGrid.vue";
-import SpacesViewGrid from "~/components/LSy/SpacesViewGrid.vue";
+import StoragesViewGrid from "~/components/Show/StoragesViewGrid.vue";
+import SpacesViewGrid from "~/components/Show/SpacesViewGrid.vue";
 
 const route = useRoute();
 const depotId = ref(route.params.id as string); // ID aus der Route

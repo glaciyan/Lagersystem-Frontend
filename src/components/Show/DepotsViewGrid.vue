@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import CardComponent from "~/components/LSy/DepotCard.vue";
+import CardComponent from "~/components/Show/DepotCard.vue";
 import { z } from "zod";
 import { Storage } from "~/lib/api/types";
 import { useRouter } from "vue-router";

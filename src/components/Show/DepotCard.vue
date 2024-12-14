@@ -1,3 +1,26 @@
+<script setup lang="ts">
+import { computed, defineProps } from "vue";
+
+const props = defineProps<{
+  name: string;
+  description: string;
+  id: string;
+  maxNameLength: number;
+  maxDescriptionLength: number;
+}>();
+
+const truncatedName = computed(() =>
+  props.name.length > props.maxNameLength
+    ? props.name.slice(0, props.maxNameLength)
+    : props.name,
+);
+
+const truncatedDescription = computed(() => {
+  const truncated = props.description.slice(0, props.maxDescriptionLength);
+  return truncated.replace(/(.{20})/g, "$1\n") + (props.description.length > props.maxDescriptionLength ? "..." : "");
+});
+</script>
+
 <template>
   <div
     class="card"
@@ -27,29 +50,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { computed, defineProps } from "vue";
-
-const props = defineProps<{
-  name: string;
-  description: string;
-  id: string;
-  maxNameLength: number;
-  maxDescriptionLength: number;
-}>();
-
-const truncatedName = computed(() =>
-  props.name.length > props.maxNameLength
-    ? props.name.slice(0, props.maxNameLength)
-    : props.name,
-);
-
-const truncatedDescription = computed(() => {
-  const truncated = props.description.slice(0, props.maxDescriptionLength);
-  return truncated.replace(/(.{20})/g, "$1\n") + (props.description.length > props.maxDescriptionLength ? "..." : "");
-});
-</script>
 
   <style scoped>
   .card {

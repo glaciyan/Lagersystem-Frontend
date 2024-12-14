@@ -2,12 +2,11 @@
 import LayoutVertical from "~/components/LayoutVertical.vue";
 import LayoutHorizontal from "~/components/LayoutHorizontal.vue";
 import PageContainer from "~/components/PageContainer";
-import DepotsViewGrid from "~/components/LSy/DepotsViewGrid.vue";
-import CreateDepot from "~/components/LSy/CreateDepot.vue";
+import DepotsViewGrid from "~/components/Show/DepotsViewGrid.vue";
+import CreateDepot from "~/components/Create/CreateDepot.vue";
 import { endpoints } from "~/lib/api/config/endpoints";
 import { Button } from "ant-design-vue";
 import { useApi } from "~/lib/api/useApi";
-import { useRouter } from "vue-router";
 
 const showCreateDepot = ref(false);
 const triggerUpdate = () => {
