@@ -17,3 +17,13 @@ export const Storage = z.object({
 });
 
 export const StorageArray = z.array(Storage);
+
+export const Space = z.object({
+  id: z.string(),
+  name: z.string(),
+  size: z.number(),
+  description: z.string(),
+  storageId: z.string(),
+});
+
+export const SpaceArray = z.array(Space);

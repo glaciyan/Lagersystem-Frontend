@@ -41,7 +41,7 @@ import version from "~/version";
       </div>
       <div className="flex mt-24 items-center">
         <LogoWithLabel class="mr-2" />
-        <p className="mr-2">
+        <p className="mr-2 my-0">
           v{{ version }}
         </p>
       </div>
