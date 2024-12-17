@@ -25,12 +25,12 @@ const truncatedDescription = computed(() => {
   <div
     class="card"
     :style="{ width: (props.maxNameLength * 10) + 'px' }"
-    @click="$emit('navigate', props.id)"
+    @click="$emit( props.id)"
   >
     <!-- Schließen-Button -->
     <span
       class="delete-icon"
-      @click.stop="$emit('delete', props.id)"
+      @click.stop="$emit( props.id)"
     >✕</span>
 
     <!-- Karteninhalt -->
