@@ -38,26 +38,17 @@ const { data, errors, aborted, refetch } = useApi(endpoints.getStorages, {});
       @triggerUpdate="triggerUpdate"
     />
 
-    <!--
-      Loading
-      state
-      with
-      option
-      to
-      abort
-      --
-    >
-      <LayoutVertical v-else-if="loading">
-        <Button
-          danger
-          @click="abort"
-        >
-          Abort
-        </Button>
-        <div>Loading data, please wait...</div>
-      </LayoutVertical>
+    <!-- <LayoutVertical v-else-if="loading">
+      <Button
+        danger
+        @click="abort"
+      >
+        Abort
+      </Button>
+      <div>Loading data, please wait...</div>
+    </LayoutVertical> -->
 
-      <!-- Error state with retry option -->
+    <!-- Error state with retry option
     <LayoutVertical v-else-if="errors">
       <Button @click="refetch">
         Retry
@@ -67,7 +58,7 @@ const { data, errors, aborted, refetch } = useApi(endpoints.getStorages, {});
       </div>
     </LayoutVertical>
 
-    <!-- Render data -->
+    Render data -->
     <LayoutVertical v-else>
       <LayoutHorizontal>
         <Button
