@@ -19,7 +19,7 @@ function toggleShowCreateDepot() {
   showCreateDepot.value = !showCreateDepot.value;
 }
 
-const { data, errors, aborted, refetch } = useApi(endpoints.getStorages, {});
+const { data, aborted, refetch } = useApi(endpoints.getStorages, {});
 
 </script>
 
