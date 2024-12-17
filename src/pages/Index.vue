@@ -17,10 +17,9 @@ const triggerUpdate = () => {
 
 function toggleShowCreateDepot() {
   showCreateDepot.value = !showCreateDepot.value;
-  // router.go(0);
 }
 
-const { data, loading, errors, aborted, abort, refetch } = useApi(endpoints.getStorages, {});
+const { data, errors, aborted, refetch } = useApi(endpoints.getStorages, {});
 
 </script>
 

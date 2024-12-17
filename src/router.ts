@@ -13,9 +13,16 @@ const routes = [
   },
   {
     path: "/depot/:id",
-    component: () => import("./pages/DepotDisplay.vue"), // Depot-Seite
+    component: () => import("./pages/DepotDisplay.vue"),
     meta: {
       title: title("Depot"),
+    },
+  },
+  {
+    path: "/storage/:id",
+    component: () => import("./pages/StorageDisplay.vue"),
+    meta: {
+      title: title("Storage"),
     },
   },
   {

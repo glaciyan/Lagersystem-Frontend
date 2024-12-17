@@ -2,21 +2,44 @@
 import { Card, List, ListItem } from "ant-design-vue";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
+import { useApi } from "~/lib/api/useApi";
+import { endpoints } from "~/lib/api/config/endpoints";
+import { z } from "zod";
+import { StorageArray } from "~/lib/api/config/endpoints";
+
+type StorageType = z.infer<typeof StorageArray>[number];
+
 const props = defineProps<{
-  storages: { id: string; name: string; description: string; spaces: any[]; subStorages: any[] }[];
+  storages: StorageType[];
 }>();
 
 const router = useRouter();
 
 const dataItems = computed(() => props.storages);
 
-const navigateToDepot = (id: string) => {
-  router.push(`/depot/${id}`);
+const navigateToStorage = (id: string) => {
+  console.log("Navigating to storage", id);
+  router.push(`/storage/${id}`);
 };
 
+const emit = defineEmits(["triggerUpdate"]);
+function triggerUpdate() {
+  emit("triggerUpdate");
+}
 const handleDelete = async (id: string) => {
-  await indexStore.deleteStorage(id);
+  const confirmDelete = confirm("Möchten Sie dieses Depot wirklich löschen?");
+  if (confirmDelete) {
+    try {
+      await useApi(endpoints.deleteStorage, { params: { id } });
+      console.log(`Storage ${id} wurde gelöscht.`);
+      triggerUpdate();
+    }
+    catch (error) {
+      console.error("Fehler beim Löschen des Depots:", error);
+    }
+  }
 };
+
 </script>
 
 <template>
@@ -32,7 +55,7 @@ const handleDelete = async (id: string) => {
         <ListItem>
           <Card
             style="margin-top: 10px; cursor: pointer; border: 2px solid #ccc; border-radius: 8px;"
-            @click="navigateToDepot(item.id)"
+            @click="navigateToStorage(item.id)"
           >
             <div class="card-header">
               <span>{{ item.name }}</span>

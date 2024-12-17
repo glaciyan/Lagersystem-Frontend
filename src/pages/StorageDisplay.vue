@@ -63,7 +63,7 @@ function triggerUpdate() {
 <template>
   <PageContainer>
     <div>
-      <h1>Depot Details</h1>
+      <h1>Storage Details</h1>
       <div v-if="loading">
         Lädt...
       </div>
@@ -73,6 +73,9 @@ function triggerUpdate() {
         </p>
         <p>
           <strong>Beschreibung:</strong> {{ storage.description }}
+        </p>
+        <p>
+          <strong>ID:</strong> {{ storage.id }}
         </p>
       </div>
       <div v-else>

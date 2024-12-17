@@ -13,22 +13,24 @@ const props = defineProps<{
 }>();
 
 const router = useRouter();
+const emit = defineEmits(["triggerUpdate"]);
+function triggerUpdate() {
+  emit("triggerUpdate");
+}
 
-// Computed-Eigenschaft für die Depots
 const depots = computed(() => props.depots);
 
-// Navigationsfunktion
 const navigateToDepot = (id: string) => {
   router.push(`/depot/${id}`);
 };
 
-// Löschfunktion
 const handleDelete = async (id: string) => {
   const confirmDelete = confirm("Möchten Sie dieses Depot wirklich löschen?");
   if (confirmDelete) {
     try {
       await useApi(endpoints.deleteStorage, { params: { id } });
       console.log(`Depot ${id} wurde gelöscht.`);
+      triggerUpdate();
     }
     catch (error) {
       console.error("Fehler beim Löschen des Depots:", error);

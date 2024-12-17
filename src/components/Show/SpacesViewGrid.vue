@@ -1,16 +1,21 @@
 <script lang="ts" setup>
 import { Card, List, ListItem, Modal } from "ant-design-vue";
 import { ref } from "vue";
+import { z } from "zod";
+import { Space } from "~/lib/api/config/endpoints";
+
+// Typ aus dem Zod-Schema ableiten
+type SpaceType = z.infer<typeof Space>;
 
 defineProps<{
-  storages: { id: string; name: string; size: number; description: string; products: any[]; storageId: string }[];
+  spaces: SpaceType[];
 }>();
 
-const selectedSpace = ref(null); // Ausgewählter Space für Details
-const isModalVisible = ref(false); // Steuert die Sichtbarkeit des Modals
+const selectedSpace = ref<SpaceType | null>(null);
 
-// TODO: use correct type
-const showDetails = (space: any) => {
+const isModalVisible = ref(false);
+
+const showDetails = (space: SpaceType) => {
   selectedSpace.value = space;
   isModalVisible.value = true;
 };
@@ -29,7 +34,7 @@ const handleDelete = async (id: string) => {
 
     <List
       :grid="{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }"
-      :data-source="storages"
+      :data-source="spaces"
       style="border: 3px solid #f0f0f0; border-radius: 8px;"
     >
       <template #renderItem="{ item }">
@@ -104,7 +109,7 @@ h2 {
 }
 
 a-card:hover {
-  transform: scale(1.02); /* Vergrößert die Karte leicht beim Hovern */
-  border-color: #007bff; /* Ändert die Rahmenfarbe beim Hovern */
+  transform: scale(1.02);
+  border-color: #007bff;
 }
 </style>

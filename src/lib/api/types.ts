@@ -25,3 +25,5 @@ export const Space = z.object({
   description: z.string(),
   storageId: z.string(),
 });
+
+export const SpaceArray = z.array(Space);
