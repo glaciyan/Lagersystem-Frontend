@@ -2,7 +2,6 @@ import { z } from "zod";
 import { endpoint } from "../endpoint.ts";
 import { Space, Storage, Product, ProductArray } from "../types.ts";
 
-
 export const endpoints = {
   getStorages: endpoint("GET", "/v1/storages").withQuery<{ depth?: number }>().returns(z.array(Storage)),
   getStorage: endpoint<{ id: string }>("GET", p => `/v1/storages/${p.id}`).returns(Storage),

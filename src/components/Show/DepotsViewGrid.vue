@@ -21,7 +21,7 @@ watch(
   (newValue) => {
     localDepots.value = [...newValue];
     console.log("DepotsViewGrid: props.depots changed:", newValue);
-  }
+  },
 );
 const dataItems = computed(() => localDepots.value);
 
@@ -47,7 +47,7 @@ const handleDelete = async (id: string) => {
             duration: 2,
           });
         }
-      }
+      },
     );
 
     watch(
@@ -55,14 +55,14 @@ const handleDelete = async (id: string) => {
       (result) => {
         if (result) {
           console.log(`Depot ${id} wurde gelöscht.`);
-          localDepots.value = localDepots.value.filter((storage) => storage.id !== id);
+          localDepots.value = localDepots.value.filter((storage: any) => storage.id !== id);
           notification.success({
             message: "Erfolg",
             description: `Depot ${id} wurde erfolgreich gelöscht!`,
             duration: 3,
           });
         }
-      }
+      },
     );
 
     watch(
@@ -76,7 +76,7 @@ const handleDelete = async (id: string) => {
             duration: 3,
           });
         }
-      }
+      },
     );
   }
 };
