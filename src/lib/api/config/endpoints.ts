@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { endpoint } from "../endpoint.ts";
-import { Space, Storage, Product } from "../types.ts";
+import { Space, Storage, Product, ProductArray } from "../types.ts";
 
 
 export const endpoints = {
@@ -11,4 +11,6 @@ export const endpoints = {
   postSpace: endpoint("POST", "/v1/spaces").withBody<{ name: string; totalSize: number; unit: string; description: string; storageId: string }>().returns(Space),
   deleteSpace: endpoint<{ id: string }>("DELETE", p => `/v1/spaces/${p.id}`).returns(Space),
   postProduct: endpoint("POST", "/v1/products").withBody<{ name: string; description: string; spaceId: string }>().returns(Product),
+  getProducts: endpoint("GET", `/v1/products`).returns(ProductArray),
+  deleteProduct: endpoint<{ id: string }>("DELETE", p => `/v1/products/${p.id}`).returns(Product),
 };
