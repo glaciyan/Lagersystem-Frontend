@@ -13,17 +13,10 @@ const routes = [
   },
   {
     path: "/depot/:id",
+    name: "Depot",
     component: () => import("./pages/DepotDisplay.vue"),
     meta: {
       title: title("Depot"),
-    },
-  },
-  {
-    path: "/storage/:id",
-    name: "Storage",
-    component: () => import("./pages/StorageDisplay.vue"),
-    meta: {
-      title: title("Storage"),
     },
   },
   {
