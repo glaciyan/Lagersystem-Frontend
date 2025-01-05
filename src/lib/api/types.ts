@@ -18,12 +18,32 @@ export const Storage = z.object({
 
 export const StorageArray = z.array(Storage);
 
+
+
 export const Space = z.object({
-  id: z.string(),
-  name: z.string(),
-  size: z.number(),
-  description: z.string(),
-  storageId: z.string(),
+  id: z.string(), 
+  name: z.string(), 
+  totalSize: z.number(),
+  currentSize: z.number(), 
+  unit: z.string(), 
+  description: z.string(), 
+  products: z.array(z.any()), 
+  storageId: z.string(), 
+  createdAt: z.string(), 
+  updatedAt: z.string().nullable(), 
 });
 
 export const SpaceArray = z.array(Space);
+
+export const Product = z.object({
+  id: z.string(), 
+  name: z.string(), 
+  description: z.string(), 
+  size: z.number(), 
+  unit: z.string(), 
+  attributes: z.record(z.any()), 
+  createdAt: z.string(), 
+  updatedAt: z.string().nullable(), 
+});
+
+export const ProductArray = z.array(Product);
