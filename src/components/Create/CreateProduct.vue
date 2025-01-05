@@ -6,7 +6,6 @@ import FormInput from "~/components/Form/FormInput.vue";
 import FormInputNumber from "~/components/Form/FormInputNumber.vue";
 import { Button, Divider } from "ant-design-vue";
 
-
 const emit = defineEmits(["triggerUpdate"]);
 function triggerUpdate() {
   emit("triggerUpdate");
