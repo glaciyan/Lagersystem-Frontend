@@ -7,7 +7,7 @@ import FormInputNumber from "~/components/Form/FormInputNumber.vue";
 import { Button, Divider } from "ant-design-vue";
 
 const props = defineProps<{
-  storageId: string; // Pflichtprop (weil kein `?` verwendet wird)
+  spaceId: string;
 }>();
 
 const emit = defineEmits(["triggerUpdate"]);
@@ -23,27 +23,26 @@ function triggerUpdate() {
         ✕
       </Button>
     </div>
-    <ApiForm :endpoint="endpoints.postSpace"
-      :initialState="{ name: '', totalSize: 0, unit: '', description: '', storageId: props.storageId }"
+    <ApiForm :endpoint="endpoints.postProduct" :initialState="{ name: '', description: '', size: 0, unit: '' }"
       @success="(data) => { triggerUpdate(); console.log(data); }" @failure="(err) => console.log(err)">
       <Divider>
-        Name for the spaces
+        Name for the product:
       </Divider>
-      <FormInput for="name" placeholder="Please enter the name of the Space" />
+      <FormInput for="name" placeholder="Please enter the name of the product" />
       <Divider>
-        Size for the space:
+        Size for the product:
       </Divider>
-      <FormInputNumber for="totalSize" placeholder="Please enter the size of the space" />
+      <FormInputNumber for="size" placeholder="Please enter the size of the product" />
       <Divider>
-        Unit for the space:
+        Unit for the product:
       </Divider>
-      <FormInput for="unit" placeholder="Please enter the unit of the space" />
+      <FormInput for="unit" placeholder="Please enter the unit of the product" />
       <Divider>
         Description
       </Divider>
-      <FormInputTextArea for="description" placeholder="Please enter the description for the space" />
+      <FormInputTextArea for="description" placeholder="Please enter the description for the product" />
       <Button htmlType="submit" type="primary">
-        Create Space
+        Create product
       </Button>
     </ApiForm>
   </div>

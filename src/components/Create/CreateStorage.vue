@@ -5,7 +5,6 @@ import FormInputTextArea from "~/components/Form/FormInputTextArea.vue";
 import FormInput from "~/components/Form/FormInput.vue";
 import { Button, Divider } from "ant-design-vue";
 
-// Define props
 const props = defineProps<{
   parentId: string; // Pflichtprop (weil kein `?` verwendet wird)
 }>();
@@ -17,38 +16,24 @@ function handleButtonCLick() {
 </script>
 
 <template>
-  <div
-    class="form-container"
-    style="padding-top: 0px"
-  >
+  <div class="form-container" style="padding-top: 0px">
     <div class="header">
-      <Button
-        type="text"
-        class="close-button"
-        @click="handleButtonCLick"
-      >
+      <Button type="text" class="close-button" @click="handleButtonCLick">
         ✕
       </Button>
     </div>
-    <ApiForm
-      :endpoint="endpoints.postStorage"
-      :initialState="{ name: '', description: '', parentId: props.parentId }"
-      @success="(data) => {handleButtonCLick(); console.log(data);}"
-      @failure="(err) => console.log(err)"
-    >
+    <ApiForm :endpoint="endpoints.postStorage" :initialState="{ name: '', description: '', parentId: props.parentId }"
+      @success="(data) => { handleButtonCLick(); console.log(data); }" @failure="(err) => console.log(err)">
       <Divider>
         Name for the storage:
       </Divider>
-      <FormInput for="name" />
+      <FormInput for="name" placeholder="Please enter the name of your storage" />
       <Divider>
         Description
       </Divider>
-      <FormInputTextArea for="description" />
-      <Button
-        htmlType="submit"
-        type="primary"
-      >
-        Submit
+      <FormInputTextArea for="description" placeholder="Please enter the description" />
+      <Button htmlType="submit" type="primary">
+        Create Storage
       </Button>
     </ApiForm>
   </div>
@@ -56,15 +41,18 @@ function handleButtonCLick() {
 
 <style scoped>
 .form-container {
-  max-width: 400px; /* Optional: Begrenze die Breite */
-  margin: 0 auto; /* Zentriere das Formular */
+  max-width: 400px;
+  /* Optional: Begrenze die Breite */
+  margin: 0 auto;
+  /* Zentriere das Formular */
   padding: 20px;
   position: relative;
 }
 
 .header {
   display: flex;
-  justify-content: flex-end; /* Rechtsbündig */
+  justify-content: flex-end;
+  /* Rechtsbündig */
   margin-bottom: 8px;
 }
 
