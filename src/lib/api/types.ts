@@ -14,6 +14,8 @@ export const Storage = z.object({
   description: z.string(),
   spaces: z.array(z.any()),
   subStorages: z.array(z.any()),
+  createdAt: z.string(),
+  updatedAt: z.string().nullable(),
 });
 
 export const StorageArray = z.array(Storage);
