@@ -10,7 +10,6 @@ import { useApi } from "~/lib/api/useApi";
 
 const showCreateDepot = ref(false);
 const triggerUpdate = () => {
-  console.log("triggerUpdate");
   toggleShowCreateDepot();
   refetch();
 };
@@ -19,13 +18,12 @@ function toggleShowCreateDepot() {
   showCreateDepot.value = !showCreateDepot.value;
 }
 
-const { data, aborted, refetch } = useApi(endpoints.getStorages, {});
+const { data, errors, loading, abort, aborted, refetch } = useApi(endpoints.getStorages, {});
 
 </script>
 
 <template>
   <PageContainer>
-    <!-- Display when the fetch request was aborted -->
     <LayoutVertical v-if="aborted">
       <Button @click="refetch">
         Retry
@@ -33,22 +31,15 @@ const { data, aborted, refetch } = useApi(endpoints.getStorages, {});
 
       <div>Request was aborted.</div>
     </LayoutVertical>
-    <CreateDepot
-      v-if="showCreateDepot"
-      @triggerUpdate="triggerUpdate"
-    />
+    <CreateDepot v-if="showCreateDepot" @triggerUpdate="triggerUpdate" />
 
-    <!-- <LayoutVertical v-else-if="loading">
-      <Button
-        danger
-        @click="abort"
-      >
+    <LayoutVertical v-else-if="loading">
+      <Button danger @click="abort">
         Abort
       </Button>
       <div>Loading data, please wait...</div>
-    </LayoutVertical> -->
+    </LayoutVertical>
 
-    <!-- Error state with retry option
     <LayoutVertical v-else-if="errors">
       <Button @click="refetch">
         Retry
@@ -58,12 +49,9 @@ const { data, aborted, refetch } = useApi(endpoints.getStorages, {});
       </div>
     </LayoutVertical>
 
-    Render data -->
     <LayoutVertical v-else>
       <LayoutHorizontal>
-        <Button
-          @click="refetch"
-        >
+        <Button @click="refetch">
           Retry
         </Button>
 
@@ -73,18 +61,10 @@ const { data, aborted, refetch } = useApi(endpoints.getStorages, {});
       </LayoutHorizontal>
 
       <div v-if="data?.length">
-        <!-- <div
-          v-for="storage in data"
-          :key="storage.id"
-        >
-          {{ storage.name }} - {{ storage.id }}
-        </div> -->
-        <DepotsViewGrid
-          :depots="data ?? []"
-        />
+        <DepotsViewGrid :depots="data ?? []" />
       </div>
       <div v-else>
-        No storage data available.
+        There is currently no depot, please add a new one and configure it!
       </div>
     </LayoutVertical>
   </PageContainer>
