@@ -10,10 +10,7 @@ const props = defineProps<{
   storageId: string; // Pflichtprop (weil kein `?` verwendet wird)
 }>();
 
-const emit = defineEmits(["triggerUpdate"]);
-function triggerUpdate() {
-  emit("triggerUpdate");
-}
+const emit = defineEmits(["success"]);
 </script>
 
 <template>
@@ -25,15 +22,15 @@ function triggerUpdate() {
       <Button
         type="text"
         class="close-button"
-        @click="triggerUpdate"
+        @click="$router.go(-1)"
       >
         ✕
       </Button>
     </div>
     <ApiForm
       :endpoint="endpoints.postSpace"
-      :initialState="{ name: '', totalSize: 0, unit: '', description: '', storageId: props.storageId }"
-      @success="(data) => { triggerUpdate(); console.log(data); }"
+      :initialState="{ name: '', totalSize: 5, unit: '', description: '', storageId: props.storageId }"
+      @success="(data) => { console.log(data); emit('success') }"
       @failure="(err) => console.log(err)"
     >
       <Divider>

@@ -1,37 +1,31 @@
 <script lang="ts" setup>
-import { Button } from "ant-design-vue";
-import { ref, watch, computed, onMounted } from "vue";
-import { useRoute } from "vue-router";
-import CreateStorage from "~/components/Create/CreateStorage.vue";
-import CreateSpace from "~/components/Create/CreateSpace.vue";
-import CreateProduct from "~/components/Create/CreateProduct.vue";
 import PageContainer from "~/components/PageContainer";
 import { endpoints } from "~/lib/api/config/endpoints";
 import { useApi } from "~/lib/api/useApi";
-import StoragesViewGrid from "~/components/Show/StoragesViewGrid.vue";
+import SubStoragesViewGrid from "~/components/Show/SubStoragesViewGrid.vue";
 import SpacesViewGrid from "~/components/Show/SpacesViewGrid.vue";
 import ProductViewGrid from "~/components/Show/ProductViewGrid.vue";
+import LayoutVertical from "~/components/LayoutVertical.vue";
 
 const route = useRoute();
 const depotId = ref(route.params.id as string);
-
-const showCreateStorage = ref(false);
-const showCreateSpace = ref(false);
-const showCreateProduct = ref(false);
-
-onMounted(() => {
-  showCreateStorage.value = false;
-  showCreateSpace.value = false;
-  showCreateProduct.value = false;
-});
-
-const { data: storage, errors, loading, aborted, refetch } = useApi(endpoints.getStorage, {
+const input = reactive({
   params: {
-    id: depotId.value,
+    id: route.params.id as string,
   },
 });
 
-const reactiveStorages = computed(() => storage.value);
+// const showCreateStorage = ref(false);
+// const showCreateSpace = ref(false);
+// const showCreateProduct = ref(false);
+
+// onMounted(() => {
+//   showCreateStorage.value = false;
+//   showCreateSpace.value = false;
+//   showCreateProduct.value = false;
+// });
+
+const { data, errors, aborted, loading, refetch } = useApi(endpoints.getStorage, input);
 
 const { data: products, refetch: refetchProducts } = useApi(endpoints.getProducts, {
   params: {},
@@ -41,44 +35,45 @@ watch(
   () => route.params.id,
   (newId) => {
     if (typeof newId === "string") {
+      input.params.id = newId;
       depotId.value = newId;
-      refetch();
+      // refetch(); // no need to refetch, input is reactive now
       refetchProducts();
     }
   },
 );
 
-function toggleCreateStorage() {
-  if (showCreateSpace.value || showCreateProduct.value) {
-    showCreateSpace.value = false;
-    showCreateProduct.value = false;
-  }
-  showCreateStorage.value = !showCreateStorage.value;
-}
+// function toggleCreateStorage() {
+//   if (showCreateSpace.value || showCreateProduct.value) {
+//     showCreateSpace.value = false;
+//     showCreateProduct.value = false;
+//   }
+//   showCreateStorage.value = !showCreateStorage.value;
+// }
 
-function toggleCreateSpace() {
-  if (showCreateStorage.value || showCreateProduct.value) {
-    showCreateStorage.value = false;
-    showCreateProduct.value = false;
-  }
-  showCreateSpace.value = !showCreateSpace.value;
-}
+// function toggleCreateSpace() {
+//   if (showCreateStorage.value || showCreateProduct.value) {
+//     showCreateStorage.value = false;
+//     showCreateProduct.value = false;
+//   }
+//   showCreateSpace.value = !showCreateSpace.value;
+// }
 
-function toggleCreateProduct() {
-  if (showCreateStorage.value || showCreateSpace.value) {
-    showCreateStorage.value = false;
-    showCreateSpace.value = false;
-  }
-  showCreateProduct.value = !showCreateProduct.value;
-}
+// function toggleCreateProduct() {
+//   if (showCreateStorage.value || showCreateSpace.value) {
+//     showCreateStorage.value = false;
+//     showCreateSpace.value = false;
+//   }
+//   showCreateProduct.value = !showCreateProduct.value;
+// }
 
-function triggerUpdate() {
-  showCreateStorage.value = false;
-  showCreateSpace.value = false;
-  showCreateProduct.value = false;
-  refetch();
-  refetchProducts();
-}
+// function triggerUpdate() {
+//   showCreateStorage.value = false;
+//   showCreateSpace.value = false;
+//   showCreateProduct.value = false;
+//   refetch();
+//   refetchProducts();
+// }
 </script>
 
 <template>
@@ -104,19 +99,19 @@ function triggerUpdate() {
       <div v-else-if="aborted">
         <p>Der Ladevorgang wurde abgebrochen. Bitte versuchen Sie es erneut.</p>
       </div>
-      <div v-else-if="storage">
+      <div v-else-if="data">
         <p>
-          <strong>Name:</strong> {{ storage.name }}
+          <strong>Name:</strong> {{ data.name }}
         </p>
         <p>
-          <strong>Beschreibung:</strong> {{ storage.description }}
+          <strong>Beschreibung:</strong> {{ data.description }}
         </p>
       </div>
       <div v-else>
         <p>Depot nicht gefunden oder Fehler beim Laden der Daten...</p>
       </div>
     </div>
-    <div class="button-container">
+    <!-- <div class="button-container">
       <Button
         htmlType="submit"
         type="primary"
@@ -138,8 +133,8 @@ function triggerUpdate() {
       >
         Add product
       </Button>
-    </div>
-    <CreateStorage
+    </div> -->
+    <!-- <CreateStorage
       v-if="showCreateStorage"
       :parentId="storage?.id"
       @close="toggleCreateStorage"
@@ -156,11 +151,29 @@ function triggerUpdate() {
       :spaceId="storage?.id"
       @close="toggleCreateProduct"
       @triggerUpdate="triggerUpdate"
-    />
+    /> -->
 
-    <StoragesViewGrid :storages="reactiveStorages?.subStorages ?? []" />
-    <SpacesViewGrid :spaces="reactiveStorages?.spaces ?? []" />
-    <ProductViewGrid :products="products ?? []" />
+    <LayoutVertical gap="large">
+      <SubStoragesViewGrid
+        :data
+        :errors
+        :loading
+        :aborted
+        :refetch
+        :parentId="depotId"
+        @update="refetch"
+      />
+      <SpacesViewGrid
+        :data
+        :errors
+        :loading
+        :aborted
+        :refetch
+        :parentId="depotId"
+        @update="refetch"
+      />
+      <ProductViewGrid :products="products ?? []" />
+    </LayoutVertical>
   </PageContainer>
 </template>
 

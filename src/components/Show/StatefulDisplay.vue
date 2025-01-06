@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import LayoutVertical from "~/components/LayoutVertical.vue";
-import LayoutHorizontal from "~/components/LayoutHorizontal.vue";
 import { Button, Empty, Result, Spin } from "ant-design-vue";
 import ClosedCircle from "~/icons/ClosedCircle.vue";
 import ReloadIcon from "~/icons/ReloadIcon.vue";
 import { h } from "vue";
 import { ApiError } from "~/lib/api/core";
 
-const props = defineProps<{ data: any[] | null; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch: () => void }>();
+const props = withDefaults(defineProps<{ data: any | any[] | null; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch: () => void; emptyText?: string; itemName: string }>(), {
+  emptyText: "Keine Daten vorhanden.",
+});
 </script>
 
 <template>
@@ -83,8 +84,18 @@ const props = defineProps<{ data: any[] | null; errors: ApiError[] | null; loadi
     </LayoutVertical>
 
     <LayoutVertical v-else>
-      <LayoutHorizontal />
-
+      <div class="flex flex-wrap content-center gap-6">
+        <h1 class="m-0 text-xl">
+          {{ props.itemName }}
+        </h1>
+        <slot name="createNew" />
+        <Button
+          :icon="h(ReloadIcon)"
+          @click="refetch"
+        >
+          Neu Laden
+        </Button>
+      </div>
       <!-- WE GOT DATA -->
       <div v-if="props.data?.length">
         <slot name="display" />
@@ -100,21 +111,9 @@ const props = defineProps<{ data: any[] | null; errors: ApiError[] | null; loadi
           <Empty :image="Empty.PRESENTED_IMAGE_SIMPLE">
             <template #description>
               <span class="text-light-5">
-                Keine Daten vorhanden.
+                {{ emptyText }}
               </span>
             </template>
-            <LayoutHorizontal
-              gap="middle"
-              class="mt-6"
-            >
-              <slot name="createNew" />
-              <Button
-                :icon="h(ReloadIcon)"
-                @click="props.refetch"
-              >
-                Neu Laden
-              </Button>
-            </LayoutHorizontal>
           </Empty>
         </LayoutVertical>
       </LayoutVertical>

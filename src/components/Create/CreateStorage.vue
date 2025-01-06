@@ -5,14 +5,13 @@ import FormInputTextArea from "~/components/Form/FormInputTextArea.vue";
 import FormInput from "~/components/Form/FormInput.vue";
 import { Button, Divider } from "ant-design-vue";
 
+const router = useRouter();
+
 const props = defineProps<{
   parentId: string; // Pflichtprop (weil kein `?` verwendet wird)
 }>();
 
-const emit = defineEmits(["triggerUpdate"]);
-function handleButtonCLick() {
-  emit("triggerUpdate");
-}
+const emit = defineEmits(["success"]);
 </script>
 
 <template>
@@ -24,7 +23,7 @@ function handleButtonCLick() {
       <Button
         type="text"
         class="close-button"
-        @click="handleButtonCLick"
+        @click="router.go(-1)"
       >
         ✕
       </Button>
@@ -32,7 +31,7 @@ function handleButtonCLick() {
     <ApiForm
       :endpoint="endpoints.postStorage"
       :initialState="{ name: '', description: '', parentId: props.parentId }"
-      @success="(data) => { handleButtonCLick(); console.log(data); }"
+      @success="(data) => { console.log(data); emit('success') }"
       @failure="(err) => console.log(err)"
     >
       <Divider>

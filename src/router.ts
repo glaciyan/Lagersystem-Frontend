@@ -28,6 +28,27 @@ const routes = [
     },
   },
   {
+    path: "/depot/:id/newstorage",
+    component: () => import("./pages/NewStorage.vue"),
+    meta: {
+      title: title("Creating Storage"),
+    },
+  },
+  {
+    path: "/depot/:id/newspace",
+    component: () => import("./pages/NewSpace.vue"),
+    meta: {
+      title: title("Creating Storage"),
+    },
+  },
+  {
+    path: "/depot/:id/newproduct",
+    component: () => import("./components/Create/CreateStorage.vue"),
+    meta: {
+      title: title("Creating Storage"),
+    },
+  },
+  {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: () => import("./pages/NotFound.vue"),

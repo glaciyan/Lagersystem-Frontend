@@ -5,9 +5,9 @@ import FormInputTextArea from "~/components/Form/FormInputTextArea.vue";
 import FormInput from "~/components/Form/FormInput.vue";
 import { Button, Divider } from "ant-design-vue";
 
-const emit = defineEmits(["triggerUpdate"]);
+const router = useRouter();
 function handleButtonCLick() {
-  emit("triggerUpdate");
+  router.go(-1);
 }
 
 </script>
