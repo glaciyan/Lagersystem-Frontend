@@ -43,7 +43,7 @@ const handleDelete = async (id: string) => {
         if (isLoading) {
           notification.info({
             message: "Löschen...",
-            description: "Das Depot wird gelöscht.",
+            description: "The depot is deleted.",
             duration: 2,
           });
         }
@@ -58,7 +58,7 @@ const handleDelete = async (id: string) => {
           localDepots.value = localDepots.value.filter((storage: any) => storage.id !== id);
           notification.success({
             message: "Erfolg",
-            description: `Depot ${id} wurde erfolgreich gelöscht!`,
+            description: `Depot ${id} was successfully deleted!`,
             duration: 3,
           });
         }
@@ -72,7 +72,7 @@ const handleDelete = async (id: string) => {
           console.error("Fehler beim Löschen des Depots:", err);
           notification.error({
             message: "Fehler",
-            description: "Das Depot konnte nicht gelöscht werden.",
+            description: "The depot could not be deleted.",
             duration: 3,
           });
         }
@@ -86,7 +86,6 @@ const handleDelete = async (id: string) => {
   <div>
     <h2>Depots</h2>
     <div class="depot-list">
-      <!-- Dynamisches Rendering der Depots ohne Card-Komponente -->
       <div v-for="depot in dataItems" :key="depot.id" class="depot-item">
         <div>
           <p><strong>Name:</strong> {{ depot.name }}</p>

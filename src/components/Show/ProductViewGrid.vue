@@ -2,42 +2,43 @@
 import { Card, List, ListItem, Modal } from "ant-design-vue";
 import { ref, computed, watch } from "vue";
 import { z } from "zod";
-import { SpaceArray } from "~/lib/api/config/endpoints";
+import { ProductArray } from "~/lib/api/config/endpoints";
 import { useApi } from "~/lib/api/useApi";
 import { endpoints } from "~/lib/api/config/endpoints";
 import { notification } from "ant-design-vue";
 
-type SpaceType = z.infer<typeof SpaceArray>[number];
+// Typ aus dem Zod-Schema ableiten
+type ProductType = z.infer<typeof ProductArray>[number];
 
 const props = defineProps<{
-  spaces: SpaceType[];
+  products: ProductType[];
 }>();
 
-const localSpaces = ref([...props.spaces]);
+const localProducts = ref([...props.products]);
 
-const selectedSpace = ref<SpaceType | null>(null);
+const selectedProduct = ref<ProductType | null>(null);
 
 watch(
-  () => props.spaces,
+  () => props.products,
   (newValue) => {
-    localSpaces.value = [...newValue];
+    localProducts.value = [...newValue];
   },
 );
 
-const dataItems = computed(() => localSpaces.value);
+const dataItems = computed(() => localProducts.value);
 
 const isModalVisible = ref(false);
 
-const showDetails = (space: SpaceType) => {
-  selectedSpace.value = space;
+const showDetails = (product: ProductType) => {
+  selectedProduct.value = product;
   isModalVisible.value = true;
 };
 
 const deleting = ref(false);
 const handleDelete = async (id: string) => {
-  const confirmDelete = confirm("Möchten Sie diesen Space wirklich löschen?");
+  const confirmDelete = confirm("Möchten Sie dieses Produkt wirklich löschen?");
   if (confirmDelete) {
-    const { data, errors, loading } = useApi(endpoints.deleteSpace, { params: { id } });
+    const { data, errors, loading } = useApi(endpoints.deleteProduct, { params: { id } });
 
     watch(
       () => loading.value,
@@ -46,7 +47,7 @@ const handleDelete = async (id: string) => {
         if (isLoading) {
           notification.info({
             message: "Löschen...",
-            description: "The space is deleted.",
+            description: "The product is deleted.",
             duration: 2,
           });
         }
@@ -57,11 +58,11 @@ const handleDelete = async (id: string) => {
       () => data.value,
       (result) => {
         if (result) {
-          console.log(`Space ${id} wurde gelöscht.`);
-          localSpaces.value = localSpaces.value.filter((tempSpace: any) => tempSpace.id !== id);
+          console.log(`Produkt ${id} wurde gelöscht.`);
+          localProducts.value = localProducts.value.filter((tempProduct: any) => tempProduct.id !== id);
           notification.success({
             message: "Erfolg",
-            description: `Space ${id} was successfully deleted!`,
+            description: `Storage ${id} was successfully deleted!`,
             duration: 3,
           });
         }
@@ -72,14 +73,14 @@ const handleDelete = async (id: string) => {
       () => errors.value,
       (err) => {
         if (err) {
-          console.error("Fehler beim Löschen des Spaces:", err);
+          console.error("Fehler beim Löschen des Produkts:", err);
           notification.error({
             message: "Fehler",
-            description: "The space could not be deleted.",
+            description: "The product could not be deleted.",
             duration: 3,
           });
         }
-      },
+      }
     );
   }
 };
@@ -88,7 +89,7 @@ const handleDelete = async (id: string) => {
 
 <template>
   <div>
-    <h2>Spaces</h2>
+    <h2>Produkte</h2>
 
     <List :grid="{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }" :data-source="dataItems"
       style="border: 3px solid #f0f0f0; border-radius: 8px;">
@@ -97,7 +98,7 @@ const handleDelete = async (id: string) => {
           <Card :style="{
             marginTop: '10px',
             cursor: 'pointer',
-            border: `2px solid ${item.currentSize < item.totalSize ? 'green' : 'red'}`,
+            border: '2px solid #ccc',
             borderRadius: '8px',
             transition: 'transform 0.2s'
           }" hoverable @click="showDetails(item)">
@@ -107,13 +108,10 @@ const handleDelete = async (id: string) => {
             </div>
             <div class="card-content">
               <div>
-                <strong>Größe:</strong> {{ item.totalSize }} {{ item.unit }}
+                <strong>Größe:</strong> {{ item.size }} {{ item.unit }}
               </div>
               <div>
-                <strong>Aktuelle Größe:</strong> {{ item.currentSize }} {{ item.unit }}
-              </div>
-              <div>
-                <strong>Produkte:</strong> {{ item.products.length }}
+                <strong>Beschreibung:</strong> {{ item.description }}
               </div>
             </div>
           </Card>
@@ -121,16 +119,15 @@ const handleDelete = async (id: string) => {
       </template>
     </List>
 
-    <Modal v-model:visible="isModalVisible" title="Space Details" :footer="null">
-      <p><strong>Name:</strong> {{ selectedSpace?.name }}</p>
-      <p><strong>Unit:</strong> {{ selectedSpace?.unit }}</p>
-      <p><strong>Size:</strong> {{ selectedSpace?.totalSize }} </p>
-      <p><strong>Current size:</strong> {{ selectedSpace?.currentSize }} </p>
-      <p><strong>Description:</strong> {{ selectedSpace?.description }}</p>
-      <p><strong>Products:</strong> {{ selectedSpace?.products.length }}</p>
-      <p><strong>Storage ID:</strong> {{ selectedSpace?.storageId }}</p>
-      <p><strong>Created on:</strong> {{ selectedSpace?.createdAt }}</p>
-      <p><strong>Last updated:</strong> {{ selectedSpace?.updatedAt || 'N/A' }}</p>
+    <!-- Modal für Details -->
+    <Modal v-model:visible="isModalVisible" title="Produktdetails" :footer="null">
+      <p><strong>Name:</strong> {{ selectedProduct?.name }}</p>
+      <p><strong>Größe:</strong> {{ selectedProduct?.size }} </p>
+      <p><strong>Einheit:</strong> {{ selectedProduct?.unit }}</p>
+      <p><strong>Beschreibung:</strong> {{ selectedProduct?.description }}</p>
+      <p><strong>Attribute:</strong> {{ selectedProduct?.attributes }}</p>
+      <p><strong>Erstellt am:</strong> {{ selectedProduct?.createdAt }}</p>
+      <p><strong>Zuletzt aktualisiert:</strong> {{ selectedProduct?.updatedAt || 'N/A' }}</p>
     </Modal>
   </div>
 </template>
