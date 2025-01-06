@@ -47,3 +47,20 @@ export const Product = z.object({
 });
 
 export const ProductArray = z.array(Product);
+
+export const StoredProduct = z.object({
+  id: z.string(),
+  productId: z.string(),
+  spaceId: z.string(),
+  productName: z.string(),
+  productDescription: z.string(),
+  productSize: z.number(),
+  productUnit: z.string(),
+  attribute: z.record(z.any()),
+  quantity: z.number(),
+  size: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string().nullable(),
+});
+
+export const StoredProductArray = z.array(StoredProduct);
