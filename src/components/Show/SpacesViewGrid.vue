@@ -113,7 +113,7 @@ const handleDelete = async (id: string) => {
                 <strong>Aktuelle Größe:</strong> {{ item.currentSize }} {{ item.unit }}
               </div>
               <div>
-                <strong>Produkte:</strong> {{ item.products.length }}
+                <strong>Produkte:</strong> {{ item.products }}
               </div>
             </div>
           </Card>
@@ -127,8 +127,9 @@ const handleDelete = async (id: string) => {
       <p><strong>Size:</strong> {{ selectedSpace?.totalSize }} </p>
       <p><strong>Current size:</strong> {{ selectedSpace?.currentSize }} </p>
       <p><strong>Description:</strong> {{ selectedSpace?.description }}</p>
-      <p><strong>Products:</strong> {{ selectedSpace?.products.length }}</p>
+      <p><strong>Products:</strong> {{ selectedSpace?.products }}</p>
       <p><strong>Storage ID:</strong> {{ selectedSpace?.storageId }}</p>
+      <p><strong>Space ID:</strong> {{ selectedSpace?.spaceId }}</p>
       <p><strong>Created on:</strong> {{ selectedSpace?.createdAt }}</p>
       <p><strong>Last updated:</strong> {{ selectedSpace?.updatedAt || 'N/A' }}</p>
     </Modal>

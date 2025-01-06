@@ -126,6 +126,7 @@ const handleDelete = async (id: string) => {
       <p><strong>Einheit:</strong> {{ selectedProduct?.unit }}</p>
       <p><strong>Beschreibung:</strong> {{ selectedProduct?.description }}</p>
       <p><strong>Attribute:</strong> {{ selectedProduct?.attributes }}</p>
+      <p><strong>product Id:</strong> {{ selectedProduct?.id }}</p>
       <p><strong>Erstellt am:</strong> {{ selectedProduct?.createdAt }}</p>
       <p><strong>Zuletzt aktualisiert:</strong> {{ selectedProduct?.updatedAt || 'N/A' }}</p>
     </Modal>
