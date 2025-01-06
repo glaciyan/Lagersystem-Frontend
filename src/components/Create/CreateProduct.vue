@@ -13,31 +13,57 @@ function triggerUpdate() {
 </script>
 
 <template>
-  <div class="form-container" style="padding-top: 0px">
+  <div
+    class="form-container"
+    style="padding-top: 0px"
+  >
     <div class="header">
-      <Button type="text" class="close-button" @click="triggerUpdate">
+      <Button
+        type="text"
+        class="close-button"
+        @click="triggerUpdate"
+      >
         ✕
       </Button>
     </div>
-    <ApiForm :endpoint="endpoints.postProduct" :initialState="{ name: '', description: '', size: 0, unit: '' }"
-      @success="(data) => { triggerUpdate(); console.log(data); }" @failure="(err) => console.log(err)">
+    <ApiForm
+      :endpoint="endpoints.postProduct"
+      :initialState="{ name: '', description: '', size: 0, unit: '' }"
+      @success="(data) => { triggerUpdate(); console.log(data); }"
+      @failure="(err) => console.log(err)"
+    >
       <Divider>
         Name for the product:
       </Divider>
-      <FormInput for="name" placeholder="Please enter the name of the product" />
+      <FormInput
+        for="name"
+        placeholder="Please enter the name of the product"
+      />
       <Divider>
         Size for the product:
       </Divider>
-      <FormInputNumber for="size" placeholder="Please enter the size of the product" />
+      <FormInputNumber
+        for="size"
+        placeholder="Please enter the size of the product"
+      />
       <Divider>
         Unit for the product:
       </Divider>
-      <FormInput for="unit" placeholder="Please enter the unit of the product" />
+      <FormInput
+        for="unit"
+        placeholder="Please enter the unit of the product"
+      />
       <Divider>
         Description
       </Divider>
-      <FormInputTextArea for="description" placeholder="Please enter the description for the product" />
-      <Button htmlType="submit" type="primary">
+      <FormInputTextArea
+        for="description"
+        placeholder="Please enter the description for the product"
+      />
+      <Button
+        htmlType="submit"
+        type="primary"
+      >
         Create product
       </Button>
     </ApiForm>

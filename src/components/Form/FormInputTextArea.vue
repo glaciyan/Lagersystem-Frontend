@@ -6,5 +6,9 @@ const values = inject("values") as Ref<any>;
 </script>
 
 <template>
-  <Textarea v-model:value="values[props.for]" v-bind="$attrs" :placeholder="props.placeholder" />
+  <Textarea
+    v-model:value="values[props.for]"
+    v-bind="$attrs"
+    :placeholder="props.placeholder"
+  />
 </template>

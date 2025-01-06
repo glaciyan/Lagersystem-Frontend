@@ -86,14 +86,22 @@ const handleDelete = async (id: string) => {
   <div>
     <h2>Depots</h2>
     <div class="depot-list">
-      <div v-for="depot in dataItems" :key="depot.id" class="depot-item">
+      <div
+        v-for="depot in dataItems"
+        :key="depot.id"
+        class="depot-item"
+      >
         <div>
           <p><strong>Name:</strong> {{ depot.name }}</p>
           <p><strong>Beschreibung:</strong> {{ depot.description }}</p>
         </div>
         <div class="depot-actions">
-          <button @click="() => navigateToDepot(depot.id)">Edit</button>
-          <button @click="() => handleDelete(depot.id)">Delete</button>
+          <button @click="() => navigateToDepot(depot.id)">
+            Edit
+          </button>
+          <button @click="() => handleDelete(depot.id)">
+            Delete
+          </button>
         </div>
       </div>
     </div>

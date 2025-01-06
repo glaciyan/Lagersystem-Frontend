@@ -31,10 +31,16 @@ const { data, errors, loading, abort, aborted, refetch } = useApi(endpoints.getS
 
       <div>Request was aborted.</div>
     </LayoutVertical>
-    <CreateDepot v-if="showCreateDepot" @triggerUpdate="triggerUpdate" />
+    <CreateDepot
+      v-if="showCreateDepot"
+      @triggerUpdate="triggerUpdate"
+    />
 
     <LayoutVertical v-else-if="loading">
-      <Button danger @click="abort">
+      <Button
+        danger
+        @click="abort"
+      >
         Abort
       </Button>
       <div>Loading data, please wait...</div>

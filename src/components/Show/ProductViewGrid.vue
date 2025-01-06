@@ -91,20 +91,30 @@ const handleDelete = async (id: string) => {
   <div>
     <h2>Produkte</h2>
 
-    <List :grid="{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }" :data-source="dataItems"
-      style="border: 3px solid #f0f0f0; border-radius: 8px;">
+    <List
+      :grid="{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }"
+      :data-source="dataItems"
+      style="border: 3px solid #f0f0f0; border-radius: 8px;"
+    >
       <template #renderItem="{ item }">
         <ListItem>
-          <Card :style="{
-            marginTop: '10px',
-            cursor: 'pointer',
-            border: '2px solid #ccc',
-            borderRadius: '8px',
-            transition: 'transform 0.2s'
-          }" hoverable @click="showDetails(item)">
+          <Card
+            :style="{
+              marginTop: '10px',
+              cursor: 'pointer',
+              border: '2px solid #ccc',
+              borderRadius: '8px',
+              transition: 'transform 0.2s'
+            }"
+            hoverable
+            @click="showDetails(item)"
+          >
             <div class="card-header">
               <span>{{ item.name }}</span>
-              <span class="delete-icon" @click.stop="handleDelete(item.id)">{{ deleting ? "Löschen..." : "✕" }}</span>
+              <span
+                class="delete-icon"
+                @click.stop="handleDelete(item.id)"
+              >{{ deleting ? "Löschen..." : "✕" }}</span>
             </div>
             <div class="card-content">
               <div>
@@ -120,7 +130,11 @@ const handleDelete = async (id: string) => {
     </List>
 
     <!-- Modal für Details -->
-    <Modal v-model:visible="isModalVisible" title="Produktdetails" :footer="null">
+    <Modal
+      v-model:visible="isModalVisible"
+      title="Produktdetails"
+      :footer="null"
+    >
       <p><strong>Name:</strong> {{ selectedProduct?.name }}</p>
       <p><strong>Größe:</strong> {{ selectedProduct?.size }} </p>
       <p><strong>Einheit:</strong> {{ selectedProduct?.unit }}</p>

@@ -13,5 +13,10 @@ if (!values.value[props.for]) {
 </script>
 
 <template>
-  <InputNumber v-model:value="values[props.for]" :placeholder="props.placeholder" :step="0.01" style="width: 100%" />
+  <InputNumber
+    v-model:value="values[props.for]"
+    :placeholder="props.placeholder"
+    :step="0.01"
+    style="width: 100%"
+  />
 </template>

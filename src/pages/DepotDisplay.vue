@@ -93,7 +93,12 @@ function triggerUpdate() {
           <strong>Fehler beim Laden des Depots:</strong>
         </p>
         <ul>
-          <li v-for="(error, index) in errors" :key="index">{{ error.message }}</li>
+          <li
+            v-for="(error, index) in errors"
+            :key="index"
+          >
+            {{ error.message }}
+          </li>
         </ul>
       </div>
       <div v-else-if="aborted">
@@ -112,22 +117,46 @@ function triggerUpdate() {
       </div>
     </div>
     <div class="button-container">
-      <Button htmlType="submit" type="primary" @click="toggleCreateStorage">
+      <Button
+        htmlType="submit"
+        type="primary"
+        @click="toggleCreateStorage"
+      >
         Add storage
       </Button>
-      <Button htmlType="submit" type="primary" @click="toggleCreateSpace">
+      <Button
+        htmlType="submit"
+        type="primary"
+        @click="toggleCreateSpace"
+      >
         Add space
       </Button>
-      <Button htmlType="submit" type="primary" @click="toggleCreateProduct">
+      <Button
+        htmlType="submit"
+        type="primary"
+        @click="toggleCreateProduct"
+      >
         Add product
       </Button>
     </div>
-    <CreateStorage v-if="showCreateStorage" :parentId="storage?.id" @close="toggleCreateStorage"
-      @triggerUpdate="triggerUpdate" />
-    <CreateSpace v-if="showCreateSpace" :storageId="storage?.id" @close="toggleCreateSpace"
-      @triggerUpdate="triggerUpdate" />
-    <CreateProduct v-if="showCreateProduct" :spaceId="storage?.id" @close="toggleCreateProduct"
-      @triggerUpdate="triggerUpdate" />
+    <CreateStorage
+      v-if="showCreateStorage"
+      :parentId="storage?.id"
+      @close="toggleCreateStorage"
+      @triggerUpdate="triggerUpdate"
+    />
+    <CreateSpace
+      v-if="showCreateSpace"
+      :storageId="storage?.id"
+      @close="toggleCreateSpace"
+      @triggerUpdate="triggerUpdate"
+    />
+    <CreateProduct
+      v-if="showCreateProduct"
+      :spaceId="storage?.id"
+      @close="toggleCreateProduct"
+      @triggerUpdate="triggerUpdate"
+    />
 
     <StoragesViewGrid :storages="reactiveStorages?.subStorages ?? []" />
     <SpacesViewGrid :spaces="reactiveStorages?.spaces ?? []" />

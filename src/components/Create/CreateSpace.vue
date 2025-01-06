@@ -17,32 +17,57 @@ function triggerUpdate() {
 </script>
 
 <template>
-  <div class="form-container" style="padding-top: 0px">
+  <div
+    class="form-container"
+    style="padding-top: 0px"
+  >
     <div class="header">
-      <Button type="text" class="close-button" @click="triggerUpdate">
+      <Button
+        type="text"
+        class="close-button"
+        @click="triggerUpdate"
+      >
         ✕
       </Button>
     </div>
-    <ApiForm :endpoint="endpoints.postSpace"
+    <ApiForm
+      :endpoint="endpoints.postSpace"
       :initialState="{ name: '', totalSize: 0, unit: '', description: '', storageId: props.storageId }"
-      @success="(data) => { triggerUpdate(); console.log(data); }" @failure="(err) => console.log(err)">
+      @success="(data) => { triggerUpdate(); console.log(data); }"
+      @failure="(err) => console.log(err)"
+    >
       <Divider>
         Name for the spaces
       </Divider>
-      <FormInput for="name" placeholder="Please enter the name of the Space" />
+      <FormInput
+        for="name"
+        placeholder="Please enter the name of the Space"
+      />
       <Divider>
         Size for the space:
       </Divider>
-      <FormInputNumber for="totalSize" placeholder="Please enter the size of the space" />
+      <FormInputNumber
+        for="totalSize"
+        placeholder="Please enter the size of the space"
+      />
       <Divider>
         Unit for the space:
       </Divider>
-      <FormInput for="unit" placeholder="Please enter the unit of the space" />
+      <FormInput
+        for="unit"
+        placeholder="Please enter the unit of the space"
+      />
       <Divider>
         Description
       </Divider>
-      <FormInputTextArea for="description" placeholder="Please enter the description for the space" />
-      <Button htmlType="submit" type="primary">
+      <FormInputTextArea
+        for="description"
+        placeholder="Please enter the description for the space"
+      />
+      <Button
+        htmlType="submit"
+        type="primary"
+      >
         Create Space
       </Button>
     </ApiForm>
