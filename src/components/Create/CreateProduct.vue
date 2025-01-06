@@ -6,10 +6,7 @@ import FormInput from "~/components/Form/FormInput.vue";
 import FormInputNumber from "~/components/Form/FormInputNumber.vue";
 import { Button, Divider } from "ant-design-vue";
 
-const emit = defineEmits(["triggerUpdate"]);
-function triggerUpdate() {
-  emit("triggerUpdate");
-}
+const emit = defineEmits(["success"]);
 </script>
 
 <template>
@@ -21,7 +18,7 @@ function triggerUpdate() {
       <Button
         type="text"
         class="close-button"
-        @click="triggerUpdate"
+        @click="$router.go(-1)"
       >
         ✕
       </Button>
@@ -29,7 +26,7 @@ function triggerUpdate() {
     <ApiForm
       :endpoint="endpoints.postProduct"
       :initialState="{ name: '', description: '', size: 0, unit: '' }"
-      @success="(data) => { triggerUpdate(); console.log(data); }"
+      @success="(data) => { console.log(data); emit('success') }"
       @failure="(err) => console.log(err)"
     >
       <Divider>

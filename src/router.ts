@@ -42,8 +42,8 @@ const routes = [
     },
   },
   {
-    path: "/depot/:id/newproduct",
-    component: () => import("./components/Create/CreateStorage.vue"),
+    path: "/product/create",
+    component: () => import("./pages/NewProduct.vue"),
     meta: {
       title: title("Creating Storage"),
     },

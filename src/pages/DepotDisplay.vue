@@ -27,7 +27,7 @@ const input = reactive({
 
 const { data, errors, aborted, loading, refetch } = useApi(endpoints.getStorage, input);
 
-const { data: products, refetch: refetchProducts } = useApi(endpoints.getProducts, {
+const { data: products, refetch: refetchProducts, errors: productErrors, loading: productsLoading, aborted: productsAborted } = useApi(endpoints.getProducts, {
   params: {},
 });
 
@@ -172,7 +172,15 @@ watch(
         :parentId="depotId"
         @update="refetch"
       />
-      <ProductViewGrid :products="products ?? []" />
+      <ProductViewGrid
+        :data="products"
+        :errors="productErrors"
+        :loading="productsLoading"
+        :refetch="refetchProducts"
+        :aborted="productsAborted"
+        :originStorageId="depotId"
+        @update="refetchProducts"
+      />
     </LayoutVertical>
   </PageContainer>
 </template>
