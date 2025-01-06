@@ -80,7 +80,7 @@ const handleDelete = async (id: string) => {
             duration: 3,
           });
         }
-      }
+      },
     );
   }
 };
