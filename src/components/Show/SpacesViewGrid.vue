@@ -6,6 +6,7 @@ import { SpaceArray } from "~/lib/api/config/endpoints";
 import { useApi } from "~/lib/api/useApi";
 import { endpoints } from "~/lib/api/config/endpoints";
 import { notification } from "ant-design-vue";
+import useItems from "ant-design-vue/es/menu/src/hooks/useItems";
 
 type SpaceType = z.infer<typeof SpaceArray>[number];
 
@@ -122,7 +123,7 @@ const handleDelete = async (id: string) => {
               <div>
                 <strong>Aktuelle Größe:</strong> {{ item.currentSize }} {{ item.unit }}
               </div>
-              <div>
+              <div v-if="item.products">
                 <strong>Produkte:</strong> {{ item.products.length }}
               </div>
             </div>

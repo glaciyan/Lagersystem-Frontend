@@ -27,7 +27,7 @@ export const Space = z.object({
   currentSize: z.number(),
   unit: z.string(),
   description: z.string(),
-  products: z.array(z.any()),
+  storedProducts: z.array(z.any()),
   storageId: z.string(),
   createdAt: z.string(),
   updatedAt: z.string().nullable(),

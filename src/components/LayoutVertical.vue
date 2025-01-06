@@ -4,9 +4,11 @@ import { Flex } from "ant-design-vue";
 const props = withDefaults(defineProps<{
   gap?: "small" | "middle" | "large";
   align?: string;
+  justify?: string;
 }>(), {
   gap: "small",
   align: "start",
+  justify: "normal",
 });
 </script>
 
@@ -14,6 +16,7 @@ const props = withDefaults(defineProps<{
   <Flex
     :gap="props.gap"
     :align="props.align"
+    :justify="props.justify"
     vertical
   >
     <slot />

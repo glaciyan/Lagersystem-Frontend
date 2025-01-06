@@ -1,84 +1,53 @@
 <script setup lang="ts">
-import LayoutVertical from "~/components/LayoutVertical.vue";
-import LayoutHorizontal from "~/components/LayoutHorizontal.vue";
 import PageContainer from "~/components/PageContainer";
-import DepotsViewGrid from "~/components/Show/DepotsViewGrid.vue";
-import CreateDepot from "~/components/Create/CreateDepot.vue";
 import { endpoints } from "~/lib/api/config/endpoints";
-import { Button } from "ant-design-vue";
 import { useApi } from "~/lib/api/useApi";
+import StatefulDisplay from "~/components/Show/StatefulDisplay.vue";
+import NewDepotButton from "~/components/NewDepotButton.vue";
+import ReloadIcon from "~/icons/ReloadIcon.vue";
+import { h } from "vue";
+import DepotCard from "~/components/StorageCard.vue";
+import { Button } from "ant-design-vue";
 
-const showCreateDepot = ref(false);
-const triggerUpdate = () => {
-  toggleShowCreateDepot();
-  refetch();
-};
-
-function toggleShowCreateDepot() {
-  showCreateDepot.value = !showCreateDepot.value;
-}
-
-const { data, errors, loading, abort, aborted, refetch } = useApi(endpoints.getStorages, {});
-
+const { data, errors, loading, aborted, refetch } = useApi(endpoints.getStorages, {});
 </script>
 
 <template>
   <PageContainer>
-    <LayoutVertical v-if="aborted">
-      <Button @click="refetch">
-        Retry
-      </Button>
+    <StatefulDisplay
+      :data
+      :errors
+      :loading
+      :aborted
+      :refetch
+    >
+      <template #createNew>
+        <NewDepotButton />
+      </template>
 
-      <div>Request was aborted.</div>
-    </LayoutVertical>
-    <CreateDepot
-      v-if="showCreateDepot"
-      @triggerUpdate="triggerUpdate"
-    />
-
-    <LayoutVertical v-else-if="loading">
-      <Button
-        danger
-        @click="abort"
-      >
-        Abort
-      </Button>
-      <div>Loading data, please wait...</div>
-    </LayoutVertical>
-
-    <LayoutVertical v-else-if="errors">
-      <Button @click="refetch">
-        Retry
-      </Button>
-      <div class="text-red">
-        <strong>Error:</strong> Failed to fetch data.
-      </div>
-    </LayoutVertical>
-
-    <LayoutVertical v-else>
-      <LayoutHorizontal>
-        <Button @click="refetch">
-          Retry
-        </Button>
-
-        <Button @click="toggleShowCreateDepot">
-          Add Depot
-        </Button>
-      </LayoutHorizontal>
-
-      <div v-if="data?.length">
-        <DepotsViewGrid :depots="data ?? []" />
-      </div>
-      <div v-else>
-        There is currently no depot, please add a new one and configure it!
-      </div>
-    </LayoutVertical>
+      <template #display>
+        <div class="flex flex-wrap content-center gap-6">
+          <h1 class="m-0 text-xl">
+            Depots
+          </h1>
+          <NewDepotButton />
+          <Button
+            :icon="h(ReloadIcon)"
+            @click="refetch"
+          >
+            Neu Laden
+          </Button>
+        </div>
+        <!-- <DepotsViewGrid :depots="data ?? []" /> -->
+        <div class="grid grid-cols-1 mt-6 gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
+          <DepotCard
+            v-for="depot of data"
+            :key="depot.id"
+            :depot="depot"
+            @update="refetch"
+          />
+        </div>
+      </template>
+    </StatefulDisplay>
   </PageContainer>
 </template>
-
-<style scoped>
-.error {
-  color: red;
-  margin-top: 10px;
-}
-</style>

@@ -1,3 +1,4 @@
+import CreateDepot from "./components/Create/CreateDepot.vue";
 import Index from "./pages/Index.vue";
 
 import title from "./title";
@@ -9,6 +10,13 @@ const routes = [
     component: Index,
     meta: {
       title: title("Home"),
+    },
+  },
+  {
+    path: "/depot/create",
+    component: CreateDepot,
+    meta: {
+      title: title("Creating Depot"),
     },
   },
   {

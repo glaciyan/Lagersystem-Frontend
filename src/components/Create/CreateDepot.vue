@@ -29,7 +29,10 @@ function handleButtonCLick() {
     <ApiForm
       :endpoint="endpoints.postStorage"
       :initialState="{ name: '', description: '' }"
-      @success="(data) => { handleButtonCLick(); console.log(data); }"
+      @success="async (data) => {
+        console.log(data);
+        await $router.push(`/depot/${data.id}`);
+      }"
       @failure="(err) => console.log(err)"
     >
       <Divider>
