@@ -23,7 +23,7 @@ import version from "~/version";
             Home
           </GLink>
         </FooterSection>
-        <FooterSection title="Data Sources">
+        <!-- <FooterSection title="Data Sources">
           <ExternalLink href="https://www.youtube.com">
             youtube
           </ExternalLink>
@@ -32,7 +32,7 @@ import version from "~/version";
           <ExternalLink href="https://www.youtube.com">
             youtube
           </ExternalLink>
-        </FooterSection>
+        </FooterSection> -->
         <FooterSection title="Other">
           <GLink to="https://github.com/Teamprojekt-Lagersystem/Lagersystem-Frontend">
             Github
@@ -45,9 +45,9 @@ import version from "~/version";
           v{{ version }}
         </p>
       </div>
-      <p className="mt-6 text-light-ternary">
+      <!-- <p className="mt-6 text-light-ternary">
         This is a student project. Placeholder.
-      </p>
+      </p> -->
     </PageContainer>
   </footer>
 </template>
