@@ -9,7 +9,7 @@
   "scripts": {
     "pre": "npm run gen:version",
     "dev": "npm run pre && vite --mode development",
-    "build": "npm run pre && vue-tsc --noEmit && vite build --mode production",
+    "build": "npm run pre && vue-tsc --noEmit && vite build",
     "start": "vite preview",
     "prod": "npm run build && npm run start",
     "lint": "eslint ./src ./uno.config.ts ./vite.config.ts --max-warnings=0",
