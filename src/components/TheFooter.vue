@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import PageContainer from "./PageContainer";
 import FooterSection from "./FooterSection.vue";
-import ExternalLink from "./ExternalLink.vue";
 import GLink from "./GLink";
 import LogoWithLabel from "~/assets/logo-label.svg?component";
 import version from "~/version";
