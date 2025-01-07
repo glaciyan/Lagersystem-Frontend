@@ -22,4 +22,7 @@ export const Errors = createErrors({
   FR_API_FETCH_FAILED: {
     message: "Unable to get a connection to the API",
   },
+  FR_FORM_ASSIGN_SPACE: {
+    message: "The requested assignment is too big for this space",
+  },
 });

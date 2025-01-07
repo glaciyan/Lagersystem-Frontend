@@ -9,7 +9,7 @@ import { match } from "~/lib/api/match";
 import { Product } from "~/lib/api/types";
 import { notification } from "ant-design-vue";
 
-const props = defineProps<{ product: z.infer<typeof Product> }>();
+const props = defineProps<{ product: z.infer<typeof Product>; displayOnly?: boolean }>();
 const emit = defineEmits(["update", "open"]);
 
 const handleDelete = async () => {
@@ -37,7 +37,7 @@ const handleDelete = async () => {
 
 <template>
   <div
-    class="group min-w-[16rem] flex flex-col items-stretch justify-between rounded-md ring-1 ring-dark-1 transition-shadow hover:cursor-pointer hover:ring-1 hover:ring-cyan"
+    :class="['group max-w-[18rem] min-w-[16rem] flex flex-col items-stretch justify-between rounded-md ring-1 ring-dark-1 transition-shadow hover:ring-1 hover:ring-cyan', {'hover:cursor-pointer': !displayOnly}]"
   >
     <div @click="emit('open')">
       <div class="m-0 overflow-hidden text-ellipsis border-b border-dark-1 px-3 py-2 text-lg text-light-1">
@@ -53,11 +53,14 @@ const handleDelete = async () => {
         {{ props.product.description }}
       </p>
     </div>
-    <div class="h-[2.5rem] w-full flex flex-row items-stretch self-end border-t border-dark-1 opacity-0 transition-all group-hover:opacity-100">
+    <div
+      v-if="!displayOnly"
+      class="h-[2.5rem] w-full flex flex-row items-stretch self-end border-t border-dark-1 opacity-0 transition-all group-hover:opacity-100"
+    >
       <button class="w-full overflow-hidden border-r border-dark-1 transition-colors">
         <!-- TODO this should lead to the edit page? -->
         <RouterLink :to="`/product/${props.product.id}`">
-          <div class="flex items-center justify-center gap-2 text-base text-gray-4 hover:text-blue">
+          <div class="flex items-center justify-center gap-2 text-base text-gray-4 line-through hover:text-blue">
             <EditIcon class="!size-4" />
             Bearbeiten
           </div>

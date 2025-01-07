@@ -6,6 +6,7 @@ import AddButton from "../AddButton.vue";
 import { Product, ProductArray } from "~/lib/api/types";
 import { z } from "zod";
 import ProductCard from "../ProductCard.vue";
+import AssignButton from "../AssignButton.vue";
 
 const selectedProduct = ref < z.infer<typeof Product> | null>(null);
 const openModal = ref(false);
@@ -30,6 +31,9 @@ const props = defineProps<{ data: z.infer<typeof ProductArray> | null; errors: A
       <AddButton :to="`/product/create${props.originStorageId ? `?origin=${props.originStorageId}` : ''}`">
         Produkt Erstellen
       </AddButton>
+      <AssignButton :to="`/product/assign${props.originStorageId ? `?origin=${props.originStorageId}` : ''}`">
+        Produkt Zusweisen
+      </AssignButton>
     </template>
 
     <template #display>

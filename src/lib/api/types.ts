@@ -8,14 +8,25 @@ export const ErrorSchema = z.object({
 
 export const ErrorResponse = z.object({ errors: z.array(ErrorSchema) });
 
+export const Product = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  size: z.number(),
+  unit: z.optional(z.string()),
+  attributes: z.record(z.any()),
+  createdAt: z.string(),
+  updatedAt: z.string().nullable(),
+});
+
 export const Space = z.object({
   id: z.string(),
   name: z.string(),
   totalSize: z.number(),
   currentSize: z.number(),
-  unit: z.string(),
+  unit: z.optional(z.string()),
   description: z.string(),
-  storedProducts: z.array(z.any()),
+  storedProducts: z.array(Product),
   storageId: z.string(),
   createdAt: z.string(),
   updatedAt: z.string().nullable(),
@@ -27,6 +38,7 @@ const baseStorage = z.object({
   id: z.string(),
   name: z.string(),
   description: z.string(),
+  parentId: z.nullable(z.string()),
   spaces: SpaceArray,
   // subStorages: z.array(z.any()),
   createdAt: z.string(),
@@ -42,17 +54,6 @@ export const Storage: z.ZodType<StorageType> = baseStorage.extend({
 });
 
 export const StorageArray = z.array(Storage);
-
-export const Product = z.object({
-  id: z.string(),
-  name: z.string(),
-  description: z.string(),
-  size: z.number(),
-  unit: z.string(),
-  attributes: z.record(z.any()),
-  createdAt: z.string(),
-  updatedAt: z.string().nullable(),
-});
 
 export const ProductArray = z.array(Product);
 

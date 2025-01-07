@@ -48,6 +48,7 @@ export async function api<Q extends Query = {},
             };
           }
           else {
+            console.error(apiDataParse.error);
             return {
               errors: [Errors.FR_API_INVALID_FORMAT],
             };

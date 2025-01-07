@@ -49,6 +49,13 @@ const routes = [
     },
   },
   {
+    path: "/product/assign",
+    component: () => import("./pages/AssignProduct.vue"),
+    meta: {
+      title: title("Creating Storage"),
+    },
+  },
+  {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: () => import("./pages/NotFound.vue"),

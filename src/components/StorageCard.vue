@@ -55,7 +55,7 @@ const handleDelete = async () => {
       <button class="w-full overflow-hidden border-r border-dark-1 transition-colors">
         <!-- TODO this should lead to the edit page? -->
         <RouterLink :to="`/depot/${props.storage.id}`">
-          <div class="flex items-center justify-center gap-2 text-base text-gray-4 hover:text-blue">
+          <div class="flex items-center justify-center gap-2 text-base text-gray-4 line-through hover:text-blue">
             <EditIcon class="!size-4" />
             Bearbeiten
           </div>

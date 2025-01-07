@@ -12,6 +12,7 @@ type Props = {
   initialState: B;
   params?: P;
   query?: Q;
+  validation?: (values: B, errors: Errors) => any;
 };
 
 const props = defineProps<Props>();
@@ -53,6 +54,7 @@ const onSubmit = (values: B) => {
   <FormManager
     v-model="form"
     :initialValues="props.initialState"
+    :validation="validation"
     @submit="onSubmit"
   >
     <LinkedForm v-bind="$attrs">

@@ -7,7 +7,7 @@ import { api } from "~/lib/api/api";
 import { endpoints } from "~/lib/api/config/endpoints";
 import { match } from "~/lib/api/match";
 import { Space } from "~/lib/api/types";
-import { notification } from "ant-design-vue";
+import { notification, Progress } from "ant-design-vue";
 
 const props = defineProps<{ space: z.infer<typeof Space> }>();
 const emit = defineEmits(["update", "open"]);
@@ -42,9 +42,15 @@ const handleDelete = async () => {
     <div @click="emit('open')">
       <div class="m-0 overflow-hidden text-ellipsis border-b border-dark-1 px-3 py-2 text-lg text-light-1">
         {{ props.space.name }}
+      </div>
+      <div class="m-0 overflow-hidden text-ellipsis border-b border-dark-1 px-3 py-2 text-lg text-light-1">
+        Produkte: {{ props.space.storedProducts.length }}
         <span class="px-3 text-base text-light-9">
-          Größe: {{ props.space.totalSize }}{{ props.space.unit }}
+          {{ props.space.currentSize }}{{ props.space.unit }}/{{ props.space.totalSize }}{{ props.space.unit }}
         </span>
+        <div>
+          <Progress :percent="Math.round(props.space.currentSize/props.space.totalSize * 100)" />
+        </div>
       </div>
       <p
         v-if="props.space.description"
@@ -57,7 +63,7 @@ const handleDelete = async () => {
       <button class="w-full overflow-hidden border-r border-dark-1 transition-colors">
         <!-- TODO this should lead to the edit page? -->
         <RouterLink :to="`/space/${props.space.id}`">
-          <div class="flex items-center justify-center gap-2 text-base text-gray-4 hover:text-blue">
+          <div class="flex items-center justify-center gap-2 text-base text-gray-4 line-through hover:text-blue">
             <EditIcon class="!size-4" />
             Bearbeiten
           </div>

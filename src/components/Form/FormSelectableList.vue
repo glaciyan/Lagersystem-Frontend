@@ -11,6 +11,9 @@ function selectItem(id: string) {
 
 <template>
   <div>
-    <slot :onSelect="selectItem" :selectedId="values[props.for]" />
+    <slot
+      :onSelect="selectItem"
+      :selectedId="values[props.for]"
+    />
   </div>
 </template>

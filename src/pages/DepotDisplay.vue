@@ -6,10 +6,9 @@ import SubStoragesViewGrid from "~/components/Show/SubStoragesViewGrid.vue";
 import SpacesViewGrid from "~/components/Show/SpacesViewGrid.vue";
 import ProductViewGrid from "~/components/Show/ProductViewGrid.vue";
 import LayoutVertical from "~/components/LayoutVertical.vue";
-import { notification } from "ant-design-vue";
-import ApiForm from "~/components/Form/ApiForm.vue";
-import FormInputNumber from "~/components/Form/FormInputNumber.vue";
-import FormSelectableList from "~/components/Form/FormSelectableList.vue";
+import { Button } from "ant-design-vue";
+import { RouterLink } from "vue-router";
+import ReturnIcon from "~/icons/ReturnIcon.vue";
 
 const route = useRoute();
 const depotId = ref(route.params.id as string);
@@ -115,6 +114,17 @@ watch(
         <p>Depot nicht gefunden oder Fehler beim Laden der Daten...</p>
       </div>
     </div>
+    <RouterLink
+      v-if="data && data.parentId"
+      :to="`/depot/${data!.parentId}`"
+    >
+      <Button class="!mx-0">
+        <div class="flex flex-wrap items-center justify-center gap-2">
+          <ReturnIcon />
+          Zurück zum Parent
+        </div>
+      </Button>
+    </RouterLink>
     <!-- <div class="button-container">
       <Button
         htmlType="submit"
