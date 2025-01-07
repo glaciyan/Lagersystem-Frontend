@@ -6,6 +6,10 @@ import SubStoragesViewGrid from "~/components/Show/SubStoragesViewGrid.vue";
 import SpacesViewGrid from "~/components/Show/SpacesViewGrid.vue";
 import ProductViewGrid from "~/components/Show/ProductViewGrid.vue";
 import LayoutVertical from "~/components/LayoutVertical.vue";
+import { notification } from "ant-design-vue";
+import ApiForm from "~/components/Form/ApiForm.vue";
+import FormInputNumber from "~/components/Form/FormInputNumber.vue";
+import FormSelectableList from "~/components/Form/FormSelectableList.vue";
 
 const route = useRoute();
 const depotId = ref(route.params.id as string);
@@ -197,5 +201,44 @@ watch(
 
 button {
   margin: 10px;
+}
+
+.layout-horizontal {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Vertical Layout */
+.layout-vertical {
+  width: 45%;
+}
+
+/* Selectable List Styling */
+.selectable-list {
+  list-style: none;
+  color: black;
+  padding: 0;
+}
+
+.selectable-list li {
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.selectable-list li:hover {
+  background-color: #e6f7ff;
+  transform: scale(1.02);
+}
+
+.selectable-list li.selected {
+  background-color: #1890ff;
 }
 </style>
