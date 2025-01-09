@@ -21,10 +21,9 @@ const routes = [
   },
   {
     path: "/storage/:id",
-    name: "Depot",
     component: () => import("./pages/StorageDisplay.vue"),
     meta: {
-      title: title("Depot"),
+      title: title("Storage"),
     },
   },
   {
