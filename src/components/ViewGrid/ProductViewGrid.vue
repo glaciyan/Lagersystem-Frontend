@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import StatefulDisplay from "~/components/Show/StatefulDisplay.vue";
+import StatefulDisplay from "~/components/ViewGrid/StatefulDisplay.vue";
 import { Modal } from "ant-design-vue";
 import { ApiError } from "~/lib/api/core";
-import AddButton from "../AddButton.vue";
+import AddButton from "../Buttons/AddButton.vue";
 import { Product, ProductArray } from "~/lib/api/types";
 import { z } from "zod";
-import ProductCard from "../ProductCard.vue";
-import AssignButton from "../AssignButton.vue";
+import ProductCard from "../ItemCard/ProductCard.vue";
+import AssignButton from "../Buttons/AssignButton.vue";
+import ViewGridHeader from "./ViewGridHeader.vue";
+
+const emit = defineEmits(["update"]);
+
+const props = defineProps<{ data: z.infer<typeof ProductArray> | null; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch: () => void; originStorageId?: string }>();
 
 const selectedProduct = ref < z.infer<typeof Product> | null>(null);
 const openModal = ref(false);
-// const props = defineProps<{ id: string }>();
-
-// const { data, errors, loading, aborted, refetch } = useApi(endpoints.getStorage, { params: { id: props.id } });
-const emit = defineEmits(["update"]);
-const props = defineProps<{ data: z.infer<typeof ProductArray> | null; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch: () => void; originStorageId?: string }>();
 </script>
 
 <template>
@@ -27,13 +27,18 @@ const props = defineProps<{ data: z.infer<typeof ProductArray> | null; errors: A
     emptyText="Keine Produkte vorhanden."
     itemName="Produkte"
   >
-    <template #createNew>
-      <AddButton :to="`/product/create${props.originStorageId ? `?origin=${props.originStorageId}` : ''}`">
-        Produkt Erstellen
-      </AddButton>
-      <AssignButton :to="`/product/assign${props.originStorageId ? `?origin=${props.originStorageId}` : ''}`">
-        Produkt Zusweisen
-      </AssignButton>
+    <template #header>
+      <ViewGridHeader
+        header="Produkte"
+        :refetch="refetch"
+      >
+        <AddButton :to="`/product/create${props.originStorageId ? `?origin=${props.originStorageId}` : ''}`">
+          Produkt Erstellen
+        </AddButton>
+        <AssignButton :to="`/product/assign${props.originStorageId ? `?origin=${props.originStorageId}` : ''}`">
+          Produkt Zusweisen
+        </AssignButton>
+      </ViewGridHeader>
     </template>
 
     <template #display>
@@ -51,6 +56,7 @@ const props = defineProps<{ data: z.infer<typeof ProductArray> | null; errors: A
       </div>
     </template>
   </StatefulDisplay>
+
   <Modal
     v-model:open="openModal"
     title="Produktdetails"

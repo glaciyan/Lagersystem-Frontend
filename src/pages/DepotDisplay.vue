@@ -2,9 +2,9 @@
 import PageContainer from "~/components/PageContainer";
 import { endpoints } from "~/lib/api/config/endpoints";
 import { useApi } from "~/lib/api/useApi";
-import SubStoragesViewGrid from "~/components/Show/SubStoragesViewGrid.vue";
-import SpacesViewGrid from "~/components/Show/SpacesViewGrid.vue";
-import ProductViewGrid from "~/components/Show/ProductViewGrid.vue";
+import SubStoragesViewGrid from "~/components/ViewGrid/SubStoragesViewGrid.vue";
+import SpacesViewGrid from "~/components/ViewGrid/SpacesViewGrid.vue";
+import ProductViewGrid from "~/components/ViewGrid/ProductViewGrid.vue";
 import LayoutVertical from "~/components/LayoutVertical.vue";
 import { Button } from "ant-design-vue";
 import { RouterLink } from "vue-router";

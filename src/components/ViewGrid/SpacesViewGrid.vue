@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import StatefulDisplay from "~/components/Show/StatefulDisplay.vue";
+import StatefulDisplay from "~/components/ViewGrid/StatefulDisplay.vue";
 import { Modal } from "ant-design-vue";
 import { ApiError } from "~/lib/api/core";
-import AddButton from "../AddButton.vue";
-import SpaceCard from "../SpaceCard.vue";
+import AddButton from "../Buttons/AddButton.vue";
+import SpaceCard from "../ItemCard/SpaceCard.vue";
 import { Space, Storage } from "~/lib/api/types";
 import { z } from "zod";
-import ProductCard from "../ProductCard.vue";
+import ProductCard from "../ItemCard/ProductCard.vue";
+import ViewGridHeader from "./ViewGridHeader.vue";
+
+const emit = defineEmits(["update"]);
+
+const props = defineProps<{ data: z.infer<typeof Storage> | null; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch: () => void; parentId: string }>();
 
 const selectedSpace = ref < z.infer<typeof Space> | null>(null);
 const openModal = ref(false);
-// const props = defineProps<{ id: string }>();
-
-// const { data, errors, loading, aborted, refetch } = useApi(endpoints.getStorage, { params: { id: props.id } });
-const emit = defineEmits(["update"]);
-const props = defineProps<{ data: z.infer<typeof Storage> | null; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch: () => void; parentId: string }>();
 </script>
 
 <template>
@@ -27,10 +27,15 @@ const props = defineProps<{ data: z.infer<typeof Storage> | null; errors: ApiErr
     emptyText="Keine Spaces vorhanden."
     itemName="Spaces"
   >
-    <template #createNew>
-      <AddButton :to="`/depot/${parentId}/newspace`">
-        Space Hinzufügen
-      </AddButton>
+    <template #header>
+      <ViewGridHeader
+        header="Spaces"
+        :refetch="refetch"
+      >
+        <AddButton :to="`/depot/${parentId}/newspace`">
+          Space Hinzufügen
+        </AddButton>
+      </ViewGridHeader>
     </template>
 
     <template #display>
@@ -48,6 +53,7 @@ const props = defineProps<{ data: z.infer<typeof Storage> | null; errors: ApiErr
       </div>
     </template>
   </StatefulDisplay>
+
   <Modal
     v-model:open="openModal"
     title="Space Details"
