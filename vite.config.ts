@@ -4,8 +4,9 @@ import vue from "@vitejs/plugin-vue";
 import SVGLoader from "vite-svg-loader";
 import AutoImport from "unplugin-auto-import/vite";
 import UnoCSS from "unocss/vite";
+import { visualizer } from "rollup-plugin-visualizer";
 
-// https://vitejs.dev/config/
+// https://vitejs.dev/config
 export default defineConfig({
   resolve: {
     alias: {
@@ -19,6 +20,9 @@ export default defineConfig({
     AutoImport({
       imports: ["vue", "vue-router", "@vueuse/core"],
       dts: true,
+    }),
+    visualizer({
+      filename: "status.html",
     }),
   ],
 });

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { InputProps } from "ant-design-vue";
-import { Input } from "ant-design-vue";
+import { Textarea, type InputProps } from "ant-design-vue";
 
 const props = defineProps<{ for: string; placeholder?: string } & InputProps>();
 const values = inject("values") as Ref<any>;
 </script>
 
 <template>
-  <Input
+  <Textarea
     v-model:value="values[props.for]"
+    v-bind="$attrs"
     :placeholder="props.placeholder"
   />
 </template>

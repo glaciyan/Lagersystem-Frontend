@@ -1,15 +1,58 @@
+import CreateDepot from "./components/Create/CreateDepot.vue";
 import Index from "./pages/Index.vue";
 
 import title from "./title";
 import { createRouter, createWebHistory } from "vue-router";
 
-// Define all routes here
 const routes = [
   {
     path: "/",
     component: Index,
     meta: {
       title: title("Home"),
+    },
+  },
+  {
+    path: "/depot/create",
+    component: CreateDepot,
+    meta: {
+      title: title("Creating Depot"),
+    },
+  },
+  {
+    path: "/depot/:id",
+    name: "Depot",
+    component: () => import("./pages/DepotDisplay.vue"),
+    meta: {
+      title: title("Depot"),
+    },
+  },
+  {
+    path: "/depot/:id/newstorage",
+    component: () => import("./pages/NewStorage.vue"),
+    meta: {
+      title: title("Creating Storage"),
+    },
+  },
+  {
+    path: "/depot/:id/newspace",
+    component: () => import("./pages/NewSpace.vue"),
+    meta: {
+      title: title("Creating Storage"),
+    },
+  },
+  {
+    path: "/product/create",
+    component: () => import("./pages/NewProduct.vue"),
+    meta: {
+      title: title("Creating Storage"),
+    },
+  },
+  {
+    path: "/product/assign",
+    component: () => import("./pages/AssignProduct.vue"),
+    meta: {
+      title: title("Creating Storage"),
     },
   },
   {
@@ -31,7 +74,6 @@ const router = createRouter({
 });
 
 router.afterEach((to) => {
-  // Take the optional title value from the route and set it as the page title
   if (to.meta.title) {
     document.title = to.meta.title as string;
   }

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import PageContainer from "./PageContainer";
 import FooterSection from "./FooterSection.vue";
-import ExternalLink from "./ExternalLink.vue";
 import GLink from "./GLink";
 import LogoWithLabel from "~/assets/logo-label.svg?component";
 import version from "~/version";
@@ -23,7 +22,7 @@ import version from "~/version";
             Home
           </GLink>
         </FooterSection>
-        <FooterSection title="Data Sources">
+        <!-- <FooterSection title="Data Sources">
           <ExternalLink href="https://www.youtube.com">
             youtube
           </ExternalLink>
@@ -32,7 +31,7 @@ import version from "~/version";
           <ExternalLink href="https://www.youtube.com">
             youtube
           </ExternalLink>
-        </FooterSection>
+        </FooterSection> -->
         <FooterSection title="Other">
           <GLink to="https://github.com/Teamprojekt-Lagersystem/Lagersystem-Frontend">
             Github
@@ -41,13 +40,13 @@ import version from "~/version";
       </div>
       <div className="flex mt-24 items-center">
         <LogoWithLabel class="mr-2" />
-        <p className="mr-2">
+        <p className="mr-2 my-0">
           v{{ version }}
         </p>
       </div>
-      <p className="mt-6 text-light-ternary">
+      <!-- <p className="mt-6 text-light-ternary">
         This is a student project. Placeholder.
-      </p>
+      </p> -->
     </PageContainer>
   </footer>
 </template>
