@@ -25,7 +25,6 @@ const openModal = ref(false);
     :aborted
     :refetch
     emptyText="Keine Produkte vorhanden."
-    itemName="Produkte"
   >
     <template #header>
       <ViewGridHeader

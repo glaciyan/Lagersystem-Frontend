@@ -25,7 +25,6 @@ const openModal = ref(false);
     :aborted
     :refetch
     emptyText="Keine Spaces vorhanden."
-    itemName="Spaces"
   >
     <template #header>
       <ViewGridHeader
