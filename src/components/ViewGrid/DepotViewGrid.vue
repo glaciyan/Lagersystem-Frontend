@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { endpoints } from "~/lib/api/config/endpoints";
 import { useApi } from "~/lib/api/useApi";
-import StatefulDisplay from "~/components/Show/StatefulDisplay.vue";
-import StorageCard from "../StorageCard.vue";
-import AddButton from "../AddButton.vue";
+import StatefulDisplay from "~/components/ViewGrid/StatefulDisplay.vue";
+import StorageCard from "../ItemCard/StorageCard.vue";
+import AddButton from "../Buttons/AddButton.vue";
+import ViewGridHeader from "./ViewGridHeader.vue";
 
 const { data, errors, loading, aborted, refetch } = useApi(endpoints.getStorages, {});
 </script>
@@ -16,12 +17,16 @@ const { data, errors, loading, aborted, refetch } = useApi(endpoints.getStorages
     :aborted
     :refetch
     emptyText="Keine Depots vorhanden"
-    itemName="Depot"
   >
-    <template #createNew>
-      <AddButton to="/depot/create">
-        Depot Erstellen
-      </AddButton>
+    <template #header>
+      <ViewGridHeader
+        title="Depots"
+        :refetch="refetch"
+      >
+        <AddButton to="/depot/create">
+          Depot Erstellen
+        </AddButton>
+      </ViewGridHeader>
     </template>
 
     <template #display>

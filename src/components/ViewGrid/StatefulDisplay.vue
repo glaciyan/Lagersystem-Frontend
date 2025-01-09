@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import LayoutVertical from "~/components/LayoutVertical.vue";
-import { Button, Empty, Result, Spin } from "ant-design-vue";
+import { Empty, Result, Spin } from "ant-design-vue";
 import ClosedCircle from "~/icons/ClosedCircle.vue";
-import ReloadIcon from "~/icons/ReloadIcon.vue";
-import { h } from "vue";
 import { ApiError } from "~/lib/api/core";
+import ReloadButton from "../Buttons/ReloadButton.vue";
 
-const props = withDefaults(defineProps<{ data: any | any[] | null; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch: () => void; emptyText?: string; itemName: string }>(), {
-  emptyText: "Keine Daten vorhanden.",
-});
+const props = defineProps<{ data: any | any[] | null; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch?: (() => void); emptyText?: string }>();
 </script>
 
 <template>
@@ -23,12 +20,7 @@ const props = withDefaults(defineProps<{ data: any | any[] | null; errors: ApiEr
         title="Die Anfrage wurde abgebrochen."
       >
         <template #extra>
-          <Button
-            :icon="h(ReloadIcon)"
-            @click="props.refetch"
-          >
-            Neu Laden
-          </Button>
+          <ReloadButton :refetch="props.refetch" />
         </template>
       </Result>
     </LayoutVertical>
@@ -59,12 +51,7 @@ const props = withDefaults(defineProps<{ data: any | any[] | null; errors: ApiEr
         title="Es gab Fehler bei der Anfrage."
       >
         <template #extra>
-          <Button
-            :icon="h(ReloadIcon)"
-            @click="props.refetch"
-          >
-            Neu Laden
-          </Button>
+          <ReloadButton :refetch="props.refetch" />
           <LayoutVertical
             class="my-6 rounded-md bg-dark-6 p-6"
           >
@@ -84,19 +71,9 @@ const props = withDefaults(defineProps<{ data: any | any[] | null; errors: ApiEr
     </LayoutVertical>
 
     <LayoutVertical v-else>
-      <div class="flex flex-wrap content-center gap-6">
-        <h1 class="m-0 text-xl">
-          {{ props.itemName }}
-        </h1>
-        <slot name="createNew" />
-        <Button
-          :icon="h(ReloadIcon)"
-          @click="refetch"
-        >
-          Neu Laden
-        </Button>
-      </div>
       <!-- WE GOT DATA -->
+      <slot name="header" />
+
       <div v-if="props.data?.length">
         <slot name="display" />
       </div>
@@ -111,7 +88,7 @@ const props = withDefaults(defineProps<{ data: any | any[] | null; errors: ApiEr
           <Empty :image="Empty.PRESENTED_IMAGE_SIMPLE">
             <template #description>
               <span class="text-light-5">
-                {{ emptyText }}
+                {{ props.emptyText }}
               </span>
             </template>
           </Empty>
