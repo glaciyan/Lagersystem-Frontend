@@ -18,7 +18,7 @@ const resultErrors = ref<ApiError[]>([]);
 
 <template>
   <PageContainer>
-    <RouterLink :to="`/depot/${$route.query.origin}`">
+    <RouterLink :to="`/storage/${$route.query.origin}`">
       <Button>
         <div class="flex flex-wrap items-center justify-center gap-2">
           <ReturnIcon />
@@ -34,7 +34,7 @@ const resultErrors = ref<ApiError[]>([]);
           description: `Produkt erfolgreich zugewiesen: ${data.productName}`,
           duration: 3,
         });
-        return $router.push(`/depot/${$route.query.origin}`);
+        return $router.push(`/storage/${$route.query.origin}`);
       }"
       @fail="(errors) => {
         notification.error({

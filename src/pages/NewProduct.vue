@@ -6,7 +6,7 @@ import CreateProduct from "~/components/Create/CreateProduct.vue";
   <CreateProduct
     @success="async () => {
       if ($route.query.origin) {
-        return $router.push(`/depot/${$route.query.origin}`);
+        return $router.push(`/storage/${$route.query.origin}`);
       } else {
         return $router.push('/');
       }

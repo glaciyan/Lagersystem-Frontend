@@ -31,7 +31,7 @@ const openModal = ref(false);
         title="Spaces"
         :refetch="refetch"
       >
-        <AddButton :to="`/depot/${parentId}/newspace`">
+        <AddButton :to="`/storage/${parentId}/newspace`">
           Space Hinzufügen
         </AddButton>
       </ViewGridHeader>

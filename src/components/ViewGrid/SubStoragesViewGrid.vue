@@ -28,7 +28,7 @@ const displayData = computed(() => props.data?.subStorages ?? []);
         title="Storages"
         :refetch="props.refetch"
       >
-        <AddButton :to="`/depot/${parentId}/newstorage`">
+        <AddButton :to="`/storage/${parentId}/newstorage`">
           Storage Hinzufügen
         </AddButton>
       </ViewGridHeader>

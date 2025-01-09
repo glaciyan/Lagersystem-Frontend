@@ -14,6 +14,6 @@ watch(() => route.params.id, (newId) => {
 <template>
   <CreateStorage
     :parentId="parentId"
-    @success="async () => await $router.push(`/depot/${parentId}`)"
+    @success="async () => await $router.push(`/storage/${parentId}`)"
   />
 </template>

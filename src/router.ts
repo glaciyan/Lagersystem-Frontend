@@ -13,29 +13,28 @@ const routes = [
     },
   },
   {
-    path: "/depot/create",
+    path: "/storage/create",
     component: CreateDepot,
     meta: {
       title: title("Creating Depot"),
     },
   },
   {
-    path: "/depot/:id",
-    name: "Depot",
-    component: () => import("./pages/DepotDisplay.vue"),
+    path: "/storage/:id",
+    component: () => import("./pages/StorageDisplay.vue"),
     meta: {
-      title: title("Depot"),
+      title: title("Storage"),
     },
   },
   {
-    path: "/depot/:id/newstorage",
+    path: "/storage/:id/newstorage",
     component: () => import("./pages/NewStorage.vue"),
     meta: {
       title: title("Creating Storage"),
     },
   },
   {
-    path: "/depot/:id/newspace",
+    path: "/storage/:id/newspace",
     component: () => import("./pages/NewSpace.vue"),
     meta: {
       title: title("Creating Storage"),
