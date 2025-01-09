@@ -40,7 +40,7 @@ const handleDelete = async () => {
     class="group min-w-[16rem] flex flex-col items-stretch justify-between rounded-md ring-1 ring-dark-1 transition-shadow hover:cursor-pointer hover:ring-1 hover:ring-cyan"
   >
     <RouterLink
-      :to="`/depot/${props.storage.id}`"
+      :to="`/storage/${props.storage.id}`"
     >
       <p class="m-0 overflow-hidden text-ellipsis border-b border-dark-1 px-3 py-2 text-lg text-light-1">
         {{ props.storage.name }}
@@ -54,7 +54,7 @@ const handleDelete = async () => {
     <div class="h-[2.5rem] w-full flex flex-row items-stretch self-end border-t border-dark-1 opacity-0 transition-all group-hover:opacity-100">
       <button class="w-full overflow-hidden border-r border-dark-1 transition-colors">
         <!-- TODO this should lead to the edit page? -->
-        <RouterLink :to="`/depot/${props.storage.id}`">
+        <RouterLink :to="`/storage/${props.storage.id}`">
           <div class="flex items-center justify-center gap-2 text-base text-gray-4 line-through hover:text-blue">
             <EditIcon class="!size-4" />
             Bearbeiten

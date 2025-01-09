@@ -31,7 +31,7 @@ function handleButtonCLick() {
       :initialState="{ name: '', description: '' }"
       @success="async (data) => {
         console.log(data);
-        await $router.push(`/depot/${data.id}`);
+        await $router.push(`/storage/${data.id}`);
       }"
       @failure="(err) => console.log(err)"
     >

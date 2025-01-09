@@ -116,7 +116,7 @@ watch(
     </div>
     <RouterLink
       v-if="data && data.parentId"
-      :to="`/depot/${data!.parentId}`"
+      :to="`/storage/${data!.parentId}`"
     >
       <Button class="!mx-0">
         <div class="flex flex-wrap items-center justify-center gap-2">
