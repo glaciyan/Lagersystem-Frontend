@@ -21,7 +21,7 @@ const { data: storage, loading: storageLoading, errors: storageErrors } = useApi
 
 const selectProductSize = ref(NaN);
 
-const filteredSpaces = computed(() => Number.isNaN(selectProductSize.value) ? [] : storage.value?.spaces.filter(s => s.totalSize > s.currentSize + selectProductSize.value));
+const filteredSpaces = computed(() => Number.isNaN(selectProductSize.value) ? [] : storage.value?.spaces.filter(s => s.totalSize - (s.currentSize + selectProductSize.value) >= 0));
 watch(filteredSpaces, (newval) => {
   console.log(newval);
 });
