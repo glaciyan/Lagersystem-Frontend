@@ -28,7 +28,7 @@ const openModal = ref(false);
   >
     <template #header>
       <ViewGridHeader
-        header="Produkte"
+        title="Produkte"
         :refetch="refetch"
       >
         <AddButton :to="`/product/create${props.originStorageId ? `?origin=${props.originStorageId}` : ''}`">

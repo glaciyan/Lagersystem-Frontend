@@ -28,7 +28,7 @@ const openModal = ref(false);
   >
     <template #header>
       <ViewGridHeader
-        header="Spaces"
+        title="Spaces"
         :refetch="refetch"
       >
         <AddButton :to="`/depot/${parentId}/newspace`">

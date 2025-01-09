@@ -20,7 +20,7 @@ const { data, errors, loading, aborted, refetch } = useApi(endpoints.getStorages
   >
     <template #header>
       <ViewGridHeader
-        header="Depots"
+        title="Depots"
         :refetch="refetch"
       >
         <AddButton to="/depot/create">
