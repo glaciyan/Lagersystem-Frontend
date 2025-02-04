@@ -8,6 +8,7 @@ import { endpoints } from "~/lib/api/config/endpoints";
 import { match } from "~/lib/api/match";
 import { Storage } from "~/lib/api/types";
 import { notification } from "ant-design-vue";
+import FolderIcon from "~/icons/FolderIcon.vue";
 
 const props = defineProps<{ storage: z.infer<typeof Storage> }>();
 const emit = defineEmits(["update"]);
@@ -37,13 +38,13 @@ const handleDelete = async () => {
 
 <template>
   <div
-    class="group min-w-[16rem] flex flex-col items-stretch justify-between rounded-md ring-1 ring-dark-1 transition-shadow hover:cursor-pointer hover:ring-1 hover:ring-cyan"
+    class="group min-w-[16rem] flex flex-col items-stretch justify-between rounded-md ring-3 ring-dark-1 transition-shadow hover:cursor-pointer hover:ring-2 hover:ring-orange"
   >
     <RouterLink
       :to="`/storage/${props.storage.id}`"
     >
-      <p class="m-0 overflow-hidden text-ellipsis border-b border-dark-1 px-3 py-2 text-lg text-light-1">
-        {{ props.storage.name }}
+      <p class="m-0 flex gap-2 overflow-hidden text-ellipsis px-3 py-2 text-lg text-light-1">
+        <FolderIcon /> {{ props.storage.name }}
       </p>
       <p
         class="overflow-hidden text-ellipsis px-3 py-2 text-base text-light-9"

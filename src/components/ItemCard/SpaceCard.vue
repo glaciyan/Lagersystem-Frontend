@@ -8,6 +8,7 @@ import { endpoints } from "~/lib/api/config/endpoints";
 import { match } from "~/lib/api/match";
 import { Space } from "~/lib/api/types";
 import { notification, Progress } from "ant-design-vue";
+import TransparentCubeIcon from "~/icons/TransparentCubeIcon.vue";
 
 const props = defineProps<{ space: z.infer<typeof Space> }>();
 const emit = defineEmits(["update", "open"]);
@@ -40,10 +41,10 @@ const handleDelete = async () => {
     class="group min-w-[16rem] flex flex-col items-stretch justify-between rounded-md ring-1 ring-dark-1 transition-shadow hover:cursor-pointer hover:ring-1 hover:ring-cyan"
   >
     <div @click="emit('open')">
-      <div class="m-0 overflow-hidden text-ellipsis border-b border-dark-1 px-3 py-2 text-lg text-light-1">
-        {{ props.space.name }}
+      <div class="m-0 flex gap-2 overflow-hidden text-ellipsis border-b border-dark-1 px-3 py-2 text-lg text-light-7">
+        <TransparentCubeIcon />{{ props.space.name }}
       </div>
-      <div class="m-0 overflow-hidden text-ellipsis border-b border-dark-1 px-3 py-2 text-lg text-light-1">
+      <div class="m-0 overflow-hidden text-ellipsis border-b border-dark-1 px-3 py-2 text-lg text-light-7">
         Produkte: {{ props.space.storedProducts.length }}
         <span class="px-3 text-base text-light-9">
           {{ props.space.currentSize }}{{ props.space.unit }}/{{ props.space.totalSize }}{{ props.space.unit }}
