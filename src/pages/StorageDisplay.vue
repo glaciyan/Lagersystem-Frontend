@@ -40,7 +40,7 @@ watch(
 
 <template>
   <PageContainer>
-    <div class="flex flex-row gap-4 mb-4">
+    <div class="mb-4 flex flex-row gap-4">
       <div class="flex flex-row gap-2">
         <button
           class="flex border border-2 border-dark-3 rounded-full bg-dark-9 px-2 py-2 transition-colors !m-0 !mb-2 hover:bg-dark-8"
