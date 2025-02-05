@@ -46,8 +46,13 @@ export function useApi<Q extends Query = {},
     if (result.value) {
       loading.value = false;
       match(result.value, {
-        ok: val => data.value = val,
-        error: err => errors.value = err,
+        ok: (val) => {
+          data.value = val;
+          errors.value = null;
+        },
+        error: (err) => {
+          errors.value = err;
+        },
       });
     }
     else {

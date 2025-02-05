@@ -19,11 +19,11 @@ const { data: breadcrumb, errors: bErrors, loading: bLoading, aborted: bAborted 
 </script>
 
 <template>
-  <div v-if="bErrors">
-    Failed to load breadcrumb
-  </div>
-  <div v-else-if="bAborted">
+  <div v-if="bAborted">
     Breadcrumb request aborted
+  </div>
+  <div v-else-if="bErrors">
+    Failed to load breadcrumb
   </div>
   <Breadcrumb v-else>
     <BreadcrumbItem>
