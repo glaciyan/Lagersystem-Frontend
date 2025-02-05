@@ -35,17 +35,17 @@ const { data: breadcrumb, errors: bErrors, loading: bLoading, aborted: bAborted 
       <Spin size="small" />
     </BreadcrumbItem>
     <BreadcrumbItem
-      v-for="b of breadcrumb?.entries.slice(0, -1)"
+      v-for="b of breadcrumb?.entries"
       v-else
       :key="b.id"
     >
       <RouterLink
-        v-if="b.type === 'storage'"
+        v-if="b.type === 'storage' && b.id !== props.id"
         :to="`/storage/${b.id}`"
       >
         {{ b.name }}
       </RouterLink>
-      <div v-else-if="b.type === 'space'">
+      <div v-else>
         {{ b.name }}
       </div>
     </BreadcrumbItem>
