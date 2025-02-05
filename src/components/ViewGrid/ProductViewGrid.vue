@@ -3,7 +3,7 @@ import StatefulDisplay from "~/components/ViewGrid/StatefulDisplay.vue";
 import { Modal } from "ant-design-vue";
 import { ApiError } from "~/lib/api/core";
 import AddButton from "../Buttons/AddButton.vue";
-import { Product, ProductArray } from "~/lib/api/types";
+import { Product, ProductArray } from "~/api/types";
 import { z } from "zod";
 import ProductCard from "../ItemCard/ProductCard.vue";
 import AssignButton from "../Buttons/AssignButton.vue";

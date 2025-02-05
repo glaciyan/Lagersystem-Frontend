@@ -6,7 +6,7 @@ import EditIcon from "~/icons/EditIcon.vue";
 import { api } from "~/lib/api/api";
 import { endpoints } from "~/api/endpoints";
 import { match } from "~/lib/api/match";
-import { Space } from "~/lib/api/types";
+import { Space } from "~/api/types";
 import { notification, Progress } from "ant-design-vue";
 import TransparentCubeIcon from "~/icons/TransparentCubeIcon.vue";
 

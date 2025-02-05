@@ -6,7 +6,7 @@ import EditIcon from "~/icons/EditIcon.vue";
 import { api } from "~/lib/api/api";
 import { endpoints } from "~/api/endpoints";
 import { match } from "~/lib/api/match";
-import { Product } from "~/lib/api/types";
+import { Product } from "~/api/types";
 import { notification } from "ant-design-vue";
 
 const props = defineProps<{ product: z.infer<typeof Product>; displayOnly?: boolean }>();

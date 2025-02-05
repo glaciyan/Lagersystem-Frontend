@@ -4,7 +4,7 @@ import { Modal } from "ant-design-vue";
 import { ApiError } from "~/lib/api/core";
 import AddButton from "../Buttons/AddButton.vue";
 import SpaceCard from "../ItemCard/SpaceCard.vue";
-import { Space, Storage } from "~/lib/api/types";
+import { Space, Storage } from "~/api/types";
 import { z } from "zod";
 import ProductCard from "../ItemCard/ProductCard.vue";
 import ViewGridHeader from "./ViewGridHeader.vue";

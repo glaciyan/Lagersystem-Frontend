@@ -3,7 +3,7 @@ import StatefulDisplay from "~/components/ViewGrid/StatefulDisplay.vue";
 import StorageCard from "../ItemCard/StorageCard.vue";
 import { ApiError } from "~/lib/api/core";
 import AddButton from "../Buttons/AddButton.vue";
-import { Storage } from "~/lib/api/types";
+import { Storage } from "~/api/types";
 import { z } from "zod";
 import ViewGridHeader from "./ViewGridHeader.vue";
 

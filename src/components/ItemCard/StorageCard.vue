@@ -6,7 +6,7 @@ import EditIcon from "~/icons/EditIcon.vue";
 import { api } from "~/lib/api/api";
 import { endpoints } from "~/api/endpoints";
 import { match } from "~/lib/api/match";
-import { Storage } from "~/lib/api/types";
+import { Storage } from "~/api/types";
 import { notification } from "ant-design-vue";
 import FolderIcon from "~/icons/FolderIcon.vue";
 

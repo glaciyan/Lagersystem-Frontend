@@ -1,5 +1,5 @@
 import { z, ZodSchema, ZodTypeAny } from "zod";
-import { ErrorResponse, ErrorSchema } from "./types";
+import { ErrorResponse, ErrorSchema } from "./coreTypes";
 
 export const BASE_URL = import.meta.env.VITE_API_ENDPOINT_URL;
 

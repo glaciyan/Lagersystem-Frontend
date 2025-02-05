@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { endpoint } from "../lib/api/endpoint.ts";
-import { Space, Storage, Product, ProductArray, StoredProduct, BreadcrumbPath } from "../lib/api/types.ts";
+import { Space, Storage, Product, ProductArray, StoredProduct, BreadcrumbPath } from "./types.ts";
 
 export const endpoints = {
   getStorages: endpoint("GET", "/v1/storages").withQuery<{ depth?: number }>().returns(z.array(Storage)),

@@ -7,7 +7,7 @@ import FormSelectableList from "../Form/FormSelectableList.vue";
 import { Button, Divider, Empty, Spin } from "ant-design-vue";
 import FormInputNumber from "../Form/FormInputNumber.vue";
 import { z } from "zod";
-import { StoredProduct } from "~/lib/api/types";
+import { StoredProduct } from "~/api/types";
 
 const props = defineProps<{ storageId: string }>();
 
