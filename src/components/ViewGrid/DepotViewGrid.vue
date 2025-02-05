@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { endpoints } from "~/lib/api/config/endpoints";
+import { endpoints } from "~/api/endpoints";
 import { useApi } from "~/lib/api/useApi";
 import StatefulDisplay from "~/components/ViewGrid/StatefulDisplay.vue";
 import StorageCard from "../ItemCard/StorageCard.vue";

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { endpoints } from "~/lib/api/config/endpoints";
+import { endpoints } from "~/api/endpoints";
 import ApiForm from "../Form/ApiForm.vue";
 import { ApiError } from "~/lib/api/core";
 import { useApi } from "~/lib/api/useApi";

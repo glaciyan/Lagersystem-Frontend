@@ -1,4 +1,4 @@
-import { createErrors } from "../errorUtil";
+import { createErrors } from "./errorUtil";
 
 export const Errors = createErrors({
   FE_API_REQUEST_ABORT: {

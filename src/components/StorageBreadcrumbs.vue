@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Breadcrumb, BreadcrumbItem, Spin } from "ant-design-vue";
-import { endpoints } from "~/lib/api/config/endpoints";
+import { endpoints } from "~/api/endpoints";
 import { useApi } from "~/lib/api/useApi";
 
 const props = defineProps<{ id: string }>();

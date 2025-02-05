@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import ApiForm from "~/components/Form/ApiForm.vue";
-import { endpoints } from "~/lib/api/config/endpoints";
+import { endpoints } from "~/api/endpoints";
 import FormInputTextArea from "~/components/Form/FormInputTextArea.vue";
 import FormInput from "~/components/Form/FormInput.vue";
 import { Button, Divider } from "ant-design-vue";

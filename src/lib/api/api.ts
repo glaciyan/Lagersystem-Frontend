@@ -1,6 +1,6 @@
 import { ZodSchema, ZodTypeAny } from "zod";
 import { Query, Params, Body, BasicEndpoint, Input, ApiResult, EndpointRequest } from "./core";
-import { Errors } from "./config/errors";
+import { Errors } from "./errors";
 import { ErrorResponse } from "./types";
 
 export async function api<Q extends Query = {},

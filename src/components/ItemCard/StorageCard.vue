@@ -4,7 +4,7 @@ import { z } from "zod";
 import DeleteIcon from "~/icons/DeleteIcon.vue";
 import EditIcon from "~/icons/EditIcon.vue";
 import { api } from "~/lib/api/api";
-import { endpoints } from "~/lib/api/config/endpoints";
+import { endpoints } from "~/api/endpoints";
 import { match } from "~/lib/api/match";
 import { Storage } from "~/lib/api/types";
 import { notification } from "ant-design-vue";

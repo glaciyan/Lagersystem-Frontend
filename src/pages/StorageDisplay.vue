@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import PageContainer from "~/components/PageContainer";
-import { endpoints } from "~/lib/api/config/endpoints";
+import { endpoints } from "~/api/endpoints";
 import { useApi } from "~/lib/api/useApi";
 import ProductViewGrid from "~/components/ViewGrid/ProductViewGrid.vue";
 import LayoutVertical from "~/components/LayoutVertical.vue";
