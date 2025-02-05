@@ -14,6 +14,9 @@ export function useApi<Q extends Query = {},
   const loading = ref(true);
   const aborted = ref(false);
 
+  const baseInput = isRef(input) ? input.value as any : input;
+  const reactiveInput = isReactive(baseInput) ? baseInput : reactive(baseInput);
+
   let controller = new AbortController();
 
   const internalAbort = (setAbort: boolean = true) => {
@@ -52,12 +55,10 @@ export function useApi<Q extends Query = {},
     }
   });
 
-  if (isReactive(input)) {
-    console.log("Input is reactive", input, endpoint);
-    watch(input, () => {
-      refetch();
-    });
-  }
+  watch(reactiveInput, () => {
+    refetch();
+    console.log("Reactive refetch", input, endpoint);
+  }, { deep: true });
 
   doFetch();
 

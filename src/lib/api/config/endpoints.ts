@@ -13,5 +13,5 @@ export const endpoints = {
   getProducts: endpoint("GET", `/v1/products`).returns(ProductArray),
   deleteProduct: endpoint<{ id: string }>("DELETE", p => `/v1/products/${p.id}`).returns(Product),
   postStoredProducts: endpoint("POST", "/v1/storedProducts").withBody<{ productId: string; spaceId: string; quantity: number }>().returns(StoredProduct),
-  breadCrumb: endpoint<{ id: string }>("GET", p => `/v1/breadcrumb/${p.id}`).returns(BreadcrumbPath),
+  breadcrumb: endpoint<{ id: string }>("GET", p => `/v1/breadcrumb/${p.id}`).returns(BreadcrumbPath),
 };

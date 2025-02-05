@@ -4,9 +4,9 @@ import { endpoints } from "~/lib/api/config/endpoints";
 import { useApi } from "~/lib/api/useApi";
 import ProductViewGrid from "~/components/ViewGrid/ProductViewGrid.vue";
 import LayoutVertical from "~/components/LayoutVertical.vue";
-import { Breadcrumb, BreadcrumbItem, Spin } from "ant-design-vue";
-import { RouterLink } from "vue-router";
+import { Spin } from "ant-design-vue";
 import StorageContentViewGrid from "~/components/ViewGrid/StorageContentViewGrid.vue";
+import StorageBreadcrumbs from "~/components/StorageBreadcrumbs.vue";
 
 const route = useRoute();
 const depotId = ref(route.params.id as string);
@@ -22,8 +22,6 @@ const { data: products, refetch: refetchProducts, errors: productErrors, loading
   params: {},
 });
 
-const { data: breadcrumb, refetch: refetchBreadcrumb, errors: bErrors, loading: bLoading, aborted: bAborted } = useApi(endpoints.breadCrumb, idParam);
-
 watch(
   () => route.params.id,
   (newId) => {
@@ -33,7 +31,6 @@ watch(
       depotId.value = newId;
       // refetch(); // no need to refetch, input is reactive now
       refetchProducts();
-      refetchBreadcrumb();
     }
   },
 );
@@ -42,30 +39,8 @@ watch(
 
 <template>
   <PageContainer>
-    <div v-if="bErrors || bAborted">
-      Failed to load breadcrumb
-    </div>
-    <Breadcrumb v-else>
-      <BreadcrumbItem>
-        <RouterLink to="/">
-          Depots
-        </RouterLink>
-      </BreadcrumbItem>
-      <BreadcrumbItem v-if="bLoading">
-        <Spin size="small" />
-      </BreadcrumbItem>
-      <BreadcrumbItem
-        v-for="b of breadcrumb?.entries.slice(0, -1)"
-        v-else
-        :key="b.id"
-      >
-        <RouterLink
-          :to="`/storage/${b.id}`"
-        >
-          {{ b.name }}
-        </RouterLink>
-      </BreadcrumbItem>
-    </Breadcrumb>
+    <StorageBreadcrumbs :id="depotId" />
+
     <div class="text-2xl">
       <h1 v-if="loading">
         <Spin />
