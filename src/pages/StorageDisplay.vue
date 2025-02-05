@@ -6,7 +6,7 @@ import ProductViewGrid from "~/components/ViewGrid/ProductViewGrid.vue";
 import LayoutVertical from "~/components/LayoutVertical.vue";
 import { Spin } from "ant-design-vue";
 import StorageContentViewGrid from "~/components/ViewGrid/StorageContentViewGrid.vue";
-import StorageBreadcrumbs from "~/components/StorageBreadcrumbs.vue";
+import StorageBreadcrumbs from "~/components/ItemBreadcrumbs.vue";
 
 const route = useRoute();
 const depotId = ref(route.params.id as string);

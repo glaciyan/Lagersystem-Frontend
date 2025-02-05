@@ -40,10 +40,14 @@ const { data: breadcrumb, errors: bErrors, loading: bLoading, aborted: bAborted 
       :key="b.id"
     >
       <RouterLink
+        v-if="b.type === 'storage'"
         :to="`/storage/${b.id}`"
       >
         {{ b.name }}
       </RouterLink>
+      <div v-else-if="b.type === 'space'">
+        {{ b.name }}
+      </div>
     </BreadcrumbItem>
   </Breadcrumb>
 </template>

@@ -9,6 +9,7 @@ import ViewGridHeader from "./ViewGridHeader.vue";
 import { Modal } from "ant-design-vue";
 import ProductCard from "../ItemCard/ProductCard.vue";
 import SpaceCard from "../ItemCard/SpaceCard.vue";
+import ItemBreadcrumbs from "../ItemBreadcrumbs.vue";
 
 const emit = defineEmits(["update"]);
 
@@ -16,6 +17,10 @@ const props = defineProps<{ data: z.infer<typeof Storage> | null; errors: ApiErr
 
 const selectedSpace = ref < z.infer<typeof Space> | null>(null);
 const openModal = ref(false);
+
+watch(() => props.data, () => {
+  openModal.value = false;
+});
 </script>
 
 <template>
@@ -69,6 +74,11 @@ const openModal = ref(false);
     :footer="null"
     width="45rem"
   >
+    <ItemBreadcrumbs
+      v-if="selectedSpace?.id"
+      :id="selectedSpace.id"
+      class="!mb-1"
+    />
     <p><strong>Name:</strong> {{ selectedSpace?.name }}</p>
     <p><strong>Unit:</strong> {{ selectedSpace?.unit }}</p>
     <p><strong>Size:</strong> {{ selectedSpace?.totalSize }} </p>
