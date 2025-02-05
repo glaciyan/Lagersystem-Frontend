@@ -3,6 +3,14 @@ import Navigation from "~/components/TheVerticalNavigation.vue";
 import LogoWithLabel from "~/assets/logo-label.svg?component";
 import Container from "./PageContainer";
 import { RouterLink } from "vue-router";
+import { InputSearch } from "ant-design-vue";
+import SearchIcon from "~/icons/SearchIcon.vue";
+
+const search = ref("");
+
+const onSearch = () => {
+  console.log(`searched "${search.value}"`);
+};
 </script>
 
 <template>
@@ -21,5 +29,16 @@ import { RouterLink } from "vue-router";
         class="flex-1"
       />
     </div>
+    <InputSearch
+      v-model:value="search"
+      placeholder="Suche nach allem"
+      enterButton="Suchen!"
+      size="large"
+      @search="onSearch"
+    >
+      <template #addonBefore>
+        <SearchIcon />
+      </template>
+    </InputSearch>
   </Container>
 </template>

@@ -19,7 +19,7 @@ const openModal = ref(false);
 
 <template>
   <StatefulDisplay
-    :data="props.data"
+    :dataLength="props.data?.length"
     :errors
     :loading
     :aborted

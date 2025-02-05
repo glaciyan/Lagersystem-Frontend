@@ -11,7 +11,7 @@ const { data, errors, loading, aborted, refetch } = useApi(endpoints.getStorages
 
 <template>
   <StatefulDisplay
-    :data
+    :dataLength="data?.length"
     :errors
     :loading
     :aborted

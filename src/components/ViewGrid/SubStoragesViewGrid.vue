@@ -16,7 +16,7 @@ const displayData = computed(() => props.data?.subStorages ?? []);
 
 <template>
   <StatefulDisplay
-    :data="displayData"
+    :dataLength="displayData.length"
     :errors
     :loading
     :aborted

@@ -2,182 +2,84 @@
 import PageContainer from "~/components/PageContainer";
 import { endpoints } from "~/lib/api/config/endpoints";
 import { useApi } from "~/lib/api/useApi";
-import SubStoragesViewGrid from "~/components/ViewGrid/SubStoragesViewGrid.vue";
-import SpacesViewGrid from "~/components/ViewGrid/SpacesViewGrid.vue";
 import ProductViewGrid from "~/components/ViewGrid/ProductViewGrid.vue";
 import LayoutVertical from "~/components/LayoutVertical.vue";
-import { Button } from "ant-design-vue";
+import { Breadcrumb, BreadcrumbItem, Spin } from "ant-design-vue";
 import { RouterLink } from "vue-router";
-import ReturnIcon from "~/icons/ReturnIcon.vue";
+import StorageContentViewGrid from "~/components/ViewGrid/StorageContentViewGrid.vue";
 
 const route = useRoute();
 const depotId = ref(route.params.id as string);
-const input = reactive({
+const idParam = reactive({
   params: {
     id: route.params.id as string,
   },
 });
 
-// const showCreateStorage = ref(false);
-// const showCreateSpace = ref(false);
-// const showCreateProduct = ref(false);
-
-// onMounted(() => {
-//   showCreateStorage.value = false;
-//   showCreateSpace.value = false;
-//   showCreateProduct.value = false;
-// });
-
-const { data, errors, aborted, loading, refetch } = useApi(endpoints.getStorage, input);
+const { data, errors, aborted, loading, refetch } = useApi(endpoints.getStorage, idParam);
 
 const { data: products, refetch: refetchProducts, errors: productErrors, loading: productsLoading, aborted: productsAborted } = useApi(endpoints.getProducts, {
   params: {},
 });
 
+const { data: breadcrumb, refetch: refetchBreadcrumb, errors: bErrors, loading: bLoading, aborted: bAborted } = useApi(endpoints.breadCrumb, idParam);
+
 watch(
   () => route.params.id,
   (newId) => {
     if (typeof newId === "string") {
-      input.params.id = newId;
+      console.log("New Id loaded", newId);
+      idParam.params.id = newId;
       depotId.value = newId;
       // refetch(); // no need to refetch, input is reactive now
       refetchProducts();
+      refetchBreadcrumb();
     }
   },
 );
 
-// function toggleCreateStorage() {
-//   if (showCreateSpace.value || showCreateProduct.value) {
-//     showCreateSpace.value = false;
-//     showCreateProduct.value = false;
-//   }
-//   showCreateStorage.value = !showCreateStorage.value;
-// }
-
-// function toggleCreateSpace() {
-//   if (showCreateStorage.value || showCreateProduct.value) {
-//     showCreateStorage.value = false;
-//     showCreateProduct.value = false;
-//   }
-//   showCreateSpace.value = !showCreateSpace.value;
-// }
-
-// function toggleCreateProduct() {
-//   if (showCreateStorage.value || showCreateSpace.value) {
-//     showCreateStorage.value = false;
-//     showCreateSpace.value = false;
-//   }
-//   showCreateProduct.value = !showCreateProduct.value;
-// }
-
-// function triggerUpdate() {
-//   showCreateStorage.value = false;
-//   showCreateSpace.value = false;
-//   showCreateProduct.value = false;
-//   refetch();
-//   refetchProducts();
-// }
 </script>
 
 <template>
   <PageContainer>
-    <div>
-      <h1>Infos</h1>
-      <div v-if="loading">
-        Lädt...
-      </div>
-      <div v-else-if="errors && errors.length > 0">
-        <p>
-          <strong>Fehler beim Laden des Depots:</strong>
-        </p>
-        <ul>
-          <li
-            v-for="(error, index) in errors"
-            :key="index"
-          >
-            {{ error.message }}
-          </li>
-        </ul>
-      </div>
-      <div v-else-if="aborted">
-        <p>Der Ladevorgang wurde abgebrochen. Bitte versuchen Sie es erneut.</p>
-      </div>
-      <div v-else-if="data">
-        <p>
-          <strong>Name:</strong> {{ data.name }}
-        </p>
-        <p>
-          <strong>Beschreibung:</strong> {{ data.description }}
-        </p>
-      </div>
-      <div v-else>
-        <p>Depot nicht gefunden oder Fehler beim Laden der Daten...</p>
-      </div>
+    <div v-if="bErrors || bAborted">
+      Failed to load breadcrumb
     </div>
-    <RouterLink
-      v-if="data && data.parentId"
-      :to="`/storage/${data!.parentId}`"
-    >
-      <Button class="!mx-0">
-        <div class="flex flex-wrap items-center justify-center gap-2">
-          <ReturnIcon />
-          Zurück zum Parent
-        </div>
-      </Button>
-    </RouterLink>
-    <!-- <div class="button-container">
-      <Button
-        htmlType="submit"
-        type="primary"
-        @click="toggleCreateStorage"
+    <Breadcrumb v-else>
+      <BreadcrumbItem>
+        <RouterLink to="/">
+          Depots
+        </RouterLink>
+      </BreadcrumbItem>
+      <BreadcrumbItem v-if="bLoading">
+        <Spin size="small" />
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        v-for="b of breadcrumb?.entries.slice(0, -1)"
+        v-else
+        :key="b.id"
       >
-        Add storage
-      </Button>
-      <Button
-        htmlType="submit"
-        type="primary"
-        @click="toggleCreateSpace"
-      >
-        Add space
-      </Button>
-      <Button
-        htmlType="submit"
-        type="primary"
-        @click="toggleCreateProduct"
-      >
-        Add product
-      </Button>
-    </div> -->
-    <!-- <CreateStorage
-      v-if="showCreateStorage"
-      :parentId="storage?.id"
-      @close="toggleCreateStorage"
-      @triggerUpdate="triggerUpdate"
-    />
-    <CreateSpace
-      v-if="showCreateSpace"
-      :storageId="storage?.id"
-      @close="toggleCreateSpace"
-      @triggerUpdate="triggerUpdate"
-    />
-    <CreateProduct
-      v-if="showCreateProduct"
-      :spaceId="storage?.id"
-      @close="toggleCreateProduct"
-      @triggerUpdate="triggerUpdate"
-    /> -->
+        <RouterLink
+          :to="`/storage/${b.id}`"
+        >
+          {{ b.name }}
+        </RouterLink>
+      </BreadcrumbItem>
+    </Breadcrumb>
+    <div class="text-2xl">
+      <h1 v-if="loading">
+        <Spin />
+      </h1>
+      <h1 v-else-if="!data || errors != null || aborted">
+        Fehler beim laden!
+      </h1>
+      <h1 v-else>
+        {{ data?.name ?? "..." }}
+      </h1>
+    </div>
 
     <LayoutVertical gap="large">
-      <SubStoragesViewGrid
-        :data
-        :errors
-        :loading
-        :aborted
-        :refetch
-        :parentId="depotId"
-        @update="refetch"
-      />
-      <SpacesViewGrid
+      <StorageContentViewGrid
         :data
         :errors
         :loading

@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import StatefulDisplay from "~/components/ViewGrid/StatefulDisplay.vue";
-import { Modal } from "ant-design-vue";
+import StorageCard from "../ItemCard/StorageCard.vue";
 import { ApiError } from "~/lib/api/core";
 import AddButton from "../Buttons/AddButton.vue";
-import SpaceCard from "../ItemCard/SpaceCard.vue";
 import { Space, Storage } from "~/lib/api/types";
 import { z } from "zod";
-import ProductCard from "../ItemCard/ProductCard.vue";
 import ViewGridHeader from "./ViewGridHeader.vue";
+import { Modal } from "ant-design-vue";
+import ProductCard from "../ItemCard/ProductCard.vue";
+import SpaceCard from "../ItemCard/SpaceCard.vue";
 
 const emit = defineEmits(["update"]);
 
@@ -19,18 +20,21 @@ const openModal = ref(false);
 
 <template>
   <StatefulDisplay
-    :dataLength="props.data?.spaces.length"
+    :dataLength="(data?.subStorages.length ?? 0) + (data?.spaces.length ?? 0)"
     :errors
     :loading
     :aborted
     :refetch
-    emptyText="Keine Spaces vorhanden."
+    emptyText="Keinen Inhalt vorhanden."
   >
     <template #header>
       <ViewGridHeader
-        title="Spaces"
-        :refetch="refetch"
+        title="Inhalt"
+        :refetch="props.refetch"
       >
+        <AddButton :to="`/storage/${parentId}/newstorage`">
+          Storage Hinzufügen
+        </AddButton>
         <AddButton :to="`/storage/${parentId}/newspace`">
           Space Hinzufügen
         </AddButton>
@@ -39,6 +43,12 @@ const openModal = ref(false);
 
     <template #display>
       <div class="grid grid-cols-1 mt-6 gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
+        <StorageCard
+          v-for="substorage of props.data!.subStorages"
+          :key="substorage.id"
+          :storage="substorage"
+          @update="emit('update')"
+        />
         <SpaceCard
           v-for="space of props.data!.spaces"
           :key="space.id"

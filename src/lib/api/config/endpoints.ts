@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { endpoint } from "../endpoint.ts";
-import { Space, Storage, Product, ProductArray, StoredProduct } from "../types.ts";
+import { Space, Storage, Product, ProductArray, StoredProduct, BreadcrumbPath } from "../types.ts";
 
 export const endpoints = {
   getStorages: endpoint("GET", "/v1/storages").withQuery<{ depth?: number }>().returns(z.array(Storage)),
@@ -13,4 +13,5 @@ export const endpoints = {
   getProducts: endpoint("GET", `/v1/products`).returns(ProductArray),
   deleteProduct: endpoint<{ id: string }>("DELETE", p => `/v1/products/${p.id}`).returns(Product),
   postStoredProducts: endpoint("POST", "/v1/storedProducts").withBody<{ productId: string; spaceId: string; quantity: number }>().returns(StoredProduct),
+  breadCrumb: endpoint<{ id: string }>("GET", p => `/v1/breadcrumb/${p.id}`).returns(BreadcrumbPath),
 };

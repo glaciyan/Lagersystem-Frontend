@@ -53,6 +53,7 @@ export function useApi<Q extends Query = {},
   });
 
   if (isReactive(input)) {
+    console.log("Input is reactive", input, endpoint);
     watch(input, () => {
       refetch();
     });

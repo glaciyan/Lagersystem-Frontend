@@ -15,7 +15,7 @@ const navigation: { path: string; name: string }[] = [
       v-for="nav in navigation"
       :key="nav.path"
       :to="nav.path"
-      class="whitespace-nowrap border border-dark-500 rounded-lg px-4 py-2 text-light-1 decoration-none transition-all hover:bg-dark-500/50 hover:text-light-9 hover:shadow-sm"
+      class="whitespace-nowrap border border-dark-500 rounded-lg px-4 py-2 decoration-none transition-all hover:bg-dark-500/50 !text-light-9 hover:shadow-sm !hover:text-light-9"
     >
       {{ nav.name }}
     </RouterLink>
@@ -25,6 +25,6 @@ const navigation: { path: string; name: string }[] = [
 <style scoped>
 .router-link-active,
 .router-link-exact-active {
-  @apply bg-dark-400 shadow-md text-light-500 hover:text-light-100;
+  @apply bg-dark-400 shadow-md !text-light-500 !hover:text-light-100;
 }
 </style>

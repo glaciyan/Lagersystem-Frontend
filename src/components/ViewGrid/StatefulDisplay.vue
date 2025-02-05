@@ -5,7 +5,7 @@ import ClosedCircle from "~/icons/ClosedCircle.vue";
 import { ApiError } from "~/lib/api/core";
 import ReloadButton from "../Buttons/ReloadButton.vue";
 
-const props = defineProps<{ data: any | any[] | null; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch?: (() => void); emptyText?: string }>();
+const props = defineProps<{ dataLength?: number; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch?: (() => void); emptyText?: string }>();
 </script>
 
 <template>
@@ -74,7 +74,7 @@ const props = defineProps<{ data: any | any[] | null; errors: ApiError[] | null;
       <!-- WE GOT DATA -->
       <slot name="header" />
 
-      <div v-if="props.data?.length">
+      <div v-if="(dataLength ?? 0) > 0">
         <slot name="display" />
       </div>
 

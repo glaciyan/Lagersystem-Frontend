@@ -73,3 +73,15 @@ export const StoredProduct = z.object({
 });
 
 export const StoredProductArray = z.array(StoredProduct);
+
+export const BreadcrumbType = z.enum(["storage", "space"]);
+
+export const BreadcrumbItem = z.object({
+  id: z.string(),
+  name: z.string(),
+  type: BreadcrumbType,
+});
+
+export const BreadcrumbPath = z.object({
+  entries: z.array(BreadcrumbItem),
+});
