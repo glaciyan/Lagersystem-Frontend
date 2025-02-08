@@ -39,7 +39,7 @@ watch(
 
 <template>
   <div
-    class="fixed right-[1rem] top-[10rem] h-[70%] overflow-scroll border-1 border-dark-2 rounded-md bg-dark-9 shadow-lg"
+    class="fixed right-[1rem] top-[10rem] h-[70%] w-[30rem] overflow-scroll border-1 border-dark-2 rounded-md bg-dark-9 shadow-lg"
   >
     <ProductViewGrid
       :data="products"
@@ -85,8 +85,8 @@ watch(
       </h1>
     </div>
 
-    <div class="flex flex-row justify-between gap-4 overflow-auto">
-      <div style="flex: 2">
+    <div class="flex flex-row gap-4">
+      <div class="flex-1">
         <StorageContentViewGrid
           :data
           :errors
@@ -98,7 +98,7 @@ watch(
         />
       </div>
 
-      <div style="flex: 1">
+      <div class="w-[30rem]">
         {{ " " }}
       </div>
     </div>
