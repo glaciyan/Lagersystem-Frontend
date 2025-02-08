@@ -7,6 +7,8 @@ import FormInputNumber from "~/components/Form/FormInputNumber.vue";
 import { Button, Divider } from "ant-design-vue";
 
 const emit = defineEmits(["success"]);
+
+const loading = ref(false);
 </script>
 
 <template>
@@ -28,6 +30,7 @@ const emit = defineEmits(["success"]);
       :initialState="{ name: '', description: '', size: 0, unit: '' }"
       @success="(data) => { console.log(data); emit('success') }"
       @failure="(err) => console.log(err)"
+      @loading="(state) => loading = state"
     >
       <Divider>
         Name for the product:
@@ -60,6 +63,7 @@ const emit = defineEmits(["success"]);
       <Button
         htmlType="submit"
         type="primary"
+        :loading
       >
         Create product
       </Button>

@@ -23,9 +23,11 @@ const form = ref<{ values: B; errors: Errors }>();
 const emit = defineEmits<{
   success: [payload: Ret];
   failure: [errors: ApiError[]];
+  loading: [state: boolean];
 }>();
 
 const onSubmit = (values: B) => {
+  emit("loading", true);
   api(props.endpoint, {
     body: values,
     params: props.params,
@@ -44,6 +46,7 @@ const onSubmit = (values: B) => {
           form.value.errors = transformError(err) as Errors;
         }
         emit("failure", err);
+        emit("loading", false);
       },
     });
   });

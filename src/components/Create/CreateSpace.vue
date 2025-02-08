@@ -11,6 +11,8 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(["success"]);
+
+const loading = ref(false);
 </script>
 
 <template>
@@ -32,6 +34,7 @@ const emit = defineEmits(["success"]);
       :initialState="{ name: '', totalSize: 5, unit: '', description: '', storageId: props.storageId }"
       @success="(data) => { console.log(data); emit('success') }"
       @failure="(err) => console.log(err)"
+      @loading="(state) => loading = state"
     >
       <Divider>
         Name for the spaces
@@ -64,6 +67,7 @@ const emit = defineEmits(["success"]);
       <Button
         htmlType="submit"
         type="primary"
+        :loading
       >
         Create Space
       </Button>

@@ -9,7 +9,7 @@ const router = useRouter();
 function handleButtonCLick() {
   router.go(-1);
 }
-
+const loading = ref(false);
 </script>
 
 <template>
@@ -34,6 +34,7 @@ function handleButtonCLick() {
         await $router.push(`/storage/${data.id}`);
       }"
       @failure="(err) => console.log(err)"
+      @loading="(state) => loading = state"
     >
       <Divider>
         Name des Depots:
@@ -52,6 +53,7 @@ function handleButtonCLick() {
       <Button
         htmlType="submit"
         type="primary"
+        :loading
       >
         Create Depot
       </Button>
