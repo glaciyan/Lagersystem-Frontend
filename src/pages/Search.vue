@@ -10,7 +10,7 @@ const apiQuery = reactive({
     q: route.query.q as string || "",
   },
 });
-const { data, errors, loading, refetch } = useApi(endpoints.search, apiQuery);
+const { data, loading } = useApi(endpoints.search, apiQuery);
 
 watch(() => route.query, (value) => {
   apiQuery.query.q = value.q as string || "";
