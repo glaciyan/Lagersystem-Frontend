@@ -98,6 +98,7 @@ watch(
         />
       </div>
 
+      <!-- Padding for the fixed product view grid -->
       <div class="w-[30rem]">
         {{ " " }}
       </div>
