@@ -39,7 +39,7 @@ watch(
 
 <template>
   <div
-    class="fixed right-[1rem] top-[10rem] h-[70%] overflow-scroll border-1 border-dark-2 rounded-md bg-dark-9 shadow-md"
+    class="fixed right-[1rem] top-[10rem] h-[70%] overflow-scroll border-1 border-dark-2 rounded-md bg-dark-9 shadow-lg"
   >
     <ProductViewGrid
       :data="products"
