@@ -2,20 +2,17 @@
 import { InputSearch } from "ant-design-vue";
 import SearchIcon from "~/icons/SearchIcon.vue";
 
-const search = ref("");
-
-const onSearch = () => {
-  console.log(`searched "${search.value}"`);
-};
+const query = defineModel<string>("query", { required: true });
+const emit = defineEmits(["submit"]);
 </script>
 
 <template>
   <InputSearch
-    v-model:value="search"
+    v-model:value="query"
     placeholder="Suche nach allem"
     enterButton="Suchen!"
     size="large"
-    @search="onSearch"
+    @search="emit('submit')"
   >
     <template #addonBefore>
       <SearchIcon />

@@ -55,6 +55,13 @@ const routes = [
     },
   },
   {
+    path: "/search",
+    component: () => import("./pages/Search.vue"),
+    meta: {
+      title: title("Searching"),
+    },
+  },
+  {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: () => import("./pages/NotFound.vue"),

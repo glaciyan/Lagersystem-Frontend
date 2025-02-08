@@ -7,7 +7,7 @@ export function useApi<Q extends Query = {},
   P extends Params = {},
   B extends Body = {},
   Ret = {},
-  Zod extends ZodSchema = ZodTypeAny>(endpoint: BasicEndpoint<Q, P, B, Ret, Zod>, input: MaybeRef<Input<Q, P, B>>, init?: RequestInit) {
+  Zod extends ZodSchema = ZodTypeAny>(endpoint: BasicEndpoint<Q, P, B, Ret, Zod>, input: MaybeRef<Input<Q, P, B>>, init?: RequestInit, immediate = true) {
   const result = ref<ApiResult<Ret> | null>(null);
   const data = ref<Ret | null>(null);
   const errors = ref<ApiError[] | null>(null);
@@ -65,7 +65,9 @@ export function useApi<Q extends Query = {},
     console.log("Reactive refetch", input, endpoint);
   }, { deep: true });
 
-  doFetch();
+  if (immediate) {
+    doFetch();
+  }
 
   return { data, errors, loading, aborted, abort, refetch };
 }

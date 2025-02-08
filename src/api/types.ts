@@ -77,3 +77,17 @@ export const BreadcrumbItem = z.object({
 export const BreadcrumbPath = z.object({
   entries: z.array(BreadcrumbItem),
 });
+
+export const SearchResult = z.object({
+  type: z.string(),
+  rank: z.number(),
+  id: z.string(),
+  description: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string().nullable(),
+  attributes: z.string(),
+  unit: z.string(),
+  totalSize: z.number(),
+  currentSize: z.number(),
+  size: z.number(),
+});

@@ -37,7 +37,7 @@ export default [
       "vue/multi-word-component-names": [
         "error",
         {
-          ignores: ["Center", "Modal", "Builds", "Index"],
+          ignores: ["Center", "Modal", "Builds", "Index", "Search"],
         },
       ],
 
