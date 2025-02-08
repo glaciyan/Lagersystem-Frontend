@@ -5,11 +5,11 @@ import ClosedCircle from "~/icons/ClosedCircle.vue";
 import { ApiError } from "~/lib/api/core";
 import ReloadButton from "../Buttons/ReloadButton.vue";
 
-const props = defineProps<{ dataLength?: number; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch?: (() => void); emptyText?: string }>();
+const props = defineProps<{ dataLength?: number; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch?: (() => void); emptyText?: string; noBorder?: boolean }>();
 </script>
 
 <template>
-  <div class="w-full border border-dark-100 rounded-lg p-8">
+  <div :class="['p-8', {'w-full border border-dark-100 rounded-lg ': !noBorder}]">
     <!-- ABORTED -->
     <LayoutVertical
       v-if="props.aborted"

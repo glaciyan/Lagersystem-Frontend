@@ -18,6 +18,7 @@ const openModal = ref(false);
 
 <template>
   <StatefulDisplay
+    noBorder
     :dataLength="props.data?.length"
     :errors
     :loading
