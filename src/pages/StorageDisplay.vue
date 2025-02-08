@@ -3,7 +3,6 @@ import PageContainer from "~/components/PageContainer";
 import { endpoints } from "~/api/endpoints";
 import { useApi } from "~/lib/api/useApi";
 import ProductViewGrid from "~/components/ViewGrid/ProductViewGrid.vue";
-import LayoutVertical from "~/components/LayoutVertical.vue";
 import { Spin } from "ant-design-vue";
 import StorageContentViewGrid from "~/components/ViewGrid/StorageContentViewGrid.vue";
 import ItemBreadcrumbs from "~/components/ItemBreadcrumbs.vue";
@@ -73,26 +72,35 @@ watch(
       </h1>
     </div>
 
-    <LayoutVertical gap="large">
-      <StorageContentViewGrid
-        :data
-        :errors
-        :loading
-        :aborted
-        :refetch
-        :parentId="depotId"
-        @update="refetch"
-      />
-      <ProductViewGrid
-        :data="products"
-        :errors="productErrors"
-        :loading="productsLoading"
-        :refetch="refetchProducts"
-        :aborted="productsAborted"
-        :originStorageId="depotId"
-        @update="refetchProducts"
-      />
-    </LayoutVertical>
+    <div class="oveflow-auto flex flex-row justify-between gap-4">
+      <div style="flex: 2">
+        <StorageContentViewGrid
+          :data
+          :errors
+          :loading
+          :aborted
+          :refetch
+          :parentId="depotId"
+          @update="refetch"
+        />
+      </div>
+
+      <!-- Don't ask why this shit is not sticky, I honestly can't care enough -->
+      <div
+        style="flex: 1"
+        class="sticky top-[20px] self-start"
+      >
+        <ProductViewGrid
+          :data="products"
+          :errors="productErrors"
+          :loading="productsLoading"
+          :refetch="refetchProducts"
+          :aborted="productsAborted"
+          :originStorageId="depotId"
+          @update="refetchProducts"
+        />
+      </div>
+    </div>
   </PageContainer>
 </template>
 

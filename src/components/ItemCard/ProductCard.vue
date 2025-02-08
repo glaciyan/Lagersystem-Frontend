@@ -37,7 +37,7 @@ const handleDelete = async () => {
 
 <template>
   <div
-    :class="['group max-w-[18rem] min-w-[16rem] flex flex-col items-stretch justify-between rounded-md ring-1 ring-dark-1 transition-shadow hover:ring-1 hover:ring-cyan', {'hover:cursor-pointer': !displayOnly}]"
+    :class="['group max-w-[12rem] min-w-[10rem] flex flex-col items-stretch justify-between rounded-md ring-1 ring-dark-1 transition-shadow hover:ring-1 hover:ring-cyan', {'hover:cursor-pointer': !displayOnly}]"
   >
     <div @click="emit('open')">
       <div class="m-0 overflow-hidden text-ellipsis border-b border-dark-1 px-3 py-2 text-lg text-light-1">
@@ -48,7 +48,7 @@ const handleDelete = async () => {
       </div>
       <p
         v-if="props.product.description"
-        class="overflow-hidden text-ellipsis px-3 py-2 text-base text-light-9"
+        class="m-0 overflow-hidden text-ellipsis px-3 py-2 text-base text-light-9"
       >
         {{ props.product.description }}
       </p>
@@ -60,21 +60,19 @@ const handleDelete = async () => {
       <button class="w-full overflow-hidden border-r border-dark-1 transition-colors">
         <!-- TODO this should lead to the edit page? -->
         <RouterLink :to="`/product/${props.product.id}`">
-          <div class="flex items-center justify-center gap-2 text-base text-gray-4 line-through hover:text-blue">
+          <div class="h-full flex items-center justify-center gap-2 text-base text-gray-4 line-through hover:text-blue">
             <EditIcon class="!size-4" />
-            Bearbeiten
           </div>
         </RouterLink>
       </button>
       <button
-        class="w-full transition-colors"
+        class="h-full w-full transition-colors"
         @click="handleDelete"
       >
         <div
-          class="flex items-center justify-center gap-2 text-base text-gray-4 hover:text-red"
+          class="h-full flex items-center justify-center gap-2 text-base text-gray-4 hover:text-red"
         >
           <DeleteIcon class="!size-4" />
-          Löschen
         </div>
       </button>
     </div>

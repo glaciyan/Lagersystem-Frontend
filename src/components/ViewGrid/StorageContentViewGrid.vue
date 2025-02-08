@@ -25,6 +25,7 @@ watch(() => props.data, () => {
 
 <template>
   <StatefulDisplay
+    class="border-2 !border-dark-1"
     :dataLength="(data?.subStorages.length ?? 0) + (data?.spaces.length ?? 0)"
     :errors
     :loading
@@ -47,7 +48,7 @@ watch(() => props.data, () => {
     </template>
 
     <template #display>
-      <div class="grid grid-cols-1 mt-6 gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
+      <div class="grid grid-cols-1 mt-6 gap-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2">
         <StorageCard
           v-for="substorage of props.data!.subStorages"
           :key="substorage.id"

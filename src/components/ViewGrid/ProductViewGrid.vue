@@ -6,7 +6,6 @@ import AddButton from "../Buttons/AddButton.vue";
 import { Product, ProductArray } from "~/api/types";
 import { z } from "zod";
 import ProductCard from "../ItemCard/ProductCard.vue";
-import AssignButton from "../Buttons/AssignButton.vue";
 import ViewGridHeader from "./ViewGridHeader.vue";
 
 const emit = defineEmits(["update"]);
@@ -19,29 +18,25 @@ const openModal = ref(false);
 
 <template>
   <StatefulDisplay
+    class=""
     :dataLength="props.data?.length"
     :errors
     :loading
     :aborted
-    :refetch
     emptyText="Keine Produkte vorhanden."
   >
     <template #header>
       <ViewGridHeader
         title="Produkte"
-        :refetch="refetch"
       >
         <AddButton :to="`/product/create${props.originStorageId ? `?origin=${props.originStorageId}` : ''}`">
-          Produkt Erstellen
+          Erstellen
         </AddButton>
-        <AssignButton :to="`/product/assign${props.originStorageId ? `?origin=${props.originStorageId}` : ''}`">
-          Produkt Zusweisen
-        </AssignButton>
       </ViewGridHeader>
     </template>
 
     <template #display>
-      <div class="grid grid-cols-1 mt-6 gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
+      <div class="grid grid-cols-2 mt-6 gap-4">
         <ProductCard
           v-for="product of props.data"
           :key="product.id"
