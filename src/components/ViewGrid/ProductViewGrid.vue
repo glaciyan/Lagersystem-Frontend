@@ -18,16 +18,17 @@ const openModal = ref(false);
 
 <template>
   <StatefulDisplay
-    class=""
     :dataLength="props.data?.length"
     :errors
     :loading
     :aborted
+    :refetch
     emptyText="Keine Produkte vorhanden."
   >
     <template #header>
       <ViewGridHeader
         title="Produkte"
+        :refetch="refetch"
       >
         <AddButton :to="`/product/create${props.originStorageId ? `?origin=${props.originStorageId}` : ''}`">
           Erstellen

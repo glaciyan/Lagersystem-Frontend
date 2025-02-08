@@ -38,7 +38,20 @@ watch(
 </script>
 
 <template>
-  <PageContainer>
+  <div
+    class="fixed right-[1rem] top-[10rem] h-[70%] overflow-scroll border-1 border-dark-2 rounded-md bg-dark-9 shadow-md"
+  >
+    <ProductViewGrid
+      :data="products"
+      :errors="productErrors"
+      :loading="productsLoading"
+      :refetch="refetchProducts"
+      :aborted="productsAborted"
+      :originStorageId="depotId"
+      @update="refetchProducts"
+    />
+  </div>
+  <PageContainer size="2xl">
     <div class="mb-4 flex flex-row gap-4">
       <div class="flex flex-row gap-2">
         <button
@@ -72,7 +85,7 @@ watch(
       </h1>
     </div>
 
-    <div class="oveflow-auto flex flex-row justify-between gap-4">
+    <div class="flex flex-row justify-between gap-4 overflow-auto">
       <div style="flex: 2">
         <StorageContentViewGrid
           :data
@@ -85,20 +98,8 @@ watch(
         />
       </div>
 
-      <!-- Don't ask why this shit is not sticky, I honestly can't care enough -->
-      <div
-        style="flex: 1"
-        class="sticky top-[20px] self-start"
-      >
-        <ProductViewGrid
-          :data="products"
-          :errors="productErrors"
-          :loading="productsLoading"
-          :refetch="refetchProducts"
-          :aborted="productsAborted"
-          :originStorageId="depotId"
-          @update="refetchProducts"
-        />
+      <div style="flex: 1">
+        {{ " " }}
       </div>
     </div>
   </PageContainer>
