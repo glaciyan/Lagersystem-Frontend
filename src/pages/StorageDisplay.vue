@@ -39,7 +39,7 @@ watch(
 
 <template>
   <div
-    class="fixed right-[1rem] top-[10rem] h-[70%] w-[30rem] overflow-scroll border-1 border-dark-2 rounded-md bg-dark-9 shadow-lg"
+    class="fixed right-[1rem] top-[10rem] h-[70%] w-[30rem] overflow-y-scroll border-1 border-dark-2 rounded-md bg-dark-9 shadow-lg"
   >
     <ProductViewGrid
       :data="products"
@@ -51,7 +51,7 @@ watch(
       @update="refetchProducts"
     />
   </div>
-  <PageContainer size="2xl">
+  <PageContainer size="full">
     <div class="mb-4 flex flex-row gap-4">
       <div class="flex flex-row gap-2">
         <button

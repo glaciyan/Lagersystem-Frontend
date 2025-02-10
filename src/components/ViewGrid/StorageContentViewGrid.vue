@@ -48,7 +48,7 @@ watch(() => props.data, () => {
     </template>
 
     <template #display>
-      <div class="grid grid-cols-1 mt-6 gap-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2">
+      <div class="mt-6 flex flex-wrap gap-4">
         <StorageCard
           v-for="substorage of props.data!.subStorages"
           :key="substorage.id"
