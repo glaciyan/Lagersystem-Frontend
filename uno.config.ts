@@ -41,6 +41,17 @@ export default defineConfig({
         "xl": ["20px", "28px"],
         "2xl": ["24px", "32px"],
       },
+      animation: {
+        keyframes: {
+          "pulse-ring": "{0%,100%{box-shadow:0 0 10px 5px #3B82F6}50%{box-shadow:0 0 15px 8px #1E40AF}}",
+        },
+        durations: {
+          "pulse-ring": "2s",
+        },
+        counts: {
+          "pulse-ring": "infinite",
+        },
+      },
     };
   },
 });

@@ -9,6 +9,7 @@ import { match } from "~/lib/api/match";
 import { Storage } from "~/api/types";
 import { notification } from "ant-design-vue";
 import FolderIcon from "~/icons/FolderIcon.vue";
+import { scrollToAndMarkElement } from "~/lib/scrollToAndMarkElement";
 
 const props = defineProps<{ storage: z.infer<typeof Storage> }>();
 const emit = defineEmits(["update"]);
@@ -34,11 +35,22 @@ const handleDelete = async () => {
     });
   }
 };
+
+const el = ref<Element | null>(null);
+
+const refferer = inject("refferer") as Ref<string>;
+onMounted(() => {
+  if (refferer && refferer.value === props.storage.id && el.value !== null) {
+    scrollToAndMarkElement(el.value);
+  }
+});
 </script>
 
 <template>
   <div
+    ref="el"
     class="group min-w-[16rem] flex flex-col items-stretch justify-between rounded-md ring-3 ring-dark-1 transition-shadow hover:cursor-pointer hover:ring-2 hover:ring-orange"
+    :l-data-id="props.storage.id"
   >
     <RouterLink
       :to="`/storage/${props.storage.id}`"

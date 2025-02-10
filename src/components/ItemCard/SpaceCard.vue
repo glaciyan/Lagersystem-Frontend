@@ -9,6 +9,7 @@ import { match } from "~/lib/api/match";
 import { Space } from "~/api/types";
 import { notification, Progress } from "ant-design-vue";
 import TransparentCubeIcon from "~/icons/TransparentCubeIcon.vue";
+import { scrollToAndMarkElement } from "~/lib/scrollToAndMarkElement";
 
 const props = defineProps<{ space: z.infer<typeof Space> }>();
 const emit = defineEmits(["update", "open"]);
@@ -34,11 +35,22 @@ const handleDelete = async () => {
     });
   }
 };
+
+const el = ref<Element | null>(null);
+
+const refferer = inject("refferer") as Ref<string>;
+onMounted(() => {
+  if (refferer && refferer.value === props.space.id && el.value !== null) {
+    scrollToAndMarkElement(el.value);
+  }
+});
 </script>
 
 <template>
   <div
+    ref="el"
     class="group min-w-[16rem] flex flex-col items-stretch justify-between rounded-md ring-1 ring-dark-1 transition-shadow hover:cursor-pointer hover:ring-1 hover:ring-cyan"
+    :l-data-id="props.space.id"
   >
     <div @click="emit('open')">
       <div class="m-0 flex gap-2 overflow-hidden text-ellipsis border-b border-dark-1 px-3 py-2 text-lg text-light-7">

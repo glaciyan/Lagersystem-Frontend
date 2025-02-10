@@ -8,6 +8,7 @@ import StorageContentViewGrid from "~/components/ViewGrid/StorageContentViewGrid
 import ItemBreadcrumbs from "~/components/FetchedBreadcrumb.vue";
 import DownChevronIcon from "~/icons/DownChevronIcon.vue";
 
+// fetch handling and updating
 const route = useRoute();
 const depotId = ref(route.params.id as string);
 const idParam = reactive({
@@ -35,6 +36,12 @@ watch(
   },
 );
 
+// refferer
+const refferer = ref(route.query.ref as string);
+watch(() => route.query, () => {
+  refferer.value = route.query.ref as string;
+});
+provide("refferer", refferer);
 </script>
 
 <template>

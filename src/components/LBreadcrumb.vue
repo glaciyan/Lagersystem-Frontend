@@ -8,7 +8,8 @@ export type BItem = {
   type: string;
 };
 
-const props = defineProps<{ breadcrumb: BItem[]; id: string; bLoading?: boolean }>();
+const props = defineProps<{ breadcrumb: BItem[]; id: string; bLoading?: boolean; reffer?: boolean }>();
+const refferal = computed(() => props.reffer ? `?ref=${props.id}` : "");
 </script>
 
 <template>
@@ -28,7 +29,7 @@ const props = defineProps<{ breadcrumb: BItem[]; id: string; bLoading?: boolean 
     >
       <RouterLink
         v-if="b.type === 'storage' && b.id !== props.id"
-        :to="`/storage/${b.id}`"
+        :to="`/storage/${b.id}${refferal}`"
       >
         {{ b.name }}
       </RouterLink>

@@ -26,7 +26,7 @@ const props = defineProps<{ result: z.infer<typeof SearchResult> }>();
         <FolderIcon />
       </template>
       <RouterLink :to="`/storage/${props.result.id}`">
-        <span class="text-white/85">{{ props.result.name }}</span>
+        <span class="text-white/85 hover:underline">{{ props.result.name }}</span>
         {{ " " }}
         <span class="text-base text-gray-5">Storage</span>
         {{ " " }}
@@ -47,6 +47,7 @@ const props = defineProps<{ result: z.infer<typeof SearchResult> }>();
       v-if="props.result.breadcrumb"
       :id="props.result.id"
       :breadcrumb="props.result.breadcrumb.entries"
+      reffer
     />
 
     <div class="mt-2 w-full flex justify-between justify-self-end">
