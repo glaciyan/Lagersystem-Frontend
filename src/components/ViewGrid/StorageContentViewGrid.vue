@@ -9,7 +9,7 @@ import ViewGridHeader from "./ViewGridHeader.vue";
 import { Modal } from "ant-design-vue";
 import ProductCard from "../ItemCard/ProductCard.vue";
 import SpaceCard from "../ItemCard/SpaceCard.vue";
-import ItemBreadcrumbs from "../ItemBreadcrumbs.vue";
+import ItemBreadcrumbs from "../FetchedBreadcrumb.vue";
 
 const emit = defineEmits(["update"]);
 

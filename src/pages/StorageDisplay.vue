@@ -5,7 +5,7 @@ import { useApi } from "~/lib/api/useApi";
 import ProductViewGrid from "~/components/ViewGrid/ProductViewGrid.vue";
 import { Spin } from "ant-design-vue";
 import StorageContentViewGrid from "~/components/ViewGrid/StorageContentViewGrid.vue";
-import ItemBreadcrumbs from "~/components/ItemBreadcrumbs.vue";
+import ItemBreadcrumbs from "~/components/FetchedBreadcrumb.vue";
 import DownChevronIcon from "~/icons/DownChevronIcon.vue";
 
 const route = useRoute();
