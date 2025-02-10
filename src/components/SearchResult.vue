@@ -25,8 +25,9 @@ const props = defineProps<{ result: z.infer<typeof SearchResult> }>();
       <template #icon>
         <FolderIcon />
       </template>
-      <span>{{ props.result.name }}</span>
       <RouterLink :to="`/storage/${props.result.id}`">
+        <span class="text-white/85">{{ props.result.name }}</span>
+        {{ " " }}
         <span class="text-base text-gray-5">Storage</span>
         {{ " " }}
         <span class="text-sm text-gray-6">{{ props.result.id }}</span>
