@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Breadcrumb, BreadcrumbItem } from "ant-design-vue";
+import { Spin } from "ant-design-vue";
 
 export type BItem = {
   id: string;

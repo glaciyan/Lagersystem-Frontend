@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import LayoutVertical from "~/components/LayoutVertical.vue";
 import { Empty, Result, Spin } from "ant-design-vue";
-import ClosedCircle from "~/icons/ClosedCircle.vue";
 import { ApiError } from "~/lib/api/core";
 import ReloadButton from "../Buttons/ReloadButton.vue";
+import ErrorDisplay from "../ErrorDisplay.vue";
 
 const props = defineProps<{ dataLength?: number; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch?: (() => void); emptyText?: string; noBorder?: boolean }>();
 </script>
@@ -42,33 +42,11 @@ const props = defineProps<{ dataLength?: number; errors: ApiError[] | null; load
     </LayoutVertical>
 
     <!-- ERRORS -->
-    <LayoutVertical
+    <ErrorDisplay
       v-else-if="props.errors"
-      align="center"
-    >
-      <Result
-        status="error"
-        title="Es gab Fehler bei der Anfrage."
-      >
-        <template #extra>
-          <ReloadButton :refetch="props.refetch" />
-          <LayoutVertical
-            class="my-6 rounded-md bg-dark-6 p-6"
-          >
-            <div
-              v-for="error in props.errors"
-              :key="error.context + error.type"
-              class="flex content-center gap-2"
-            >
-              <ClosedCircle class="text-red" />
-              <p class="m-0">
-                {{ error.type }}: {{ error.message }}
-              </p>
-            </div>
-          </LayoutVertical>
-        </template>
-      </Result>
-    </LayoutVertical>
+      :errors
+      :refetch
+    />
 
     <LayoutVertical v-else>
       <!-- WE GOT DATA -->
