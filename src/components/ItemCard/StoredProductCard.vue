@@ -8,7 +8,7 @@ import DeleteIcon from "~/icons/DeleteIcon.vue";
 import InfoIcon from "~/icons/InfoIcon.vue";
 import ApiForm from "../Form/ApiForm.vue";
 import { endpoints } from "~/api/endpoints";
-import FormInputInteger from "../Form/FormInputInteger.vue";
+import FormInputInteger from "../Form/Input/FormInputInteger.vue";
 import LayoutVertical from "../LayoutVertical.vue";
 import LayoutHorizontal from "../LayoutHorizontal.vue";
 import { postAndForget } from "~/api/postAndForget";

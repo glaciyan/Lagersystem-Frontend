@@ -5,7 +5,7 @@ import { ApiError } from "~/lib/api/core";
 import { useApi } from "~/lib/api/useApi";
 import FormSelectableList from "../Form/FormSelectableList.vue";
 import { Button, Divider, Empty, Spin } from "ant-design-vue";
-import FormInputNumber from "../Form/FormInputNumber.vue";
+import FormInputNumber from "../Form/Input/FormInputNumber.vue";
 import { z } from "zod";
 import { StoredProduct } from "~/api/types";
 

@@ -1,86 +1,50 @@
 <script lang="ts" setup>
 import ApiForm from "~/components/Form/ApiForm.vue";
 import { endpoints } from "~/api/endpoints";
-import FormInputTextArea from "~/components/Form/FormInputTextArea.vue";
-import FormInput from "~/components/Form/FormInput.vue";
-import { Button, Divider } from "ant-design-vue";
+import FormInputTextArea from "~/components/Form/Input/FormInputTextArea.vue";
+import FormInput from "~/components/Form/Input/FormInput.vue";
+import ErrorModal from "../ErrorModal.vue";
+import { useModal } from "~/composites/useModal";
 
-const router = useRouter();
-function handleButtonCLick() {
-  router.go(-1);
-}
-const loading = ref(false);
+const props = defineProps<{ cancelButton?: boolean }>();
+const emit = defineEmits(["cancel"]);
+
+const modal = useModal();
 </script>
 
 <template>
-  <div
-    class="form-container"
-    style="padding: 0px"
+  <ApiForm
+    :endpoint="endpoints.postStorage"
+    :initialState="{ name: '', description: '' }"
+    submitText="Depot Erstellen"
+    :cancelText="props.cancelButton ? 'Abbrechen' : undefined"
+    :validation="(values, errors) => {
+      if (values.name.length < 3) {
+        errors.name = {
+          message: 'Depot name ist zu kurz, mindestens 3 Zeichen',
+          type: 'error'
+        };
+      }
+    }"
+    @success="async (data) => {
+      await $router.push(`/storage/${data.id}`);
+    }"
+    @failure="(err) => modal.openWithErrors(err)"
+    @cancel="emit('cancel')"
   >
-    <div class="header">
-      <Button
-        type="text"
-        class="close-button"
-        @click="handleButtonCLick"
-      >
-        ✕
-      </Button>
-    </div>
-    <ApiForm
-      :endpoint="endpoints.postStorage"
-      :initialState="{ name: '', description: '' }"
-      @success="async (data) => {
-        console.log(data);
-        await $router.push(`/storage/${data.id}`);
-      }"
-      @failure="(err) => console.log(err)"
-      @loading="(state) => loading = state"
-    >
-      <Divider>
-        Name des Depots:
-      </Divider>
-      <FormInput
-        for="name"
-        placeholder="Please enter the name of your depot"
-      />
-      <Divider>
-        Description
-      </Divider>
-      <FormInputTextArea
-        for="description"
-        placeholder="Please enter the description"
-      />
-      <Button
-        htmlType="submit"
-        type="primary"
-        :loading
-      >
-        Create Depot
-      </Button>
-    </ApiForm>
-  </div>
+    <FormInput
+      for="name"
+      title="Name"
+    />
+
+    <FormInputTextArea
+      for="description"
+      title="Beschreibung"
+    />
+  </ApiForm>
+  <ErrorModal
+    v-model:open="modal.isOpen.value"
+    title="Depot konnte nicht erstellt werden."
+    :errors="modal.errors.value"
+  />
 </template>
-
-<style scoped>
-.form-container {
-  max-width: 400px;
-  /* Optional: Begrenze die Breite */
-  margin: 0 auto;
-  /* Zentriere das Formular */
-  padding: 20px;
-  position: relative;
-}
-
-.header {
-  display: flex;
-  justify-content: flex-end;
-  /* Rechtsbündig */
-  margin-bottom: 8px;
-}
-
-.close-button {
-  font-size: 16px;
-  color: #ff4d4f;
-  cursor: pointer;
-}
-</style>

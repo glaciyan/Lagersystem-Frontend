@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import ApiForm from "~/components/Form/ApiForm.vue";
 import { endpoints } from "~/api/endpoints";
-import FormInputTextArea from "~/components/Form/FormInputTextArea.vue";
-import FormInput from "~/components/Form/FormInput.vue";
-import FormInputNumber from "~/components/Form/FormInputNumber.vue";
+import FormInputTextArea from "~/components/Form/Input/FormInputTextArea.vue";
+import FormInput from "~/components/Form/Input/FormInput.vue";
+import FormInputNumber from "~/components/Form/Input/FormInputNumber.vue";
 import { Button, Divider } from "ant-design-vue";
 
 const emit = defineEmits(["success"]);

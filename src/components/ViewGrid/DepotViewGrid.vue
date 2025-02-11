@@ -3,10 +3,16 @@ import { endpoints } from "~/api/endpoints";
 import { useApi } from "~/lib/api/useApi";
 import StatefulDisplay from "~/components/ViewGrid/StatefulDisplay.vue";
 import StorageCard from "../ItemCard/StorageCard.vue";
-import AddButton from "../Buttons/AddButton.vue";
 import ViewGridHeader from "./ViewGridHeader.vue";
+import IconButton from "../IconButton.vue";
+import FolderPlusIcon from "~/icons/FolderPlusIcon.vue";
+import { Modal } from "ant-design-vue";
+import CreateDepot from "../Create/CreateDepot.vue";
+import { useModal } from "~/composites/useModal";
 
 const { data, errors, loading, aborted, refetch } = useApi(endpoints.getStorages, {});
+const modal = useModal();
+provide("refferer", null);
 </script>
 
 <template>
@@ -23,10 +29,15 @@ const { data, errors, loading, aborted, refetch } = useApi(endpoints.getStorages
         title="Depots"
         :refetch="refetch"
       >
-        <!-- TODO replace with IconButton -->
-        <AddButton to="/storage/create">
+        <IconButton
+          type="primary"
+          @click="modal.open()"
+        >
+          <template #icon>
+            <FolderPlusIcon />
+          </template>
           Depot Erstellen
-        </AddButton>
+        </IconButton>
       </ViewGridHeader>
     </template>
 
@@ -42,4 +53,15 @@ const { data, errors, loading, aborted, refetch } = useApi(endpoints.getStorages
       </div>
     </template>
   </StatefulDisplay>
+  <Modal
+    v-model:open="modal.isOpen.value"
+    title="Depot Erstellen"
+    destroyOnClose
+    :footer="null"
+  >
+    <CreateDepot
+      cancelButton
+      @cancel="modal.close()"
+    />
+  </Modal>
 </template>

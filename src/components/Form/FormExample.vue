@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { form } from "~/components/Form/form";
-import FormInput from "~/components/Form/FormInput.vue";
+import FormInput from "~/components/Form/Input/FormInput.vue";
 import FormManager from "~/components/Form/FormManager.vue";
 import LinkedForm from "~/components/Form/LinkedForm.vue";
 

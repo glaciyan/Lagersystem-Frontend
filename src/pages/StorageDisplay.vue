@@ -8,11 +8,10 @@ import ItemBreadcrumbs from "~/components/FetchedBreadcrumb.vue";
 import DownChevronIcon from "~/icons/DownChevronIcon.vue";
 import { Draggable, DragEvent } from "@shopify/draggable";
 import { api } from "~/lib/api/api";
-import { Modal, notification } from "ant-design-vue";
+import { notification } from "ant-design-vue";
 import { match } from "~/lib/api/match";
 import { ApiError } from "~/lib/api/core";
-import LayoutVertical from "~/components/LayoutVertical.vue";
-import ClosedCircle from "~/icons/ClosedCircle.vue";
+import ErrorModal from "~/components/ErrorModal.vue";
 
 // fetch handling and updating
 const route = useRoute();
@@ -296,27 +295,11 @@ const setupDraggable = () => {
       </div>
     </div>
   </PageContainer>
-  <Modal
+  <ErrorModal
     v-model:open="showErrorModal"
-    title="Error"
-    :footer="null"
-  >
-    Das Produkt konnte nicht zugewiesen werden.
-    <LayoutVertical
-      class="my-6 rounded-md bg-dark-3 p-6"
-    >
-      <div
-        v-for="error in resultErrors"
-        :key="error.context + error.type"
-        class="flex items-start gap-2"
-      >
-        <ClosedCircle class="mt-0.5 h-5 w-5 flex-shrink-0 text-red" />
-        <p class="m-0 text-light-1">
-          {{ error.type }}: {{ error.message }}
-        </p>
-      </div>
-    </LayoutVertical>
-  </Modal>
+    title="Das Produkt konnte nicht zugewiesen werden."
+    :errors="resultErrors"
+  />
 </template>
 
 <style scoped>

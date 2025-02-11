@@ -14,6 +14,9 @@ import StoredProductCard from "../ItemCard/StoredProductCard.vue";
 import { endpoints } from "~/api/endpoints";
 import { api } from "~/lib/api/api";
 import { match } from "~/lib/api/match";
+import { useModal } from "~/composites/useModal";
+import CreateStorage from "../Create/CreateStorage.vue";
+import CreateSpace from "../Create/CreateSpace.vue";
 
 const emit = defineEmits<{
   update: [];
@@ -47,6 +50,9 @@ watch(selectedSpace, async () => {
     });
   }
 });
+
+const createStorageModal = useModal();
+const createSpaceModal = useModal();
 </script>
 
 <template>
@@ -66,7 +72,7 @@ watch(selectedSpace, async () => {
       >
         <IconButton
           type="primary"
-          @click="$router.push(`/storage/${parentId}/newstorage`)"
+          @click="createStorageModal.open()"
         >
           <template #icon>
             <FolderPlusIcon />
@@ -75,7 +81,7 @@ watch(selectedSpace, async () => {
         </IconButton>
         <IconButton
           type="primary"
-          @click="$router.push(`/storage/${parentId}/newspace`)"
+          @click="createSpaceModal.open()"
         >
           <template #icon>
             <AddIcon />
@@ -97,6 +103,34 @@ watch(selectedSpace, async () => {
       />
     </template>
   </StatefulDisplay>
+
+  <Modal
+    v-model:open="createStorageModal.isOpen.value"
+    title="Storage Erstellen"
+    destroyOnClose
+    :footer="null"
+  >
+    <CreateStorage
+      :parentId
+      cancelButton
+      @cancel="createStorageModal.close()"
+      @success="() => { emit('update'); createStorageModal.close() }"
+    />
+  </Modal>
+
+  <Modal
+    v-model:open="createSpaceModal.isOpen.value"
+    title="Space Erstellen"
+    destroyOnClose
+    :footer="null"
+  >
+    <CreateSpace
+      :storageId="parentId"
+      cancelButton
+      @cancel="createSpaceModal.close()"
+      @success="() => { emit('update'); createSpaceModal.close() }"
+    />
+  </Modal>
 
   <Modal
     v-model:open="openModal"
