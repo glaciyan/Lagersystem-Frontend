@@ -3,7 +3,6 @@ import PageContainer from "~/components/PageContainer";
 import { endpoints } from "~/api/endpoints";
 import { useApi } from "~/lib/api/useApi";
 import ProductViewGrid from "~/components/ViewGrid/ProductViewGrid.vue";
-import { Spin } from "ant-design-vue";
 import StorageContentViewGrid from "~/components/ViewGrid/StorageContentViewGrid.vue";
 import ItemBreadcrumbs from "~/components/FetchedBreadcrumb.vue";
 import DownChevronIcon from "~/icons/DownChevronIcon.vue";
@@ -67,29 +66,10 @@ provide("refferer", refferer);
         >
           <DownChevronIcon class="rotate-90" />
         </button>
-        <!-- No forward button because its confusion -->
-        <!-- <button
-          :class="['flex border border-2 border-dark-3 rounded-full bg-dark-9 px-2 py-2 transition-colors !m-0 !mb-2 hover:bg-dark-8', $router.]"
-          @click="$router.go(+1)"
-        >
-          <DownChevronIcon class="rotate-270" />
-        </button> -->
       </div>
       <div class="mb-2 w-max flex border border-2 border-dark-3 rounded-md bg-dark-9 px-3 py-2">
         <ItemBreadcrumbs :id="depotId" />
       </div>
-    </div>
-
-    <div class="text-2xl">
-      <h1 v-if="loading">
-        <Spin />
-      </h1>
-      <h1 v-else-if="!data || errors != null || aborted">
-        Fehler beim laden!
-      </h1>
-      <h1 v-else>
-        {{ data?.name ?? "..." }}
-      </h1>
     </div>
 
     <div class="flex flex-row gap-4">
