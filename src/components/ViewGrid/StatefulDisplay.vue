@@ -52,7 +52,10 @@ const props = defineProps<{ dataLength?: number; errors: ApiError[] | null; load
       <!-- WE GOT DATA -->
       <slot name="header" />
 
-      <div v-if="(dataLength ?? 0) > 0">
+      <div
+        v-if="(dataLength ?? 0) > 0"
+        class="w-full"
+      >
         <slot name="display" />
       </div>
 

@@ -7,7 +7,7 @@ import { Product } from "~/api/types";
 import { z } from "zod";
 import IconWithText from "../IconWithText.vue";
 
-const props = defineProps<{ item: { id: string; name: string; description: string }; sizing?: { currentSize: number; unit?: string; totalSize: number }; products?: z.infer<typeof Product>[] }>();
+const props = defineProps<{ item: { id: string; name: string; description: string }; capacity?: { currentSize: number; unit?: string; totalSize: number }; sizing?: { size: number; unit?: string }; products?: z.infer<typeof Product>[] }>();
 const emit = defineEmits(["update", "open", "edit", "delete"]);
 
 const el = useTemplateRef<HTMLDivElement>("root");
@@ -27,22 +27,35 @@ onMounted(() => {
     :l-data-id="props.item.id"
   >
     <div @click="emit('open')">
-      <IconWithText class="m-0 flex gap-2 border-b border-dark-1 px-3 py-2 text-lg text-light-7 !justify-start">
-        <template #icon>
-          <slot name="icon" />
-        </template>
-        <span class="overflow-hidden text-ellipsis">{{ props.item.name }}</span>
-      </IconWithText>
+      <div class="border-b border-dark-1">
+        <IconWithText class="m-0 flex gap-2 px-3 py-2 text-lg text-light-7 !justify-start">
+          <template
+            v-if="$slots.icon"
+            #icon
+          >
+            <slot name="icon" />
+          </template>
+          <div class="overflow-hidden text-ellipsis">
+            {{ props.item.name }}
+          </div>
+        </IconWithText>
+      </div>
       <div
         v-if="props.sizing"
+        class="px-3 pt-2 text-base text-gray-3/85"
+      >
+        Größe: {{ props.sizing.size }}{{ props.sizing.unit }}
+      </div>
+      <div
+        v-if="props.capacity"
         class="m-0 overflow-hidden text-ellipsis border-b border-dark-1 px-3 py-2 text-lg text-light-7"
       >
         <span v-if="props.products">Produkte: {{ props.products.length }}</span>
         <span class="px-3 text-base text-light-9">
-          {{ props.sizing.currentSize }}{{ props.sizing.unit }}/{{ props.sizing.totalSize }}{{ props.sizing.unit }}
+          {{ props.capacity.currentSize }}{{ props.capacity.unit }}/{{ props.capacity.totalSize }}{{ props.capacity.unit }}
         </span>
         <div class="min-w-[10rem]">
-          <Progress :percent="Math.round(props.sizing.currentSize/props.sizing.totalSize * 100)" />
+          <Progress :percent="Math.round(props.capacity.currentSize/props.capacity.totalSize * 100)" />
         </div>
       </div>
       <p
