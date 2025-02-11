@@ -12,7 +12,6 @@ const props = defineProps<{ title: string; refetch?: () => void }>();
 
     <slot />
 
-    <!-- TODO replace with IconButton -->
     <ReloadButton :refetch="props.refetch" />
   </div>
 </template>

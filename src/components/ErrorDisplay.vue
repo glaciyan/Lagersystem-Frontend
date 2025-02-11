@@ -17,7 +17,6 @@ const props = defineProps<{ errors: ApiError[] | null; refetch?: (() => void) }>
       title="Es gab Fehler bei der Anfrage."
     >
       <template #extra>
-        <!-- TODO replace with IconButton -->
         <ReloadButton :refetch="props.refetch" />
         <LayoutVertical
           class="my-6 rounded-md bg-dark-6 p-6"

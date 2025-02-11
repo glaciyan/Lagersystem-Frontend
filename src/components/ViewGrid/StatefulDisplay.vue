@@ -20,7 +20,6 @@ const props = defineProps<{ dataLength?: number; errors: ApiError[] | null; load
         title="Die Anfrage wurde abgebrochen."
       >
         <template #extra>
-          <!-- TODO replace with IconButton -->
           <ReloadButton :refetch="props.refetch" />
         </template>
       </Result>

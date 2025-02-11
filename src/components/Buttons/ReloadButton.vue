@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import ReloadIcon from "~/icons/ReloadIcon.vue";
-import { h } from "vue";
-import { Button } from "ant-design-vue";
+import IconButton from "../IconButton.vue";
 
 const props = defineProps<{ refetch?: () => void }>();
 </script>
 
 <template>
-  <Button
-    v-if="refetch"
-    :icon="h(ReloadIcon)"
+  <IconButton
+    v-if="props.refetch"
     @click="props.refetch"
   >
+    <template #icon>
+      <ReloadIcon />
+    </template>
     Neu Laden
-  </Button>
+  </IconButton>
 </template>
