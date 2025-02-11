@@ -44,6 +44,7 @@ watch(
 const reload = () => {
   refetch();
   refetchProducts();
+  setupDraggable();
 };
 
 // refferer
@@ -77,7 +78,7 @@ const showErrorModal = ref(false);
 const resultErrors = ref<ApiError[]>([]);
 
 const setupDraggable = () => {
-  if (containers.product !== null && containers.content !== null) {
+  if (containers.content !== null) {
     console.log("Setting up Draggable...");
     if (draggable !== null) {
       console.log("Draggable instance found clearing it.");
@@ -85,7 +86,13 @@ const setupDraggable = () => {
       draggable = null;
     }
 
-    draggable = new Draggable([containers.content, containers.product], {
+    let list = [containers.content];
+    if (containers.product) {
+      console.log("Got Product Container");
+      list = [containers.content, containers.product];
+    }
+
+    draggable = new Draggable(list, {
       draggable: "div[l-data-id]",
       distance: 30,
     });

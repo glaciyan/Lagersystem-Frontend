@@ -37,6 +37,7 @@ if (!values.value[props.for]) {
       :placeholder="props.placeholder"
       :min="min ?? 0"
       :status="hasError ? 'error' : undefined"
+      style="width: 100%"
     />
   </Tooltip>
 </template>

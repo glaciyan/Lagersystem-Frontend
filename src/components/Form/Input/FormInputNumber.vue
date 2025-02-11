@@ -5,7 +5,7 @@ import { InputNumber, Tooltip } from "ant-design-vue";
 import { inject } from "vue";
 import FormHeader from "../FormHeader.vue";
 
-const props = defineProps<{ for: string; placeholder?: string; min?: number; title?: string } & InputProps>();
+const props = defineProps<{ for: string; placeholder?: string; min?: number; title?: string; unit?: string } & InputProps>();
 const values = inject("values") as Ref<Record<string, any>>;
 const form = inject("form") as Readonly<Ref<any>>;
 
@@ -37,6 +37,14 @@ if (!values.value[props.for]) {
       :placeholder="props.placeholder"
       :step="0.01"
       :status="hasError ? 'error' : undefined"
-    />
+      style="width: 100%"
+    >
+      <template
+        v-if="props.unit"
+        #addonAfter
+      >
+        {{ unit }}
+      </template>
+    </InputNumber>
   </Tooltip>
 </template>

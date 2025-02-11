@@ -3,94 +3,72 @@ import ApiForm from "~/components/Form/ApiForm.vue";
 import { endpoints } from "~/api/endpoints";
 import FormInputTextArea from "~/components/Form/Input/FormInputTextArea.vue";
 import FormInput from "~/components/Form/Input/FormInput.vue";
-import FormInputNumber from "~/components/Form/Input/FormInputNumber.vue";
-import { Button, Divider } from "ant-design-vue";
+import ErrorModal from "../ErrorModal.vue";
+import { useModal } from "~/composites/useModal";
+import FormInputNumber from "../Form/Input/FormInputNumber.vue";
+import LayoutHorizontal from "../LayoutHorizontal.vue";
+import LayoutVertical from "../LayoutVertical.vue";
 
-const emit = defineEmits(["success"]);
+const props = defineProps<{ cancelButton?: boolean }>();
+const emit = defineEmits(["cancel", "success"]);
 
-const loading = ref(false);
+const modal = useModal();
+
 </script>
 
 <template>
-  <div
-    class="form-container"
-    style="padding-top: 0px"
+  <ApiForm
+    :endpoint="endpoints.postProduct"
+    :initialState="{ name: '', description: '', size: 1, unit: '' }"
+    submitText="Produkt Erstellen"
+    :cancelText="props.cancelButton ? 'Abbrechen' : undefined"
+    :validation="(values, errors) => {
+      if (values.name.length < 3) {
+        errors.name = {
+          message: 'Produktname ist zu kurz, mindestens 3 Zeichen',
+          type: 'error'
+        };
+      }
+
+      if (values.size <= 0) {
+        errors.size = {
+          message: 'Größe darf nicht gleich oder kleiner als 0 sein',
+          type: 'error'
+        }
+      }
+    }"
+    @success="emit('success')"
+    @failure="(err) => modal.openWithErrors(err)"
+    @cancel="emit('cancel')"
   >
-    <div class="header">
-      <Button
-        type="text"
-        class="close-button"
-        @click="$router.go(-1)"
-      >
-        ✕
-      </Button>
-    </div>
-    <ApiForm
-      :endpoint="endpoints.postProduct"
-      :initialState="{ name: '', description: '', size: 0, unit: '' }"
-      @success="(data) => { console.log(data); emit('success') }"
-      @failure="(err) => console.log(err)"
-      @loading="(state) => loading = state"
-    >
-      <Divider>
-        Name for the product:
-      </Divider>
-      <FormInput
-        for="name"
-        placeholder="Please enter the name of the product"
-      />
-      <Divider>
-        Size for the product:
-      </Divider>
-      <FormInputNumber
-        for="size"
-        placeholder="Please enter the size of the product"
-      />
-      <Divider>
-        Unit for the product:
-      </Divider>
-      <FormInput
-        for="unit"
-        placeholder="Please enter the unit of the product"
-      />
-      <Divider>
-        Description
-      </Divider>
-      <FormInputTextArea
-        for="description"
-        placeholder="Please enter the description for the product"
-      />
-      <Button
-        htmlType="submit"
-        type="primary"
-        :loading
-      >
-        Create product
-      </Button>
-    </ApiForm>
-  </div>
+    <FormInput
+      for="name"
+      title="Name"
+    />
+
+    <FormInputTextArea
+      for="description"
+      title="Beschreibung"
+    />
+
+    <LayoutHorizontal class="w-full">
+      <LayoutVertical class="w-full">
+        <FormInputNumber
+          for="size"
+          title="Größe"
+        />
+      </LayoutVertical>
+      <LayoutVertical class="w-full">
+        <FormInput
+          for="unit"
+          title="Einheit"
+        />
+      </LayoutVertical>
+    </LayoutHorizontal>
+  </ApiForm>
+  <ErrorModal
+    v-model:open="modal.isOpen.value"
+    title="Produkt konnte nicht erstellt werden."
+    :errors="modal.errors.value"
+  />
 </template>
-
-<style scoped>
-.form-container {
-  max-width: 400px;
-  /* Optional: Begrenze die Breite */
-  margin: 0 auto;
-  /* Zentriere das Formular */
-  padding: 20px;
-  position: relative;
-}
-
-.header {
-  display: flex;
-  justify-content: flex-end;
-  /* Rechtsbündig */
-  margin-bottom: 8px;
-}
-
-.close-button {
-  font-size: 16px;
-  color: #ff4d4f;
-  cursor: pointer;
-}
-</style>

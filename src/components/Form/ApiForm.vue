@@ -26,6 +26,11 @@ const props = defineProps<Props>();
 type Errors = Record<keyof B, { message: string; type: string }>;
 const form = ref<{ values: B; errors: Errors }>();
 
+watch(form, () => console.log(form));
+
+const model = defineModel<{ values: B; errors: Errors }>();
+model.value = form.value;
+
 const emit = defineEmits<{
   success: [payload: Ret];
   failure: [errors: ApiError[]];

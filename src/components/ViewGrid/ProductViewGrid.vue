@@ -2,11 +2,14 @@
 import StatefulDisplay from "~/components/ViewGrid/StatefulDisplay.vue";
 import { Modal } from "ant-design-vue";
 import { ApiError } from "~/lib/api/core";
-import AddButton from "../Buttons/AddButton.vue";
 import { Product, ProductArray } from "~/api/types";
 import { z } from "zod";
 import ViewGridHeader from "./ViewGridHeader.vue";
 import TheProductGrid from "./TheProductGrid.vue";
+import { useModal } from "~/composites/useModal";
+import IconButton from "../IconButton.vue";
+import AddIcon from "~/icons/AddIcon.vue";
+import CreateProduct from "../Create/CreateProduct.vue";
 
 const emit = defineEmits<{
   update: [];
@@ -16,7 +19,8 @@ const emit = defineEmits<{
 const props = defineProps<{ data: z.infer<typeof ProductArray> | null; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch: () => void; originStorageId?: string }>();
 
 const selectedProduct = ref < z.infer<typeof Product> | null>(null);
-const openModal = ref(false);
+const infoModal = useModal();
+const createProductModal = useModal();
 </script>
 
 <template>
@@ -35,9 +39,15 @@ const openModal = ref(false);
         :refetch="refetch"
       >
         <!-- TODO replace with IconButton -->
-        <AddButton :to="`/product/create${props.originStorageId ? `?origin=${props.originStorageId}` : ''}`">
+        <IconButton
+          type="primary"
+          @click="createProductModal.open()"
+        >
+          <template #icon>
+            <AddIcon />
+          </template>
           Erstellen
-        </AddButton>
+        </IconButton>
       </ViewGridHeader>
     </template>
 
@@ -47,7 +57,7 @@ const openModal = ref(false);
         @update="emit('update')"
         @open="(p) => {
           selectedProduct = p;
-          openModal = true;
+          infoModal.open()
         }"
         @ready="(container) => emit('ready', container)"
       />
@@ -55,7 +65,20 @@ const openModal = ref(false);
   </StatefulDisplay>
 
   <Modal
-    v-model:open="openModal"
+    v-model:open="createProductModal.isOpen.value"
+    title="Storage Erstellen"
+    destroyOnClose
+    :footer="null"
+  >
+    <CreateProduct
+      cancelButton
+      @cancel="createProductModal.close()"
+      @success="() => { emit('update'); createProductModal.close() }"
+    />
+  </Modal>
+
+  <Modal
+    v-model:open="infoModal.isOpen.value"
     title="Produktdetails"
     :footer="null"
   >
