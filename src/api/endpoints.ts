@@ -15,4 +15,6 @@ export const endpoints = {
   postStoredProducts: endpoint("POST", "/v1/storedProducts").withBody<{ productId: string; spaceId: string; quantity: number }>().returns(StoredProduct),
   breadcrumb: endpoint<{ id: string }>("GET", p => `/v1/breadcrumb/${p.id}`).returns(BreadcrumbPath),
   search: endpoint("GET", "/v1/search").withQuery<{ q: string }>().returns(z.array(SearchResult)),
+  moveStorage: endpoint<{ id: string }>("PATCH", p => `/v1/storages/${p.id}/move`).withBody<{ newParentId: string }>().returns(Storage),
+  moveSpace: endpoint<{ id: string }>("PATCH", p => `/v1/spaces/${p.id}/move`).withBody<{ targetStorageId: string }>().returns(Space),
 };

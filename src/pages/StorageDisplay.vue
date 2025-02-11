@@ -183,6 +183,60 @@ const setupDraggable = () => {
             notification.error({ message: "Unable to assign Product, unable to get the ID from HTML." });
           }
         }
+        else if (action === "moveSTST") {
+          const sourceStorage = sourceId;
+          const destinationStorage = overId;
+          if (sourceStorage && destinationStorage) {
+            const result = await api(endpoints.moveStorage, { body: { newParentId: destinationStorage }, params: { id: sourceStorage } }, { headers: {
+              "Content-Type": "application/json",
+            } });
+            match(result, {
+              ok: () => {
+                notification.success({ message: "Storage erfolgreich bewegt." });
+                reload();
+              },
+              error: (error) => {
+                notification.error({
+                  message: "Fehler",
+                  description: "Das Produkt konnte nicht bewegt werden.",
+                  duration: 3,
+                });
+                showErrorModal.value = true;
+                resultErrors.value = error;
+              },
+            });
+          }
+          else {
+            notification.error({ message: "Unable to move Storage, unable to get the ID from HTML." });
+          }
+        }
+        else if (action === "moveSST") {
+          const sourceSpace = sourceId;
+          const destinationStorage = overId;
+          if (sourceSpace && destinationStorage) {
+            const result = await api(endpoints.moveSpace, { body: { targetStorageId: destinationStorage }, params: { id: sourceSpace } }, { headers: {
+              "Content-Type": "application/json",
+            } });
+            match(result, {
+              ok: () => {
+                notification.success({ message: "Space erfolgreich bewegt." });
+                reload();
+              },
+              error: (error) => {
+                notification.error({
+                  message: "Fehler",
+                  description: "Das Space konnte nicht bewegt werden.",
+                  duration: 3,
+                });
+                showErrorModal.value = true;
+                resultErrors.value = error;
+              },
+            });
+          }
+          else {
+            notification.error({ message: "Unable to move Space, unable to get the ID from HTML." });
+          }
+        }
       }
       clearClasses();
     });
