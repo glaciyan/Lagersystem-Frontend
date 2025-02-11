@@ -36,6 +36,7 @@ const handleDelete = async () => {
 
 <template>
   <AbstractCard
+    type="storage"
     :item="props.storage"
     class="bg-dark-8/80 ring ring-offset-3 ring-dark-1 ring-offset-dark-4 hover:ring-offset-amber"
     @update="emit('update')"

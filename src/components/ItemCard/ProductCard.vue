@@ -35,6 +35,7 @@ const handleDelete = async () => {
 
 <template>
   <AbstractCard
+    type="product"
     :item="props.product"
     :sizing="props.product"
     class="ring-1 ring-dark-1 hover:ring-1 hover:ring-cyan"

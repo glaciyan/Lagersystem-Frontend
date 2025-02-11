@@ -7,7 +7,7 @@ import { Product } from "~/api/types";
 import { z } from "zod";
 import IconWithText from "../IconWithText.vue";
 
-const props = defineProps<{ item: { id: string; name: string; description: string }; capacity?: { currentSize: number; unit?: string; totalSize: number }; sizing?: { size: number; unit?: string }; products?: z.infer<typeof Product>[] }>();
+const props = defineProps<{ type: string; item: { id: string; name: string; description: string }; capacity?: { currentSize: number; unit?: string; totalSize: number }; sizing?: { size: number; unit?: string }; products?: z.infer<typeof Product>[] }>();
 const emit = defineEmits(["update", "open", "edit", "delete"]);
 
 const el = useTemplateRef<HTMLDivElement>("root");
@@ -25,8 +25,15 @@ onMounted(() => {
     ref="root"
     class="group flex basis-[auto] flex-col items-stretch justify-between rounded-md transition-shadow hover:cursor-pointer"
     :l-data-id="props.item.id"
+    :l-data-type="props.type"
+    :l-data-capacity="(props.capacity?.totalSize ?? 0) - (props.capacity?.currentSize ?? 0)"
+    :l-data-unit="props.capacity?.unit ?? props.sizing?.unit"
+    :l-data-size="props.sizing?.size"
   >
-    <div @click="emit('open')">
+    <div
+      class="h-full"
+      @click="emit('open')"
+    >
       <div class="border-b border-dark-1">
         <IconWithText class="m-0 flex gap-2 px-3 py-2 text-lg text-light-7 !justify-start">
           <template
@@ -59,10 +66,9 @@ onMounted(() => {
         </div>
       </div>
       <p
-        v-if="props.item.description"
         class="overflow-hidden text-ellipsis px-3 py-2 text-base text-light-9"
       >
-        {{ props.item.description }}
+        {{ props.item.description ?? " " }}
       </p>
     </div>
     <div class="flex justify-around border-t border-dark-1 opacity-0 transition-all group-hover:opacity-100">
@@ -89,3 +95,13 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.drag-success {
+  @apply bg-cyan-3/20;
+}
+
+.drag-fail {
+  @apply bg-red-3/20;
+}
+</style>

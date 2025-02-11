@@ -6,6 +6,13 @@ import ProductViewGrid from "~/components/ViewGrid/ProductViewGrid.vue";
 import StorageContentViewGrid from "~/components/ViewGrid/StorageContentViewGrid.vue";
 import ItemBreadcrumbs from "~/components/FetchedBreadcrumb.vue";
 import DownChevronIcon from "~/icons/DownChevronIcon.vue";
+import { Draggable, DragEvent } from "@shopify/draggable";
+import { api } from "~/lib/api/api";
+import { Modal, notification } from "ant-design-vue";
+import { match } from "~/lib/api/match";
+import { ApiError } from "~/lib/api/core";
+import LayoutVertical from "~/components/LayoutVertical.vue";
+import ClosedCircle from "~/icons/ClosedCircle.vue";
 
 // fetch handling and updating
 const route = useRoute();
@@ -35,12 +42,148 @@ watch(
   },
 );
 
+const reload = () => {
+  refetch();
+  refetchProducts();
+};
+
 // refferer
 const refferer = ref(route.query.ref as string);
 watch(() => route.query, () => {
   refferer.value = route.query.ref as string;
 });
 provide("refferer", refferer);
+
+// draggable
+const containers: { product: HTMLDivElement | null; content: HTMLDivElement | null } = {
+  product: null,
+  content: null,
+};
+
+const productViewReady = (container: HTMLDivElement | null) => {
+  console.log("Registering product view container", container);
+  containers.product = container;
+  setupDraggable();
+};
+
+const contentViewReady = (container: HTMLDivElement | null) => {
+  console.log("Registering content view container", container);
+  containers.content = container;
+  setupDraggable();
+};
+
+let draggable: Draggable | null = null;
+
+const showErrorModal = ref(false);
+const resultErrors = ref<ApiError[]>([]);
+
+const setupDraggable = () => {
+  if (containers.product !== null && containers.content !== null) {
+    console.log("Setting up Draggable...");
+    if (draggable !== null) {
+      console.log("Draggable instance found clearing it.");
+      draggable.destroy();
+      draggable = null;
+    }
+
+    draggable = new Draggable([containers.content, containers.product], {
+      draggable: "div[l-data-id]",
+      distance: 30,
+    });
+
+    let overElement: HTMLElement | null = null;
+
+    const clearClasses = () => {
+      overElement?.classList.remove("drag-success", "drag-fail");
+    };
+
+    const getAttributes = (event: DragEvent, attribute: string) => {
+      const source = event.source;
+      const s = source.getAttribute(attribute);
+      const o = overElement?.getAttribute(attribute);
+      return [s, o];
+    };
+
+    const getTypes = (event: DragEvent) => getAttributes(event, "l-data-type");
+
+    const canDropByAction = (event: DragEvent): "move" | "assign" | null => {
+      const [sType, oType] = getTypes(event);
+      const [sUnit, oUnit] = getAttributes(event, "l-data-unit");
+      const [sSize] = getAttributes(event, "l-data-size");
+      const [, oCapacity] = getAttributes(event, "l-data-capacity");
+
+      switch (sType) {
+        case "product":
+          switch (oType) {
+            case "space":
+              if (sUnit === oUnit && Number(oCapacity) > Number(sSize)) {
+                return "assign";
+              }
+              else {
+                return null;
+              }
+            case "storage":
+              return null;
+          }
+          break;
+      }
+
+      return null;
+    };
+
+    draggable.on("drag:over", (event) => {
+      overElement = event.over;
+      if (canDropByAction(event) !== null) {
+        event.over.classList.add("drag-success");
+      }
+      else {
+        event.over.classList.add("drag-fail");
+      }
+    });
+
+    draggable.on("drag:out", () => {
+      clearClasses();
+      overElement = null;
+    });
+
+    draggable.on("drag:stop", async (event) => {
+      const action = canDropByAction(event);
+      if (action !== null) {
+        const [sourceId, overId] = getAttributes(event, "l-data-id");
+        if (action === "assign") {
+          const productId = sourceId;
+          const spaceId = overId;
+          if (productId && spaceId) {
+            const result = await api(endpoints.postStoredProducts, { body: { productId, spaceId, quantity: 1 } }, { headers: {
+              "Content-Type": "application/json",
+            } });
+            match(result, {
+              ok: () => {
+                notification.success({ message: "Produkt erfolgreich zugewiesen." });
+                reload();
+              },
+              error: (error) => {
+                notification.error({
+                  message: "Fehler",
+                  description: "Das Produkt konnte nicht zugewiesen werden.",
+                  duration: 3,
+                });
+                showErrorModal.value = true;
+                resultErrors.value = error;
+              },
+            });
+          }
+          else {
+            notification.error({ message: "Unable to assign Product, unable to get the ID from HTML." });
+          }
+        }
+      }
+      clearClasses();
+    });
+
+    console.log("Draggable initialized");
+  }
+};
 </script>
 
 <template>
@@ -55,6 +198,7 @@ provide("refferer", refferer);
       :aborted="productsAborted"
       :originStorageId="depotId"
       @update="refetchProducts"
+      @ready="productViewReady"
     />
   </div>
   <PageContainer size="full">
@@ -82,6 +226,7 @@ provide("refferer", refferer);
           :refetch
           :parentId="depotId"
           @update="refetch"
+          @ready="contentViewReady"
         />
       </div>
 
@@ -91,6 +236,27 @@ provide("refferer", refferer);
       </div>
     </div>
   </PageContainer>
+  <Modal
+    v-model:open="showErrorModal"
+    title="Error"
+    :footer="null"
+  >
+    Das Produkt konnte nicht zugewiesen werden.
+    <LayoutVertical
+      class="my-6 rounded-md bg-dark-3 p-6"
+    >
+      <div
+        v-for="error in resultErrors"
+        :key="error.context + error.type"
+        class="flex items-start gap-2"
+      >
+        <ClosedCircle class="mt-0.5 h-5 w-5 flex-shrink-0 text-red" />
+        <p class="m-0 text-light-1">
+          {{ error.type }}: {{ error.message }}
+        </p>
+      </div>
+    </LayoutVertical>
+  </Modal>
 </template>
 
 <style scoped>

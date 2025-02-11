@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import StatefulDisplay from "~/components/ViewGrid/StatefulDisplay.vue";
-import StorageCard from "../ItemCard/StorageCard.vue";
 import { ApiError } from "~/lib/api/core";
 import { Space, Storage } from "~/api/types";
 import { z } from "zod";
 import ViewGridHeader from "./ViewGridHeader.vue";
 import { Modal } from "ant-design-vue";
 import ProductCard from "../ItemCard/ProductCard.vue";
-import SpaceCard from "../ItemCard/SpaceCard.vue";
 import ItemBreadcrumbs from "../FetchedBreadcrumb.vue";
 import IconButton from "../IconButton.vue";
 import AddIcon from "~/icons/AddIcon.vue";
 import FolderPlusIcon from "~/icons/FolderPlusIcon.vue";
+import TheContentGrid from "./TheContentGrid.vue";
 
-const emit = defineEmits(["update"]);
+const emit = defineEmits<{
+  update: [];
+  ready: [container: HTMLDivElement | null];
+}>();
 
 const props = defineProps<{ data: z.infer<typeof Storage> | null; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch: () => void; parentId: string }>();
 
@@ -23,8 +25,6 @@ const openModal = ref(false);
 watch(() => props.data, () => {
   openModal.value = false;
 });
-
-// draggable
 </script>
 
 <template>
@@ -64,26 +64,15 @@ watch(() => props.data, () => {
     </template>
 
     <template #display>
-      <div class="4xl:grid-cols-6 grid grid-auto-cols-[repeat(auto-fit,minmax(_150px,_1fr))] grid-cols-1 mt-6 w-full gap-4 2xl:grid-cols-4 3xl:grid-cols-5 md:grid-cols-2 xl:grid-cols-3">
-        <StorageCard
-          v-for="substorage of props.data!.subStorages"
-          :key="substorage.id"
-          ref="storages"
-          :storage="substorage"
-          @update="emit('update')"
-        />
-        <SpaceCard
-          v-for="space of props.data!.spaces"
-          :key="space.id"
-          ref="spaces"
-          :space="space"
-          @update="emit('update')"
-          @open="() => {
-            selectedSpace = space;
-            openModal = true;
-          }"
-        />
-      </div>
+      <TheContentGrid
+        :data
+        @update="emit('update')"
+        @openSpace="(s) => {
+          selectedSpace = s;
+          openModal = true;
+        }"
+        @ready="(container) => emit('ready', container)"
+      />
     </template>
   </StatefulDisplay>
 

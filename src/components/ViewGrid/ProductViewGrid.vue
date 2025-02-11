@@ -5,10 +5,13 @@ import { ApiError } from "~/lib/api/core";
 import AddButton from "../Buttons/AddButton.vue";
 import { Product, ProductArray } from "~/api/types";
 import { z } from "zod";
-import ProductCard from "../ItemCard/ProductCard.vue";
 import ViewGridHeader from "./ViewGridHeader.vue";
+import TheProductGrid from "./TheProductGrid.vue";
 
-const emit = defineEmits(["update"]);
+const emit = defineEmits<{
+  update: [];
+  ready: [container: HTMLDivElement | null];
+}>();
 
 const props = defineProps<{ data: z.infer<typeof ProductArray> | null; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch: () => void; originStorageId?: string }>();
 
@@ -39,18 +42,15 @@ const openModal = ref(false);
     </template>
 
     <template #display>
-      <div class="grid grid-cols-2 mt-6 gap-4">
-        <ProductCard
-          v-for="product of props.data"
-          :key="product.id"
-          :product="product"
-          @update="emit('update')"
-          @open="() => {
-            selectedProduct = product;
-            openModal = true;
-          }"
-        />
-      </div>
+      <TheProductGrid
+        :data
+        @update="emit('update')"
+        @open="(p) => {
+          selectedProduct = p;
+          openModal = true;
+        }"
+        @ready="(container) => emit('ready', container)"
+      />
     </template>
   </StatefulDisplay>
 
