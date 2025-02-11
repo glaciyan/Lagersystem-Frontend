@@ -5,6 +5,7 @@ import ErrorDisplay from "~/components/ErrorDisplay.vue";
 import PageContainer from "~/components/PageContainer";
 import SearchResult from "~/components/SearchResult.vue";
 import { useApi } from "~/lib/api/useApi";
+import { last } from "~/lib/scrollToAndMarkElement";
 
 const route = useRoute();
 
@@ -19,6 +20,11 @@ watch(() => route.query, (value) => {
 });
 
 const { data, loading, errors } = useApi(endpoints.search, apiQuery);
+
+onMounted(() => {
+  console.log("resetting highlight");
+  last.id = null;
+});
 </script>
 
 <template>
