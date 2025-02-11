@@ -23,13 +23,32 @@ onMounted(() => {
     ref="container"
     class="grid grid-cols-2 mt-6 gap-4"
   >
-    <ProductCard
-      v-for="product of props.data"
-      ref="items"
-      :key="product.id"
-      :product="product"
-      @update="emit('update')"
-      @open="emit('open', product)"
-    />
+    <TransitionGroup>
+      <ProductCard
+        v-for="product of props.data"
+        ref="items"
+        :key="product.id"
+        :product="product"
+        @update="emit('update')"
+        @open="emit('open', product)"
+      />
+    </TransitionGroup>
   </div>
 </template>
+
+<style scoped>
+.v-move,
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.3s ease;
+}
+
+.v-leave-active {
+  position: absolute;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>

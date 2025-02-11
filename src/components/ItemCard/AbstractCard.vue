@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import DeleteIcon from "~/icons/DeleteIcon.vue";
 import EditIcon from "~/icons/EditIcon.vue";
-import { Progress } from "ant-design-vue";
+import { Popconfirm, Progress } from "ant-design-vue";
 import { scrollToAndMarkElement } from "~/lib/scrollToAndMarkElement";
 import { Product } from "~/api/types";
 import { z } from "zod";
 import IconWithText from "../IconWithText.vue";
 
-const props = defineProps<{ type: string; item: { id: string; name: string; description: string }; capacity?: { currentSize: number; unit?: string; totalSize: number }; sizing?: { size: number; unit?: string }; products?: z.infer<typeof Product>[] }>();
-const emit = defineEmits(["update", "open", "edit", "delete"]);
+const props = defineProps<{ type: string; item: { id: string; name: string; description: string }; capacity?: { currentSize: number; unit?: string; totalSize: number }; sizing?: { size: number; unit?: string }; products?: z.infer<typeof Product>[]; noEdit?: boolean; deleteConfig?: { title: string; onDelete: () => Promise<void> } }>();
+const emit = defineEmits(["open", "edit"]);
 
 const el = useTemplateRef<HTMLDivElement>("root");
 
@@ -73,6 +73,7 @@ onMounted(() => {
     </div>
     <div class="flex justify-around border-t border-dark-1 opacity-0 transition-all group-hover:opacity-100">
       <button
+        v-if="!noEdit"
         class="w-full border-r border-dark-2 px-3 py-2 text-base text-gray-4 transition-colors hover:text-blue"
         @click="emit('edit')"
       >
@@ -82,16 +83,24 @@ onMounted(() => {
           </template>
         </IconWithText>
       </button>
-      <button
-        class="w-full px-2 text-base text-gray-4 transition-colors hover:text-red"
-        @click="emit('delete')"
+      <Popconfirm
+        v-if="props.deleteConfig"
+        :title="props.deleteConfig.title"
+        okText="Ja"
+        cancelText="Nein"
+        @confirm="props.deleteConfig.onDelete"
       >
-        <IconWithText center>
-          <template #icon>
-            <DeleteIcon class="size-4" />
-          </template>
-        </IconWithText>
-      </button>
+        <button
+          class="w-full px-2 py-2 text-base text-gray-4 transition-colors hover:text-red"
+        >
+          <IconWithText center>
+            <template #icon>
+              <DeleteIcon class="size-4" />
+            </template>
+          </IconWithText>
+        </button>
+      </Popconfirm>
+      <slot name="customActions" />
     </div>
   </div>
 </template>

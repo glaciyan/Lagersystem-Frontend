@@ -1,4 +1,7 @@
 import { z } from "zod";
+import { roundNumber } from "~/lib/roundNumber";
+
+export const DontCare = z.any();
 
 export const Product = z.object({
   id: z.string(),
@@ -11,14 +14,27 @@ export const Product = z.object({
   updatedAt: z.string().nullable(),
 });
 
+export const StoredProduct = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  productSize: z.number(),
+  productUnit: z.string(),
+  attribute: z.record(z.any()).optional(),
+  size: z.number(),
+  quantity: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string().nullable(),
+});
+
 export const Space = z.object({
   id: z.string(),
   name: z.string(),
   totalSize: z.number(),
-  currentSize: z.number(),
+  currentSize: z.number().transform(num => roundNumber(num)),
   unit: z.optional(z.string()),
   description: z.string(),
-  storedProducts: z.array(Product),
+  storedProducts: z.array(StoredProduct),
   storageId: z.string(),
   createdAt: z.string(),
   updatedAt: z.string().nullable(),
@@ -48,21 +64,6 @@ export const Storage: z.ZodType<StorageType> = baseStorage.extend({
 export const StorageArray = z.array(Storage);
 
 export const ProductArray = z.array(Product);
-
-export const StoredProduct = z.object({
-  id: z.string(),
-  productId: z.string(),
-  spaceId: z.string(),
-  productName: z.string(),
-  productDescription: z.string(),
-  productSize: z.number(),
-  productUnit: z.string(),
-  attribute: z.record(z.any()),
-  quantity: z.number(),
-  size: z.number(),
-  createdAt: z.string(),
-  updatedAt: z.string().nullable(),
-});
 
 export const StoredProductArray = z.array(StoredProduct);
 
