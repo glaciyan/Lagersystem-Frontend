@@ -31,6 +31,7 @@ const openModal = ref(false);
         title="Produkte"
         :refetch="refetch"
       >
+        <!-- TODO replace with IconButton -->
         <AddButton :to="`/product/create${props.originStorageId ? `?origin=${props.originStorageId}` : ''}`">
           Erstellen
         </AddButton>

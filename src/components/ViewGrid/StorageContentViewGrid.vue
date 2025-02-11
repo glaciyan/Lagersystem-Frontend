@@ -2,7 +2,6 @@
 import StatefulDisplay from "~/components/ViewGrid/StatefulDisplay.vue";
 import StorageCard from "../ItemCard/StorageCard.vue";
 import { ApiError } from "~/lib/api/core";
-import AddButton from "../Buttons/AddButton.vue";
 import { Space, Storage } from "~/api/types";
 import { z } from "zod";
 import ViewGridHeader from "./ViewGridHeader.vue";
@@ -10,6 +9,9 @@ import { Modal } from "ant-design-vue";
 import ProductCard from "../ItemCard/ProductCard.vue";
 import SpaceCard from "../ItemCard/SpaceCard.vue";
 import ItemBreadcrumbs from "../FetchedBreadcrumb.vue";
+import IconButton from "../IconButton.vue";
+import AddIcon from "~/icons/AddIcon.vue";
+import FolderPlusIcon from "~/icons/FolderPlusIcon.vue";
 
 const emit = defineEmits(["update"]);
 
@@ -21,6 +23,8 @@ const openModal = ref(false);
 watch(() => props.data, () => {
   openModal.value = false;
 });
+
+// draggable
 </script>
 
 <template>
@@ -38,26 +42,40 @@ watch(() => props.data, () => {
         title="Inhalt"
         :refetch="props.refetch"
       >
-        <AddButton :to="`/storage/${parentId}/newstorage`">
+        <IconButton
+          type="primary"
+          @click="$router.push(`/storage/${parentId}/newstorage`)"
+        >
+          <template #icon>
+            <FolderPlusIcon />
+          </template>
           Storage Hinzufügen
-        </AddButton>
-        <AddButton :to="`/storage/${parentId}/newspace`">
+        </IconButton>
+        <IconButton
+          type="primary"
+          @click="$router.push(`/storage/${parentId}/newspace`)"
+        >
+          <template #icon>
+            <AddIcon />
+          </template>
           Space Hinzufügen
-        </AddButton>
+        </IconButton>
       </ViewGridHeader>
     </template>
 
     <template #display>
-      <div class="mt-6 flex flex-wrap gap-4">
+      <div class="4xl:grid-cols-6 grid grid-cols-1 mt-6 gap-4 2xl:grid-cols-4 3xl:grid-cols-5 md:grid-cols-2 xl:grid-cols-3">
         <StorageCard
           v-for="substorage of props.data!.subStorages"
           :key="substorage.id"
+          ref="storages"
           :storage="substorage"
           @update="emit('update')"
         />
         <SpaceCard
           v-for="space of props.data!.spaces"
           :key="space.id"
+          ref="spaces"
           :space="space"
           @update="emit('update')"
           @open="() => {

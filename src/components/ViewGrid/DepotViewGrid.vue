@@ -23,6 +23,7 @@ const { data, errors, loading, aborted, refetch } = useApi(endpoints.getStorages
         title="Depots"
         :refetch="refetch"
       >
+        <!-- TODO replace with IconButton -->
         <AddButton to="/storage/create">
           Depot Erstellen
         </AddButton>

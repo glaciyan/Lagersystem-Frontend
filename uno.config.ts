@@ -33,6 +33,8 @@ export default defineConfig({
         ...theme.breakpoints,
         "xlp": "1320px",
         "2xlp": "1570px",
+        "3xl": "1940px",
+        "4xl": "2200px",
       },
       fontSize: {
         "sm": ["12px", "20px"],

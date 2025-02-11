@@ -31,6 +31,7 @@ const openModal = ref(false);
         title="Spaces"
         :refetch="refetch"
       >
+        <!-- TODO replace with IconButton -->
         <AddButton :to="`/storage/${parentId}/newspace`">
           Space Hinzufügen
         </AddButton>

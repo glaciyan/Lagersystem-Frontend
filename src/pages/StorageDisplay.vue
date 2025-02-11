@@ -46,7 +46,7 @@ provide("refferer", refferer);
 
 <template>
   <div
-    class="fixed right-[1rem] top-[10rem] h-[70%] w-[30rem] overflow-y-scroll border-1 border-dark-2 rounded-md bg-dark-9 shadow-lg"
+    class="fixed bottom-[3rem] right-[1rem] top-[8rem] w-[30rem] overflow-y-scroll border-1 border-dark-2 rounded-md bg-dark-9 shadow-lg"
   >
     <ProductViewGrid
       :data="products"

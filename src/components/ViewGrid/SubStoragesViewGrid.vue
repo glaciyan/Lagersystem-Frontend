@@ -28,6 +28,7 @@ const displayData = computed(() => props.data?.subStorages ?? []);
         title="Storages"
         :refetch="props.refetch"
       >
+        <!-- TODO replace with IconButton -->
         <AddButton :to="`/storage/${parentId}/newstorage`">
           Storage Hinzufügen
         </AddButton>
