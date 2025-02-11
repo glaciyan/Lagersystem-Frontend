@@ -21,7 +21,7 @@ onMounted(() => {
 <template>
   <div
     ref="container"
-    class="4xl:grid-cols-6 grid grid-auto-cols-[repeat(auto-fit,minmax(_150px,_1fr))] grid-cols-1 mt-6 w-full gap-4 2xl:grid-cols-4 3xl:grid-cols-5 md:grid-cols-2 xl:grid-cols-3"
+    class="grid grid-auto-cols-[repeat(auto-fit,minmax(_150px,_1fr))] grid-cols-1 mt-6 w-full gap-4 2xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 md:grid-cols-2 xl:grid-cols-3"
   >
     <StorageCard
       v-for="substorage of props.data!.subStorages"

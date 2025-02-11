@@ -106,7 +106,7 @@ const setupDraggable = () => {
 
     const getTypes = (event: DragEvent) => getAttributes(event, "l-data-type");
 
-    const canDropByAction = (event: DragEvent): "move" | "assign" | null => {
+    const canDropByAction = (event: DragEvent): "moveSTST" | "moveSST" | "assign" | null => {
       const [sType, oType] = getTypes(event);
       const [sUnit, oUnit] = getAttributes(event, "l-data-unit");
       const [sSize] = getAttributes(event, "l-data-size");
@@ -119,11 +119,17 @@ const setupDraggable = () => {
               if (sUnit === oUnit && Number(oCapacity) > Number(sSize)) {
                 return "assign";
               }
-              else {
-                return null;
-              }
-            case "storage":
-              return null;
+              break;
+          }
+          break;
+        case "space":
+          if (oType === "storage") {
+            return "moveSST";
+          }
+          break;
+        case "storage":
+          if (oType === "storage") {
+            return "moveSTST";
           }
           break;
       }
