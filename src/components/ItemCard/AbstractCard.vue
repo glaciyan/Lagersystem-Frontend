@@ -15,14 +15,14 @@ const el = useTemplateRef<HTMLDivElement>("root");
 const refferer = inject("refferer") as Ref<string>;
 onMounted(() => {
   if (refferer && refferer.value === props.item.id && el.value !== null) {
-    scrollToAndMarkElement(el.value);
+    scrollToAndMarkElement(el.value, refferer.value);
   }
 });
 </script>
 
 <template>
   <div
-    ref="el"
+    ref="root"
     class="group flex basis-[auto] flex-col items-stretch justify-between rounded-md transition-shadow hover:cursor-pointer"
     :l-data-id="props.item.id"
   >

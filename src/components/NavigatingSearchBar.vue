@@ -3,10 +3,6 @@ import SearchBar from "./SearchBar.vue";
 import { notification } from "ant-design-vue";
 
 const searchQuery = ref("");
-
-watch(searchQuery, (value) => {
-  console.log(value);
-});
 </script>
 
 <template>
