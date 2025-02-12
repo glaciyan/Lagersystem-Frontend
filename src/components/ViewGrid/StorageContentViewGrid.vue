@@ -28,13 +28,15 @@ const props = defineProps<{ data: z.infer<typeof Storage> | null; errors: ApiErr
 const selectedSpace = ref<z.infer<typeof Space> | null>(null);
 const openModal = ref(false);
 
+let keepModal = false;
 watch(() => props.data, () => {
-  openModal.value = false;
+  openModal.value = keepModal;
+  keepModal = false;
 });
 
 const storedProducts = reactive<{ data: z.infer<typeof StoredProductArray> | null; errors: ApiError[] | null; loading: boolean }>({ data: null, errors: null, loading: true });
 
-watch(selectedSpace, async () => {
+const fetchStoredProducts = async () => {
   if (selectedSpace.value) {
     storedProducts.loading = true;
     const result = await api(endpoints.getStoredProductsFromSpace, { params: { id: selectedSpace.value.id } });
@@ -49,6 +51,10 @@ watch(selectedSpace, async () => {
       },
     });
   }
+};
+
+watch(selectedSpace, async () => {
+  fetchStoredProducts();
 });
 
 const createStorageModal = useModal();
@@ -156,7 +162,11 @@ const createSpaceModal = useModal();
           :key="prod.id"
           :product="prod"
           :space="selectedSpace"
-          @update="refetch"
+          @update="() => {
+            keepModal = true;
+            emit('update');
+            fetchStoredProducts();
+          }"
         />
       </div>
       <p><strong>Storage ID:</strong> {{ selectedSpace.storageId }}</p>

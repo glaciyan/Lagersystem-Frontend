@@ -2,7 +2,7 @@
 import { z } from "zod";
 import AbstractCard from "./AbstractCard.vue";
 import { Space, StoredProduct } from "~/api/types";
-import { Button, Modal, notification, Popconfirm } from "ant-design-vue";
+import { Modal, notification, Popconfirm } from "ant-design-vue";
 import IconWithText from "../IconWithText.vue";
 import DeleteIcon from "~/icons/DeleteIcon.vue";
 import InfoIcon from "~/icons/InfoIcon.vue";
@@ -10,9 +10,10 @@ import ApiForm from "../Form/ApiForm.vue";
 import { endpoints } from "~/api/endpoints";
 import FormInputInteger from "../Form/Input/FormInputInteger.vue";
 import LayoutVertical from "../LayoutVertical.vue";
-import LayoutHorizontal from "../LayoutHorizontal.vue";
 import { postAndForget } from "~/api/postAndForget";
 import { api } from "~/lib/api/api";
+import { useModal } from "~/composites/useModal";
+import EditIcon from "~/icons/EditIcon.vue";
 
 const props = defineProps<{ product: z.infer<typeof StoredProduct>; space: z.infer<typeof Space> }>();
 const emit = defineEmits(["open", "update"]);
@@ -26,19 +27,35 @@ const handleDelete = async () => {
   });
 };
 
-const modalOpen = ref(false);
+const changeQuantityModal = useModal();
+
+const normalProduct = computed(() => ({
+  name: props.product.productName,
+  id: props.product.id,
+  description: props.product.productDescription,
+}));
 </script>
 
 <template>
   <AbstractCard
     noEdit
     type="product"
-    :item="props.product"
+    :item="normalProduct"
     :sizing="props.product"
     class="ring-1 ring-dark-1 hover:ring-1 hover:ring-cyan"
     @open="emit('open')"
   >
     <template #customActions>
+      <button
+        class="w-full border-r border-dark-2 px-3 py-2 text-base text-gray-4 transition-colors hover:text-blue"
+        @click="changeQuantityModal.open()"
+      >
+        <IconWithText center>
+          <template #icon>
+            <EditIcon class="size-4" />
+          </template>
+        </IconWithText>
+      </button>
       <Popconfirm
         title="Möchten Sie alle Produkte aus dem Space entfernen oder nur die Menge reduzieren?"
         okText="Entfernen"
@@ -49,7 +66,7 @@ const modalOpen = ref(false);
         :cancelButtonProps="{size: 'middle', type: 'dashed'}"
         @confirm="handleDelete"
         @cancel="() => {
-          modalOpen = true;
+          changeQuantityModal.open()
         }"
       >
         <template #icon>
@@ -68,36 +85,38 @@ const modalOpen = ref(false);
     </template>
   </AbstractCard>
   <Modal
-    v-model:open="modalOpen"
+    v-model:open="changeQuantityModal.isOpen.value"
     title="Menge Verändern"
     :footer="null"
+    destroyOnClose
   >
     <ApiForm
       :endpoint="endpoints.updateStoredProduct"
       :params="{id: props.product.id}"
       :initialState="{quantity: props.product.quantity}"
+      :validation="(values, errors) => {
+        if (values.quantity <= 0) {
+          errors.quantity = {
+            message: 'Menge kann nicht kleiner oder gleich 0 sein',
+            type: 'error'
+          }
+        }
+      }"
+      cancelText="Abbrechen"
+      submitText="OK"
       @success="() => {
-        modalOpen = false;
+        changeQuantityModal.close()
         notification.success({message: 'Menge Verändert'})
         emit('update')
       }"
+      @cancel="changeQuantityModal.close()"
+      @failure="notification.error({message: 'Failed to change size.'})"
     >
       <LayoutVertical>
         <FormInputInteger
           for="quantity"
           :min="1"
         />
-        <LayoutHorizontal class="self-end">
-          <Button @click="modalOpen = false">
-            Cancel
-          </Button>
-          <Button
-            htmlType="submit"
-            type="primary"
-          >
-            OK
-          </Button>
-        </LayoutHorizontal>
       </LayoutVertical>
     </ApiForm>
   </Modal>

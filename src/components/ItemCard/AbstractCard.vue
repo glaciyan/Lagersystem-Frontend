@@ -7,7 +7,13 @@ import { Product } from "~/api/types";
 import { z } from "zod";
 import IconWithText from "../IconWithText.vue";
 
-const props = defineProps<{ type: string; item: { id: string; name: string; description: string }; capacity?: { currentSize: number; unit?: string; totalSize: number }; sizing?: { size: number; unit?: string }; products?: z.infer<typeof Product>[]; noEdit?: boolean; deleteConfig?: { title: string; onDelete: () => Promise<void> } }>();
+const props = defineProps<{
+  type: string;
+  item: { id: string; name: string; description: string };
+  capacity?: { currentSize: number; unit?: string; totalSize: number };
+  sizing?: { size: number; unit?: string }; products?: z.infer<typeof Product>[];
+  noEdit?: boolean; deleteConfig?: { title: string; onDelete: () => Promise<void> };
+}>();
 const emit = defineEmits(["open", "edit"]);
 
 const el = useTemplateRef<HTMLDivElement>("root");
