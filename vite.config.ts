@@ -25,4 +25,13 @@ export default defineConfig({
       filename: "status.html",
     }),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          antdv: ["ant-design-vue"],
+        },
+      },
+    },
+  },
 });
