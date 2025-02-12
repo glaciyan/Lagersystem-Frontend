@@ -33,6 +33,7 @@ const updateProductModal = useUpdateProductModal();
       title: 'Wollen sie dieses Produkt wirklick löschen?',
       onDelete: handleDelete
     }"
+    :unique="product.unique"
     @open="emit('open')"
     @edit="updateProductModal.open(props.product)"
   />

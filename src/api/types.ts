@@ -12,6 +12,7 @@ export const Product = z.object({
   attributes: z.record(z.any()),
   createdAt: z.string(),
   updatedAt: z.string().nullable(),
+  unique: z.boolean(),
 });
 
 export const StoredProduct = z.object({
@@ -25,6 +26,7 @@ export const StoredProduct = z.object({
   quantity: z.number(),
   createdAt: z.string(),
   updatedAt: z.string().nullable(),
+  unique: z.boolean(),
 });
 
 export const StoredProductFromSpace = z.object({
@@ -38,6 +40,7 @@ export const StoredProductFromSpace = z.object({
   quantity: z.number(),
   createdAt: z.string(),
   updatedAt: z.string().nullable(),
+  unique: z.boolean(),
 });
 
 export const Space = z.object({

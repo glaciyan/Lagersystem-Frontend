@@ -53,6 +53,7 @@ const normalProduct = computed(() => ({
     type="product"
     :item="normalProduct"
     :sizing="props.product"
+    :unique="props.product.unique"
     class="bg-dark-9 ring-1 ring-dark-1 hover:ring-1 hover:ring-gray-7"
     @open="emit('open')"
   >

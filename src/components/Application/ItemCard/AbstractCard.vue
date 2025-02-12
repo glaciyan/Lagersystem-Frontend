@@ -12,6 +12,7 @@ const props = defineProps<{
   type: string;
   item: { id: string; name: string; description: string };
   capacity?: { currentSize: number; unit?: string; totalSize: number };
+  unique?: boolean;
   sizing?: { size: number; unit?: string };
   products?: z.infer<typeof Product>[];
   noEdit?: boolean;
@@ -44,8 +45,8 @@ onMounted(() => {
       class="h-full"
       @click="emit('open')"
     >
-      <div class="border-b border-dark-1">
-        <IconWithText class="m-0 flex gap-2 px-3 py-2 text-lg text-light-7 !justify-start">
+      <div class="border-b border-dark-1 px-3 py-2">
+        <IconWithText class="m-0 flex gap-2 text-lg text-light-7 !justify-start">
           <template
             v-if="$slots.icon"
             #icon
@@ -56,6 +57,12 @@ onMounted(() => {
             {{ props.item.name }}
           </div>
         </IconWithText>
+        <div
+          v-if="unique"
+          class="text-base text-[#447e89]"
+        >
+          Einzigartig
+        </div>
       </div>
       <div
         v-if="props.sizing"
