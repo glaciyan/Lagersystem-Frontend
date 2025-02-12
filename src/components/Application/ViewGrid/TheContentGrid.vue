@@ -6,7 +6,6 @@ import { Space, Storage } from "~/api/types";
 
 const props = defineProps<{ data: z.infer<typeof Storage> | null }>();
 const emit = defineEmits<{
-  update: [];
   openSpace: [selectedSpace: z.infer<typeof Space> ];
   ready: [container: HTMLDivElement | null];
 }>();
@@ -29,14 +28,12 @@ onMounted(() => {
         :key="substorage.id"
         ref="storages"
         :storage="substorage"
-        @update="emit('update')"
       />
       <SpaceCard
         v-for="space of props.data!.spaces"
         :key="space.id"
         ref="spaces"
         :space="space"
-        @update="emit('update')"
         @open="emit('openSpace', space)"
       />
     </TransitionGroup>

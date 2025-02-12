@@ -12,6 +12,7 @@ import { notification } from "ant-design-vue";
 import { match } from "~/lib/api/match";
 import { ApiError } from "~/lib/api/core";
 import ErrorModal from "~/components/ErrorModal.vue";
+import { useSubscription } from "~/composites/useSubscription";
 
 // fetch handling and updating
 const route = useRoute();
@@ -46,6 +47,10 @@ const reload = () => {
   refetchProducts();
   setupDraggable();
 };
+
+useSubscription("productUpdate", () => refetchProducts());
+useSubscription("spaceUpdate", () => refetch());
+useSubscription("storageUpdate", () => refetch());
 
 // refferer
 const refferer = ref(route.query.ref as string);
@@ -266,7 +271,6 @@ const setupDraggable = async () => {
       :refetch="refetchProducts"
       :aborted="productsAborted"
       :originStorageId="depotId"
-      @update="refetchProducts"
       @ready="productViewReady"
     />
   </div>
@@ -294,7 +298,6 @@ const setupDraggable = async () => {
           :aborted
           :refetch
           :parentId="depotId"
-          @update="refetch"
           @ready="contentViewReady"
         />
       </div>

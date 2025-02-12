@@ -3,22 +3,25 @@ import { z } from "zod";
 import { api } from "~/lib/api/api";
 import { endpoints } from "~/api/endpoints";
 import { Space } from "~/api/types";
-import { notification } from "ant-design-vue";
 import TransparentCubeIcon from "~/icons/TransparentCubeIcon.vue";
 import AbstractCard from "./AbstractCard.vue";
 import { postAndForget } from "~/api/postAndForget";
+import { useUpdateSpaceModal } from "~/stores/modals";
+import { emitter } from "~/eventBus";
 
 const props = defineProps<{ space: z.infer<typeof Space> }>();
-const emit = defineEmits(["update", "open"]);
+const emit = defineEmits(["open"]);
 
 const handleDelete = async () => {
   await postAndForget({
     apiCall: () => api(endpoints.deleteSpace, { params: { id: props.space.id } }),
-    onSuccess: () => emit("update"),
+    onSuccess: () => emitter.emit("spaceUpdate", null),
     successMessage: `Space ${props.space.id} gelöscht!`,
     errorMessage: errors => `Space konnte nicht gelöscht werden: ${errors.map(err => err.message).join(", ")}`,
   });
 };
+
+const updateSpaceModal = useUpdateSpaceModal();
 </script>
 
 <template>
@@ -34,7 +37,7 @@ const handleDelete = async () => {
     }"
 
     @open="emit('open')"
-    @edit="notification.error({message: 'no'})"
+    @edit="updateSpaceModal.open(props.space)"
   >
     <template #icon>
       <TransparentCubeIcon class="size-6" />

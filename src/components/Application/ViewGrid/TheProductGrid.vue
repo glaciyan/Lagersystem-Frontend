@@ -5,7 +5,6 @@ import ProductCard from "~/components/Application/ItemCard/ProductCard.vue";
 
 const props = defineProps<{ data: z.infer<typeof ProductArray> | null }>();
 const emit = defineEmits<{
-  update: [];
   open: [selectedProduct: z.infer<typeof Product> ];
   ready: [container: HTMLDivElement | null];
 }>();
@@ -29,7 +28,6 @@ onMounted(() => {
         ref="items"
         :key="product.id"
         :product="product"
-        @update="emit('update')"
         @open="emit('open', product)"
       />
     </TransitionGroup>

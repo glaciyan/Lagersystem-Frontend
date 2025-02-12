@@ -5,4 +5,5 @@ export const roundNumber = (n: number) => {
       return Number(three.slice(0, i + 1));
     }
   }
+  return n;
 };

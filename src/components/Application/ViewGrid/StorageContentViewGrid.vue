@@ -15,10 +15,9 @@ import { endpoints } from "~/api/endpoints";
 import { api } from "~/lib/api/api";
 import { match } from "~/lib/api/match";
 import { useCreateSpaceModal, useCreateStorageModal } from "~/stores/modals";
-import { useSubscription } from "~/composites/useSubscription";
+import { emitter } from "~/eventBus";
 
 const emit = defineEmits<{
-  update: [];
   ready: [container: HTMLDivElement | null];
 }>();
 
@@ -57,9 +56,7 @@ watch(selectedSpace, async () => {
 });
 
 const createStorageModal = useCreateStorageModal();
-useSubscription("storageUpdate", () => emit("update"));
 const createSpaceModal = useCreateSpaceModal();
-useSubscription("spaceUpdate", () => emit("update"));
 </script>
 
 <template>
@@ -101,7 +98,6 @@ useSubscription("spaceUpdate", () => emit("update"));
     <template #display>
       <TheContentGrid
         :data
-        @update="emit('update')"
         @openSpace="(s) => {
           selectedSpace = s;
           openModal = true;
@@ -137,7 +133,7 @@ useSubscription("spaceUpdate", () => emit("update"));
           :space="selectedSpace"
           @update="() => {
             keepModal = true;
-            emit('update');
+            emitter.emit('spaceUpdate', null)
             fetchStoredProducts();
           }"
         />

@@ -14,14 +14,15 @@ import { postAndForget } from "~/api/postAndForget";
 import { api } from "~/lib/api/api";
 import { useModal } from "~/composites/useModal";
 import EditIcon from "~/icons/EditIcon.vue";
+import { emitter } from "~/eventBus";
 
 const props = defineProps<{ product: z.infer<typeof StoredProduct>; space: z.infer<typeof Space> }>();
-const emit = defineEmits(["open", "update"]);
+const emit = defineEmits(["open"]);
 
 const handleDelete = async () => {
   await postAndForget({
     apiCall: () => api(endpoints.deleteStoredProducts, { params: { id: props.product.id } }),
-    onSuccess: () => emit("update"),
+    onSuccess: () => emitter.emit("productUpdate", null),
     successMessage: `Produkt ${props.product.id} gelöscht!`,
     errorMessage: errors => `Produkt konnte nicht gelöscht werden: ${errors.map(err => err.message).join(", ")}`,
   });
@@ -105,9 +106,9 @@ const normalProduct = computed(() => ({
       cancelText="Abbrechen"
       submitText="OK"
       @success="() => {
-        changeQuantityModal.close()
-        notification.success({message: 'Menge Verändert'})
-        emit('update')
+        changeQuantityModal.close();
+        notification.success({ message: 'Menge Verändert' });
+        emitter.emit('storageUpdate', null);
       }"
       @cancel="changeQuantityModal.close()"
       @failure="notification.error({message: 'Failed to change size.'})"

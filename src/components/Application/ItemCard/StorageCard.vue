@@ -3,22 +3,24 @@ import { z } from "zod";
 import { api } from "~/lib/api/api";
 import { endpoints } from "~/api/endpoints";
 import { Storage } from "~/api/types";
-import { notification } from "ant-design-vue";
 import FolderIcon from "~/icons/FolderIcon.vue";
 import AbstractCard from "./AbstractCard.vue";
 import { postAndForget } from "~/api/postAndForget";
+import { useUpdateStorageModal } from "~/stores/modals";
+import { emitter } from "~/eventBus";
 
 const props = defineProps<{ storage: z.infer<typeof Storage> }>();
-const emit = defineEmits(["update"]);
 
 const handleDelete = async () => {
   await postAndForget({
     apiCall: () => api(endpoints.deleteStorage, { params: { id: props.storage.id } }),
-    onSuccess: () => emit("update"),
+    onSuccess: () => emitter.emit("storageUpdate", null),
     successMessage: `Storage ${props.storage.id} gelöscht!`,
     errorMessage: errors => `Storage konnte nicht gelöscht werden: ${errors.map(err => err.message).join(", ")}`,
   });
 };
+
+const updateStorageModal = useUpdateStorageModal();
 </script>
 
 <template>
@@ -32,7 +34,7 @@ const handleDelete = async () => {
       onDelete: handleDelete
     }"
     @open="$router.push(`/storage/${props.storage.id}`)"
-    @edit="notification.error({message: 'no'})"
+    @edit="updateStorageModal.open(props.storage)"
   >
     <template #icon>
       <FolderIcon />

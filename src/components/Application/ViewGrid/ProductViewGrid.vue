@@ -10,10 +10,8 @@ import { useModal } from "~/composites/useModal";
 import IconButton from "~/components/IconButton.vue";
 import AddIcon from "~/icons/AddIcon.vue";
 import { useCreateProductModal } from "~/stores/modals";
-import { useSubscription } from "~/composites/useSubscription";
 
 const emit = defineEmits<{
-  update: [];
   ready: [container: HTMLDivElement | null];
 }>();
 
@@ -23,7 +21,6 @@ const selectedProduct = ref < z.infer<typeof Product> | null>(null);
 const infoModal = useModal();
 
 const createProductModal = useCreateProductModal();
-useSubscription("productUpdate", () => emit("update"));
 </script>
 
 <template>
@@ -57,7 +54,6 @@ useSubscription("productUpdate", () => emit("update"));
     <template #display>
       <TheProductGrid
         :data
-        @update="emit('update')"
         @open="(p) => {
           selectedProduct = p;
           infoModal.open()
