@@ -10,32 +10,58 @@ export type BItem = {
 
 const props = defineProps<{ breadcrumb: BItem[]; id: string; bLoading?: boolean; reffer?: boolean }>();
 const refferal = computed(() => props.reffer ? `?ref=${props.id}` : "");
+const emit = defineEmits<{
+  ready: [HTMLDivElement | null];
+}>();
+const container = useTemplateRef("container");
+
+onMounted(() => {
+  emit("ready", container.value);
+});
 </script>
 
 <template>
-  <Breadcrumb>
-    <BreadcrumbItem>
-      <RouterLink to="/">
-        Depots
-      </RouterLink>
-    </BreadcrumbItem>
-    <BreadcrumbItem v-if="bLoading">
-      <Spin size="small" />
-    </BreadcrumbItem>
-    <BreadcrumbItem
-      v-for="b of breadcrumb"
-      v-else
-      :key="b.id"
-    >
-      <RouterLink
-        v-if="b.type === 'storage' && b.id !== props.id"
-        :to="`/storage/${b.id}${refferal}`"
+  <div ref="container">
+    <Breadcrumb>
+      <BreadcrumbItem>
+        <RouterLink to="/">
+          Depots
+        </RouterLink>
+      </BreadcrumbItem>
+      <BreadcrumbItem v-if="bLoading">
+        <Spin size="small" />
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        v-for="b of breadcrumb"
+        v-else
+        :key="b.id"
       >
-        {{ b.name }}
-      </RouterLink>
-      <div v-else>
-        {{ b.name }}
-      </div>
-    </BreadcrumbItem>
-  </Breadcrumb>
+        <span
+          v-if="b.type === 'storage' && b.id !== props.id"
+          :l-data-id="b.id"
+          l-data-type="storage"
+        >
+          <RouterLink
+
+            :to="`/storage/${b.id}${refferal}`"
+          >
+            {{ b.name }}
+          </RouterLink>
+        </span>
+        <span v-else>
+          {{ b.name }}
+        </span>
+      </BreadcrumbItem>
+    </Breadcrumb>
+  </div>
 </template>
+
+<style scoped>
+.drag-success {
+  @apply bg-cyan-3/20;
+}
+
+.drag-fail {
+  @apply bg-red-3/20;
+}
+</style>

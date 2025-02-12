@@ -4,7 +4,7 @@ import { endpoints } from "~/api/endpoints";
 import { useApi } from "~/lib/api/useApi";
 import ProductViewGrid from "~/components/Application/ViewGrid/ProductViewGrid.vue";
 import StorageContentViewGrid from "~/components/Application/ViewGrid/StorageContentViewGrid.vue";
-import ItemBreadcrumbs from "~/components/FetchedBreadcrumb.vue";
+import FetchedBreadcrumb from "~/components/FetchedBreadcrumb.vue";
 import DownChevronIcon from "~/icons/DownChevronIcon.vue";
 import type { DragEvent, Draggable } from "@shopify/draggable";
 import { api } from "~/lib/api/api";
@@ -60,9 +60,10 @@ watch(() => route.query, () => {
 provide("refferer", refferer);
 
 // draggable
-const containers: { product: HTMLDivElement | null; content: HTMLDivElement | null } = {
+const containers: { product: HTMLDivElement | null; content: HTMLDivElement | null; breadcrumb: HTMLDivElement | null } = {
   product: null,
   content: null,
+  breadcrumb: null,
 };
 
 const productViewReady = async (container: HTMLDivElement | null) => {
@@ -74,6 +75,12 @@ const productViewReady = async (container: HTMLDivElement | null) => {
 const contentViewReady = async (container: HTMLDivElement | null) => {
   console.log("Registering content view container", container);
   containers.content = container;
+  await setupDraggable();
+};
+
+const breadcrumbViewReady = async (container: HTMLDivElement | null) => {
+  console.log("Registering breadcrumb view container", container);
+  containers.breadcrumb = container;
   await setupDraggable();
 };
 
@@ -94,14 +101,18 @@ const setupDraggable = async () => {
     let list = [containers.content];
     if (containers.product) {
       console.log("Got Product Container");
-      list = [containers.content, containers.product];
+      list = [...list, containers.product];
+    }
+    if (containers.breadcrumb) {
+      console.log("Got Breadcrumb Container");
+      list = [...list, containers.breadcrumb];
     }
 
     console.log("Importing draggable");
     const { Draggable } = await import("@shopify/draggable");
 
     draggable = new Draggable(list, {
-      draggable: "div[l-data-id]",
+      draggable: "[l-data-id]",
       distance: 30,
     });
 
@@ -122,9 +133,12 @@ const setupDraggable = async () => {
 
     const canDropByAction = (event: DragEvent): "moveSTST" | "moveSST" | "assign" | null => {
       const [sType, oType] = getTypes(event);
+      const [sId, oId] = getAttributes(event, "l-data-id");
       const [sUnit, oUnit] = getAttributes(event, "l-data-unit");
       const [sSize] = getAttributes(event, "l-data-size");
       const [, oCapacity] = getAttributes(event, "l-data-capacity");
+
+      if (sId === oId) return null;
 
       switch (sType) {
         case "product":
@@ -285,7 +299,10 @@ const setupDraggable = async () => {
         </button>
       </div>
       <div class="mb-2 w-max flex border border-2 border-dark-3 rounded-md bg-dark-9 px-3 py-2">
-        <ItemBreadcrumbs :id="depotId" />
+        <FetchedBreadcrumb
+          :id="depotId"
+          @ready="breadcrumbViewReady"
+        />
       </div>
     </div>
 
