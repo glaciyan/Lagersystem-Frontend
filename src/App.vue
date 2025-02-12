@@ -3,6 +3,7 @@ import { App, ConfigProvider, StyleProvider, theme } from "ant-design-vue";
 import { RouterView } from "vue-router";
 import TheFooter from "~/components/TheFooter.vue";
 import TheHeader from "~/components/TheHeader.vue";
+import GlobalModals from "./GlobalModals.vue";
 </script>
 
 <template>
@@ -23,6 +24,7 @@ import TheHeader from "~/components/TheHeader.vue";
           <RouterView />
         </main>
         <TheFooter />
+        <GlobalModals />
       </App>
     </ConfigProvider>
   </StyleProvider>

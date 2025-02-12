@@ -14,9 +14,8 @@ import StoredProductCard from "~/components/Application/ItemCard/StoredProductCa
 import { endpoints } from "~/api/endpoints";
 import { api } from "~/lib/api/api";
 import { match } from "~/lib/api/match";
-import { useModal } from "~/composites/useModal";
-import CreateStorage from "~/components/Application/Create/CreateStorage.vue";
-import CreateSpace from "~/components/Application/Create/CreateSpace.vue";
+import { useCreateSpaceModal, useCreateStorageModal } from "~/stores/modals";
+import { useSubscription } from "~/composites/useSubscription";
 
 const emit = defineEmits<{
   update: [];
@@ -57,8 +56,10 @@ watch(selectedSpace, async () => {
   fetchStoredProducts();
 });
 
-const createStorageModal = useModal();
-const createSpaceModal = useModal();
+const createStorageModal = useCreateStorageModal();
+useSubscription("storageUpdate", () => emit("update"));
+const createSpaceModal = useCreateSpaceModal();
+useSubscription("spaceUpdate", () => emit("update"));
 </script>
 
 <template>
@@ -78,7 +79,7 @@ const createSpaceModal = useModal();
       >
         <IconButton
           type="primary"
-          @click="createStorageModal.open()"
+          @click="createStorageModal.open(parentId)"
         >
           <template #icon>
             <FolderPlusIcon />
@@ -87,7 +88,7 @@ const createSpaceModal = useModal();
         </IconButton>
         <IconButton
           type="primary"
-          @click="createSpaceModal.open()"
+          @click="createSpaceModal.open(parentId)"
         >
           <template #icon>
             <AddIcon />
@@ -109,34 +110,6 @@ const createSpaceModal = useModal();
       />
     </template>
   </StatefulDisplay>
-
-  <Modal
-    v-model:open="createStorageModal.isOpen.value"
-    title="Storage Erstellen"
-    destroyOnClose
-    :footer="null"
-  >
-    <CreateStorage
-      :parentId
-      cancelButton
-      @cancel="createStorageModal.close()"
-      @success="() => { emit('update'); createStorageModal.close() }"
-    />
-  </Modal>
-
-  <Modal
-    v-model:open="createSpaceModal.isOpen.value"
-    title="Space Erstellen"
-    destroyOnClose
-    :footer="null"
-  >
-    <CreateSpace
-      :storageId="parentId"
-      cancelButton
-      @cancel="createSpaceModal.close()"
-      @success="() => { emit('update'); createSpaceModal.close() }"
-    />
-  </Modal>
 
   <Modal
     v-model:open="openModal"

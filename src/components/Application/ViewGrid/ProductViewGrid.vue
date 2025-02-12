@@ -9,7 +9,8 @@ import TheProductGrid from "~/components/Application/ViewGrid/TheProductGrid.vue
 import { useModal } from "~/composites/useModal";
 import IconButton from "~/components/IconButton.vue";
 import AddIcon from "~/icons/AddIcon.vue";
-import CreateProduct from "~/components/Application/Create/CreateProduct.vue";
+import { useCreateProductModal } from "~/stores/modals";
+import { useSubscription } from "~/composites/useSubscription";
 
 const emit = defineEmits<{
   update: [];
@@ -20,7 +21,9 @@ const props = defineProps<{ data: z.infer<typeof ProductArray> | null; errors: A
 
 const selectedProduct = ref < z.infer<typeof Product> | null>(null);
 const infoModal = useModal();
-const createProductModal = useModal();
+
+const createProductModal = useCreateProductModal();
+useSubscription("productUpdate", () => emit("update"));
 </script>
 
 <template>
@@ -63,19 +66,6 @@ const createProductModal = useModal();
       />
     </template>
   </StatefulDisplay>
-
-  <Modal
-    v-model:open="createProductModal.isOpen.value"
-    title="Storage Erstellen"
-    destroyOnClose
-    :footer="null"
-  >
-    <CreateProduct
-      cancelButton
-      @cancel="createProductModal.close()"
-      @success="() => { emit('update'); createProductModal.close() }"
-    />
-  </Modal>
 
   <Modal
     v-model:open="infoModal.isOpen.value"
