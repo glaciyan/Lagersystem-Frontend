@@ -39,6 +39,7 @@ const validationHandler = () => {
 };
 
 provide("values", values);
+provide("form", form);
 provide("submit", validationHandler);
 </script>
 

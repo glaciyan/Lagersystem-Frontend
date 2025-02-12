@@ -9,7 +9,7 @@ export default defineComponent({
       default: "div",
     },
     size: {
-      type: String as PropType<"xl" | "2xl" | "sm">,
+      type: String as PropType<"xl" | "2xl" | "sm" | "full">,
       required: false,
       default: "xl",
     },
@@ -26,6 +26,10 @@ export default defineComponent({
         break;
       case "sm":
         screenSize = "max-w-screen-sm px-4";
+        break;
+      case "full":
+        screenSize = "px-4";
+        break;
     }
 
     const className = `mx-auto ${screenSize} lt-sm:px-2`;

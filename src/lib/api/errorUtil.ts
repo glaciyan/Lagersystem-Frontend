@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ErrorSchema } from "./types";
+import { ErrorSchema } from "./coreTypes";
 
 type Error = z.infer<typeof ErrorSchema>;
 

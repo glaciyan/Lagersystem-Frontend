@@ -33,6 +33,8 @@ export default defineConfig({
         ...theme.breakpoints,
         "xlp": "1320px",
         "2xlp": "1570px",
+        "3xl": "1940px",
+        "4xl": "2200px",
       },
       fontSize: {
         "sm": ["12px", "20px"],
@@ -40,6 +42,17 @@ export default defineConfig({
         "lg": ["16px", "24px"],
         "xl": ["20px", "28px"],
         "2xl": ["24px", "32px"],
+      },
+      animation: {
+        keyframes: {
+          "pulse-ring": "{0%,100%{box-shadow:0 0 10px 5px #3B82F6}50%{box-shadow:0 0 15px 8px #1E40AF}}",
+        },
+        durations: {
+          "pulse-ring": "2s",
+        },
+        counts: {
+          "pulse-ring": "infinite",
+        },
       },
     };
   },

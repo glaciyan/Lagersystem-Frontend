@@ -1,5 +1,5 @@
 import { z, ZodSchema, ZodTypeAny } from "zod";
-import { ErrorResponse, ErrorSchema } from "./types";
+import { ErrorResponse, ErrorSchema } from "./coreTypes";
 
 export const BASE_URL = import.meta.env.VITE_API_ENDPOINT_URL;
 
@@ -11,7 +11,7 @@ export type Query = Record<string, string | number | boolean>;
 export type Params = Record<string, string | number>;
 export type Body = Record<string, any>;
 
-export type Methods = "GET" | "POST" | "PUT" | "DELETE";
+export type Methods = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 export type Path<P extends Params> = string | ((p: P) => string);
 
 export interface BasicEndpoint<

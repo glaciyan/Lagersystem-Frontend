@@ -3,6 +3,8 @@ import Navigation from "~/components/TheVerticalNavigation.vue";
 import LogoWithLabel from "~/assets/logo-label.svg?component";
 import Container from "./PageContainer";
 import { RouterLink } from "vue-router";
+import NavigatingSearchBar from "./NavigatingSearchBar.vue";
+
 </script>
 
 <template>
@@ -21,5 +23,6 @@ import { RouterLink } from "vue-router";
         class="flex-1"
       />
     </div>
+    <NavigatingSearchBar />
   </Container>
 </template>

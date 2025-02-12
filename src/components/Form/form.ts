@@ -1,5 +1,8 @@
 export function form<T extends {}>() {
-    type Errors = Record<keyof T, string | undefined>;
+    type Errors = Record<keyof T, {
+      message: string;
+      type: string;
+    }>;
     type Form = {
       values: T;
       errors: Errors;
