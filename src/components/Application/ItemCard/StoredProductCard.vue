@@ -28,7 +28,10 @@ const emit = defineEmits(["open", "update"]);
 const handleDelete = async () => {
   await postAndForget({
     apiCall: () => api(endpoints.deleteStoredProducts, { params: { id: props.product.id } }),
-    onSuccess: () => emitter.emit("productUpdate", null),
+    onSuccess: () => {
+      emitter.emit("spaceUpdate", null);
+      emit("update");
+    },
     successMessage: `Produkt ${props.product.id} gelöscht!`,
     errorMessage: errors => `Produkt konnte nicht gelöscht werden: ${errors.map(err => err.message).join(", ")}`,
   });
