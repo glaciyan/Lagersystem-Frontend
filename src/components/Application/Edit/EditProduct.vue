@@ -20,7 +20,7 @@ const modal = useModal();
   <ApiForm
     v-if="product"
     :endpoint="endpoints.updateProduct"
-    :initialState="{ name: product.name, description: product.name, size: product.size }"
+    :initialState="{ name: product.name, description: product.description, size: product.size }"
     :params="{id: product.id}"
     submitText="Produkt Bearbeiten"
     :cancelText="props.cancelButton ? 'Abbrechen' : undefined"
