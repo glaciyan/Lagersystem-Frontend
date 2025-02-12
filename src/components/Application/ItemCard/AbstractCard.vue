@@ -12,8 +12,11 @@ const props = defineProps<{
   type: string;
   item: { id: string; name: string; description: string };
   capacity?: { currentSize: number; unit?: string; totalSize: number };
-  sizing?: { size: number; unit?: string }; products?: z.infer<typeof Product>[];
-  noEdit?: boolean; deleteConfig?: { title: string; onDelete: () => Promise<void> };
+  sizing?: { size: number; unit?: string };
+  products?: z.infer<typeof Product>[];
+  noEdit?: boolean;
+  noPointer?: boolean;
+  deleteConfig?: { title: string; onDelete: () => Promise<void> };
 }>();
 const emit = defineEmits(["open", "edit"]);
 
@@ -30,7 +33,7 @@ onMounted(() => {
 <template>
   <div
     ref="root"
-    class="group flex basis-[auto] flex-col items-stretch justify-between rounded-md transition-shadow hover:cursor-pointer"
+    :class="['group flex basis-[auto] flex-col items-stretch justify-between rounded-md transition-shadow', {'hover:cursor-pointer': !noPointer}]"
     :l-data-id="props.item.id"
     :l-data-type="props.type"
     :l-data-capacity="(props.capacity?.totalSize ?? 0) - (props.capacity?.currentSize ?? 0)"

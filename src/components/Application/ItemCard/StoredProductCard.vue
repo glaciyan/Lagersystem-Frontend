@@ -45,11 +45,12 @@ const normalProduct = computed(() => ({
 
 <template>
   <AbstractCard
+    noPointer
     noEdit
     type="product"
     :item="normalProduct"
     :sizing="props.product"
-    class="ring-1 ring-dark-1 hover:ring-1 hover:ring-cyan"
+    class="bg-dark-9 ring-1 ring-dark-1 hover:ring-1 hover:ring-gray-7"
     @open="emit('open')"
   >
     <template #customActions>
@@ -118,7 +119,7 @@ const normalProduct = computed(() => ({
         emit('update');
       }"
       @cancel="changeQuantityModal.close()"
-      @failure="notification.error({message: 'Failed to change size.'})"
+      @failure="(errors) => notification.error({message: errors.map(e => e.message).join(', ')})"
     >
       <LayoutVertical>
         <FormInputInteger

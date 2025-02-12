@@ -22,6 +22,7 @@ export const endpoints = {
   updateSpace: endpoint<{ id: string }>("PATCH", p => `/v1/spaces/${p.id}/update`).withBody<{ name: string; totalSize: number; description: string }>().returns(Space),
 
   // Products
+  getProduct: endpoint<{ id: string }>("GET", p => `/v1/products/${p.id}`).returns(Product),
   postProduct: endpoint("POST", "/v1/products").withBody<{ name: string; description: string; unit: string; size: number }>().returns(Product),
   getProducts: endpoint("GET", `/v1/products`).returns(ProductArray),
   deleteProduct: endpoint<{ id: string }>("DELETE", p => `/v1/products/${p.id}`).returns(Product),

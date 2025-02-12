@@ -18,9 +18,9 @@ const loadedSpace = reactive<{ data: z.infer<typeof Space> | null; errors: ApiEr
 
 const errorModal = useModal();
 
-const fetchStoredProducts = async (space: z.infer<typeof Space>) => {
+const fetchStoredProducts = async (space: z.infer<typeof Space>, refetch = false) => {
   if (space) {
-    loadedSpace.loading = true;
+    loadedSpace.loading = !refetch;
     const result = await api(endpoints.getSpace, { params: { id: space.id } });
     match(result, {
       ok: (data) => {
@@ -38,7 +38,7 @@ const fetchStoredProducts = async (space: z.infer<typeof Space>) => {
 
 function fetchWithCurrent() {
   if (spaceDetailModal.space) {
-    fetchStoredProducts(spaceDetailModal.space);
+    fetchStoredProducts(spaceDetailModal.space, true);
   }
 }
 
@@ -62,18 +62,30 @@ watchEffect(() => {
       class="p-6 space-y-6"
     >
       <div
-        v-if="loadedSpace.data.id"
+        class="!mb-0 !mt-0"
         @click="spaceDetailModal.close()"
       >
         <ItemBreadcrumbs
           :id="loadedSpace.data.id"
-          class="mb-4"
         />
+      </div>
+      <h1 class="text-xl">
+        {{ loadedSpace.data.name }}
+        <span class="text-sm text-gray-4">id: {{ loadedSpace.data.id }}</span>
+      </h1>
+
+      <div class="text-base text-gray-3 !mb-4 !mt-4">
+        <div>
+          <span class="text-base text-gray-4">Erstellt am:</span> {{ new Date(loadedSpace.data.createdAt).toLocaleString("de-DE") }}
+        </div>
+        <div v-if="loadedSpace.data.updatedAt">
+          <span class="text-base text-gray-4">Letzte Bearbeitung am:</span> {{ new Date(loadedSpace.data.updatedAt).toLocaleString("de-DE") }}
+        </div>
       </div>
 
       <div v-if="loadedSpace.data.description">
         <p class="mb-1 font-semibold">
-          Description:
+          Beschreibung:
         </p>
         <p class="">
           {{ loadedSpace.data.description }}
@@ -87,10 +99,11 @@ watchEffect(() => {
       </div>
 
       <div
+        v-if="loadedSpace.data.storedProducts.length > 0"
         class="mt-6"
       >
         <p class="mb-2 font-semibold">
-          Products:
+          Produkte:
         </p>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <StoredProductCard
@@ -105,8 +118,7 @@ watchEffect(() => {
     </div>
   </Modal>
   <ErrorModal
-    v-model:open="
-      errorModal.isOpen.value"
+    v-model:open="errorModal.isOpen.value"
     title="Fehler beim laden von Produkten"
     :errors="loadedSpace.errors"
   />
