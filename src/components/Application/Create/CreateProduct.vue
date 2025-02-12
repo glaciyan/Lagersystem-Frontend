@@ -9,7 +9,6 @@ import FormInputNumber from "~/components/Form/Input/FormInputNumber.vue";
 import LayoutHorizontal from "~/components/LayoutHorizontal.vue";
 import LayoutVertical from "~/components/LayoutVertical.vue";
 import FormCheckbox from "~/components/Form/Input/FormCheckbox.vue";
-import { Tooltip } from "ant-design-vue";
 
 const props = defineProps<{ cancelButton?: boolean }>();
 const emit = defineEmits(["cancel", "success"]);
