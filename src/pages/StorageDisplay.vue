@@ -6,7 +6,7 @@ import ProductViewGrid from "~/components/Application/ViewGrid/ProductViewGrid.v
 import StorageContentViewGrid from "~/components/Application/ViewGrid/StorageContentViewGrid.vue";
 import ItemBreadcrumbs from "~/components/FetchedBreadcrumb.vue";
 import DownChevronIcon from "~/icons/DownChevronIcon.vue";
-import { Draggable, DragEvent } from "@shopify/draggable";
+import type { DragEvent, Draggable } from "@shopify/draggable";
 import { api } from "~/lib/api/api";
 import { notification } from "ant-design-vue";
 import { match } from "~/lib/api/match";
@@ -60,16 +60,16 @@ const containers: { product: HTMLDivElement | null; content: HTMLDivElement | nu
   content: null,
 };
 
-const productViewReady = (container: HTMLDivElement | null) => {
+const productViewReady = async (container: HTMLDivElement | null) => {
   console.log("Registering product view container", container);
   containers.product = container;
-  setupDraggable();
+  await setupDraggable();
 };
 
-const contentViewReady = (container: HTMLDivElement | null) => {
+const contentViewReady = async (container: HTMLDivElement | null) => {
   console.log("Registering content view container", container);
   containers.content = container;
-  setupDraggable();
+  await setupDraggable();
 };
 
 let draggable: Draggable | null = null;
@@ -77,7 +77,7 @@ let draggable: Draggable | null = null;
 const showErrorModal = ref(false);
 const resultErrors = ref<ApiError[]>([]);
 
-const setupDraggable = () => {
+const setupDraggable = async () => {
   if (containers.content !== null) {
     console.log("Setting up Draggable...");
     if (draggable !== null) {
@@ -91,6 +91,9 @@ const setupDraggable = () => {
       console.log("Got Product Container");
       list = [containers.content, containers.product];
     }
+
+    console.log("Importing draggable");
+    const { Draggable } = await import("@shopify/draggable");
 
     draggable = new Draggable(list, {
       draggable: "div[l-data-id]",
