@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { z } from "zod";
 import AbstractCard from "./AbstractCard.vue";
-import { Space, StoredProduct } from "~/api/types";
+import { Space, StoredProduct, StoredProductFromSpace } from "~/api/types";
 import { Modal, notification, Popconfirm } from "ant-design-vue";
 import IconWithText from "~/components/IconWithText.vue";
 import DeleteIcon from "~/icons/DeleteIcon.vue";
@@ -16,8 +16,14 @@ import { useModal } from "~/composites/useModal";
 import EditIcon from "~/icons/EditIcon.vue";
 import { emitter } from "~/eventBus";
 
-const props = defineProps<{ product: z.infer<typeof StoredProduct>; space: z.infer<typeof Space> }>();
-const emit = defineEmits(["open"]);
+type Stored = z.infer<typeof StoredProduct>;
+type StoredFSpace = z.infer<typeof StoredProductFromSpace>;
+type OR = Stored | StoredFSpace;
+type AND = Stored & StoredFSpace;
+type Result = Partial<AND> & Pick<OR, keyof OR>;
+
+const props = defineProps<{ product: Result; space: z.infer<typeof Space> }>();
+const emit = defineEmits(["open", "update"]);
 
 const handleDelete = async () => {
   await postAndForget({
@@ -31,9 +37,9 @@ const handleDelete = async () => {
 const changeQuantityModal = useModal();
 
 const normalProduct = computed(() => ({
-  name: props.product.productName,
+  name: props.product.productName ?? props.product.name!,
   id: props.product.id,
-  description: props.product.productDescription,
+  description: props.product.productDescription ?? props.product.description!,
 }));
 </script>
 
@@ -109,6 +115,7 @@ const normalProduct = computed(() => ({
         changeQuantityModal.close();
         notification.success({ message: 'Menge Verändert' });
         emitter.emit('storageUpdate', null);
+        emit('update');
       }"
       @cancel="changeQuantityModal.close()"
       @failure="notification.error({message: 'Failed to change size.'})"

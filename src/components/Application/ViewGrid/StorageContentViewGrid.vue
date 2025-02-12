@@ -1,21 +1,17 @@
 <script setup lang="ts">
 import StatefulDisplay from "~/components/Application/ViewGrid/StatefulDisplay.vue";
 import { ApiError } from "~/lib/api/core";
-import { Space, Storage, StoredProductArray } from "~/api/types";
+import { Storage } from "~/api/types";
 import { z } from "zod";
 import ViewGridHeader from "~/components/Application/ViewGrid/ViewGridHeader.vue";
-import { Modal } from "ant-design-vue";
-import ItemBreadcrumbs from "~/components/FetchedBreadcrumb.vue";
+
 import IconButton from "~/components/IconButton.vue";
 import AddIcon from "~/icons/AddIcon.vue";
 import FolderPlusIcon from "~/icons/FolderPlusIcon.vue";
 import TheContentGrid from "./TheContentGrid.vue";
-import StoredProductCard from "~/components/Application/ItemCard/StoredProductCard.vue";
-import { endpoints } from "~/api/endpoints";
-import { api } from "~/lib/api/api";
-import { match } from "~/lib/api/match";
 import { useCreateSpaceModal, useCreateStorageModal } from "~/stores/modals";
-import { emitter } from "~/eventBus";
+import { useSpaceDetailsModal } from "../Details/useSpaceModalStore";
+import SpaceDetails from "../Details/SpaceDetails.vue";
 
 const emit = defineEmits<{
   ready: [container: HTMLDivElement | null];
@@ -23,40 +19,9 @@ const emit = defineEmits<{
 
 const props = defineProps<{ data: z.infer<typeof Storage> | null; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch: () => void; parentId: string }>();
 
-const selectedSpace = ref<z.infer<typeof Space> | null>(null);
-const openModal = ref(false);
-
-let keepModal = false;
-watch(() => props.data, () => {
-  openModal.value = keepModal;
-  keepModal = false;
-});
-
-const storedProducts = reactive<{ data: z.infer<typeof StoredProductArray> | null; errors: ApiError[] | null; loading: boolean }>({ data: null, errors: null, loading: true });
-
-const fetchStoredProducts = async () => {
-  if (selectedSpace.value) {
-    storedProducts.loading = true;
-    const result = await api(endpoints.getStoredProductsFromSpace, { params: { id: selectedSpace.value.id } });
-    match(result, {
-      ok: (data) => {
-        storedProducts.data = data;
-        storedProducts.loading = false;
-      },
-      error: (errors) => {
-        storedProducts.errors = errors;
-        storedProducts.loading = false;
-      },
-    });
-  }
-};
-
-watch(selectedSpace, async () => {
-  fetchStoredProducts();
-});
-
 const createStorageModal = useCreateStorageModal();
 const createSpaceModal = useCreateSpaceModal();
+const spaceDetailModal = useSpaceDetailsModal();
 </script>
 
 <template>
@@ -99,48 +64,12 @@ const createSpaceModal = useCreateSpaceModal();
       <TheContentGrid
         :data
         @openSpace="(s) => {
-          selectedSpace = s;
-          openModal = true;
+          spaceDetailModal.open(s);
         }"
         @ready="(container) => emit('ready', container)"
       />
     </template>
   </StatefulDisplay>
 
-  <Modal
-    v-model:open="openModal"
-    title="Space Details"
-    :footer="null"
-    width="45rem"
-  >
-    <div v-if="selectedSpace">
-      <ItemBreadcrumbs
-        v-if="selectedSpace?.id"
-        :id="selectedSpace.id"
-        class="!mb-1"
-      />
-      <p><strong>Name:</strong> {{ selectedSpace.name }}</p>
-      <p><strong>Unit:</strong> {{ selectedSpace.unit }}</p>
-      <p><strong>Size:</strong> {{ selectedSpace.totalSize }} </p>
-      <p><strong>Current size:</strong> {{ selectedSpace.currentSize }} </p>
-      <p><strong>Description:</strong> {{ selectedSpace.description }}</p>
-      <p><strong>Products:</strong></p>
-      <div class="grid grid-cols-2 mb-4 mt-6 w-full gap-4 border border-dark-100 rounded-lg p-8">
-        <StoredProductCard
-          v-for="prod of storedProducts?.data ?? []"
-          :key="prod.id"
-          :product="prod"
-          :space="selectedSpace"
-          @update="() => {
-            keepModal = true;
-            emitter.emit('spaceUpdate', null)
-            fetchStoredProducts();
-          }"
-        />
-      </div>
-      <p><strong>Storage ID:</strong> {{ selectedSpace.storageId }}</p>
-      <p><strong>Created on:</strong> {{ selectedSpace.createdAt }}</p>
-      <p><strong>Last updated:</strong> {{ selectedSpace.updatedAt || 'N/A' }}</p>
-    </div>
-  </Modal>
+  <SpaceDetails />
 </template>

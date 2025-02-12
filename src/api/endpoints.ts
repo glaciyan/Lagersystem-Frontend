@@ -15,6 +15,7 @@ export const endpoints = {
   updateStorage: endpoint<{ id: string }>("PATCH", p => `/v1/storages/${p.id}/update`).withBody<{ name: string; description: string }>().returns(Storage),
 
   // Spaces
+  getSpace: endpoint<{ id: string }>("GET", p => `/v1/spaces/${p.id}`).returns(Space),
   postSpace: endpoint("POST", "/v1/spaces").withBody<{ name: string; totalSize: number; unit: string; description: string; storageId: string }>().returns(Space),
   deleteSpace: endpoint<{ id: string }>("DELETE", p => `/v1/spaces/${p.id}`).returns(Space),
   moveSpace: endpoint<{ id: string }>("PATCH", p => `/v1/spaces/${p.id}/move`).withBody<{ targetStorageId: string }>().returns(Space),

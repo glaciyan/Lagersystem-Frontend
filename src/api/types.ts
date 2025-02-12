@@ -27,6 +27,19 @@ export const StoredProduct = z.object({
   updatedAt: z.string().nullable(),
 });
 
+export const StoredProductFromSpace = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  productSize: z.number(),
+  productUnit: z.string(),
+  attribute: z.record(z.any()).optional(),
+  size: z.number(),
+  quantity: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string().nullable(),
+});
+
 export const Space = z.object({
   id: z.string(),
   name: z.string(),
@@ -34,7 +47,7 @@ export const Space = z.object({
   currentSize: z.number().transform(num => roundNumber(num)),
   unit: z.optional(z.string()),
   description: z.string(),
-  // storedProducts: z.array(StoredProduct),
+  storedProducts: z.array(StoredProductFromSpace),
   storageId: z.string(),
   createdAt: z.string(),
   updatedAt: z.string().nullable(),
