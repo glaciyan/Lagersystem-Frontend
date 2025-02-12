@@ -6,6 +6,8 @@ import FormInput from "~/components/Form/Input/FormInput.vue";
 import ErrorModal from "~/components/ErrorModal.vue";
 import { useModal } from "~/composites/useModal";
 import FormInputNumber from "~/components/Form/Input/FormInputNumber.vue";
+import LayoutHorizontal from "~/components/LayoutHorizontal.vue";
+import LayoutVertical from "~/components/LayoutVertical.vue";
 
 const props = defineProps<{ cancelButton?: boolean; storageId: string }>();
 const emit = defineEmits(["cancel", "success"]);
@@ -43,15 +45,20 @@ const modal = useModal();
       title="Name"
     />
 
-    <FormInputNumber
-      for="totalSize"
-      title="Größe"
-    />
-
-    <FormInput
-      for="unit"
-      title="Einheit"
-    />
+    <LayoutHorizontal class="w-full">
+      <LayoutVertical class="w-full">
+        <FormInputNumber
+          for="totalSize"
+          title="Größe"
+        />
+      </LayoutVertical>
+      <LayoutVertical class="w-full">
+        <FormInput
+          for="unit"
+          title="Einheit"
+        />
+      </LayoutVertical>
+    </LayoutHorizontal>
 
     <FormInputTextArea
       for="description"
