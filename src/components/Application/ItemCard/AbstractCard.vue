@@ -5,7 +5,7 @@ import { Popconfirm, Progress } from "ant-design-vue";
 import { scrollToAndMarkElement } from "~/lib/scrollToAndMarkElement";
 import { Product } from "~/api/types";
 import { z } from "zod";
-import IconWithText from "../IconWithText.vue";
+import IconWithText from "~/components/IconWithText.vue";
 
 const props = defineProps<{
   type: string;

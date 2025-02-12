@@ -3,35 +3,32 @@ import ApiForm from "~/components/Form/ApiForm.vue";
 import { endpoints } from "~/api/endpoints";
 import FormInputTextArea from "~/components/Form/Input/FormInputTextArea.vue";
 import FormInput from "~/components/Form/Input/FormInput.vue";
-import ErrorModal from "../ErrorModal.vue";
+import ErrorModal from "~/components/ErrorModal.vue";
 import { useModal } from "~/composites/useModal";
-import FormInputNumber from "../Form/Input/FormInputNumber.vue";
-import LayoutHorizontal from "../LayoutHorizontal.vue";
-import LayoutVertical from "../LayoutVertical.vue";
+import FormInputNumber from "~/components/Form/Input/FormInputNumber.vue";
 
-const props = defineProps<{ cancelButton?: boolean }>();
+const props = defineProps<{ cancelButton?: boolean; storageId: string }>();
 const emit = defineEmits(["cancel", "success"]);
 
 const modal = useModal();
-
 </script>
 
 <template>
   <ApiForm
-    :endpoint="endpoints.postProduct"
-    :initialState="{ name: '', description: '', size: 1, unit: '' }"
-    submitText="Produkt Erstellen"
+    :endpoint="endpoints.postSpace"
+    :initialState="{ name: '', totalSize: 5, unit: '', description: '', storageId: props.storageId }"
+    submitText="Space Erstellen"
     :cancelText="props.cancelButton ? 'Abbrechen' : undefined"
     :validation="(values, errors) => {
       if (values.name.length < 3) {
         errors.name = {
-          message: 'Produktname ist zu kurz, mindestens 3 Zeichen',
+          message: 'Space name ist zu kurz, mindestens 3 Zeichen',
           type: 'error'
         };
       }
 
-      if (values.size <= 0) {
-        errors.size = {
+      if (values.totalSize <= 0) {
+        errors.totalSize = {
           message: 'Größe darf nicht gleich oder kleiner als 0 sein',
           type: 'error'
         }
@@ -46,29 +43,24 @@ const modal = useModal();
       title="Name"
     />
 
+    <FormInputNumber
+      for="totalSize"
+      title="Größe"
+    />
+
+    <FormInput
+      for="unit"
+      title="Einheit"
+    />
+
     <FormInputTextArea
       for="description"
       title="Beschreibung"
     />
-
-    <LayoutHorizontal class="w-full">
-      <LayoutVertical class="w-full">
-        <FormInputNumber
-          for="size"
-          title="Größe"
-        />
-      </LayoutVertical>
-      <LayoutVertical class="w-full">
-        <FormInput
-          for="unit"
-          title="Einheit"
-        />
-      </LayoutVertical>
-    </LayoutHorizontal>
   </ApiForm>
   <ErrorModal
     v-model:open="modal.isOpen.value"
-    title="Produkt konnte nicht erstellt werden."
+    title="Space konnte nicht erstellt werden."
     :errors="modal.errors.value"
   />
 </template>

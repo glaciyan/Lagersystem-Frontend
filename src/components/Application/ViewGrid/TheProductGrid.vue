@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { z } from "zod";
 import { Product, ProductArray } from "~/api/types";
-import ProductCard from "../ItemCard/ProductCard.vue";
+import ProductCard from "~/components/Application/ItemCard/ProductCard.vue";
 
 const props = defineProps<{ data: z.infer<typeof ProductArray> | null }>();
 const emit = defineEmits<{

@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import StatefulDisplay from "~/components/ViewGrid/StatefulDisplay.vue";
+import StatefulDisplay from "~/components/Application/ViewGrid/StatefulDisplay.vue";
 import { Modal } from "ant-design-vue";
 import { ApiError } from "~/lib/api/core";
 import { Product, ProductArray } from "~/api/types";
 import { z } from "zod";
-import ViewGridHeader from "./ViewGridHeader.vue";
-import TheProductGrid from "./TheProductGrid.vue";
+import ViewGridHeader from "~/components/Application/ViewGrid/ViewGridHeader.vue";
+import TheProductGrid from "~/components/Application/ViewGrid/TheProductGrid.vue";
 import { useModal } from "~/composites/useModal";
-import IconButton from "../IconButton.vue";
+import IconButton from "~/components/IconButton.vue";
 import AddIcon from "~/icons/AddIcon.vue";
-import CreateProduct from "../Create/CreateProduct.vue";
+import CreateProduct from "~/components/Application/Create/CreateProduct.vue";
 
 const emit = defineEmits<{
   update: [];

@@ -2,8 +2,8 @@
 import LayoutVertical from "~/components/LayoutVertical.vue";
 import { Empty, Result, Spin } from "ant-design-vue";
 import { ApiError } from "~/lib/api/core";
-import ReloadButton from "../Buttons/ReloadButton.vue";
-import ErrorDisplay from "../ErrorDisplay.vue";
+import ReloadButton from "~/components/Buttons/ReloadButton.vue";
+import ErrorDisplay from "~/components/ErrorDisplay.vue";
 
 const props = defineProps<{ dataLength?: number; errors: ApiError[] | null; loading: boolean; aborted: boolean; refetch?: (() => void); emptyText?: string; noBorder?: boolean }>();
 </script>

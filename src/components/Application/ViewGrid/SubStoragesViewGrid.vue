@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import StatefulDisplay from "~/components/ViewGrid/StatefulDisplay.vue";
-import StorageCard from "../ItemCard/StorageCard.vue";
+import StatefulDisplay from "~/components/Application/ViewGrid/StatefulDisplay.vue";
+import StorageCard from "~/components/Application/ItemCard/StorageCard.vue";
 import { ApiError } from "~/lib/api/core";
-import AddButton from "../Buttons/AddButton.vue";
+import AddButton from "~/components/Buttons/AddButton.vue";
 import { Storage } from "~/api/types";
 import { z } from "zod";
-import ViewGridHeader from "./ViewGridHeader.vue";
+import ViewGridHeader from "~/components/Application/ViewGrid/ViewGridHeader.vue";
 
 const emit = defineEmits(["update"]);
 

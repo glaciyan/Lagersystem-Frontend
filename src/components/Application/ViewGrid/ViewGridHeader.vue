@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ReloadButton from "../Buttons/ReloadButton.vue";
+import ReloadButton from "~/components/Buttons/ReloadButton.vue";
 
 const props = defineProps<{ title: string; refetch?: () => void }>();
 </script>

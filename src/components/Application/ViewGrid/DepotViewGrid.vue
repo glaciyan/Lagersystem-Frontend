@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { endpoints } from "~/api/endpoints";
 import { useApi } from "~/lib/api/useApi";
-import StatefulDisplay from "~/components/ViewGrid/StatefulDisplay.vue";
-import StorageCard from "../ItemCard/StorageCard.vue";
-import ViewGridHeader from "./ViewGridHeader.vue";
-import IconButton from "../IconButton.vue";
+import StatefulDisplay from "~/components/Application/ViewGrid/StatefulDisplay.vue";
+import StorageCard from "~/components/Application/ItemCard/StorageCard.vue";
+import ViewGridHeader from "~/components/Application/ViewGrid/ViewGridHeader.vue";
+import IconButton from "~/components/IconButton.vue";
 import FolderPlusIcon from "~/icons/FolderPlusIcon.vue";
 import { Modal } from "ant-design-vue";
-import CreateDepot from "../Create/CreateDepot.vue";
+import CreateDepot from "~/components/Application/Create/CreateDepot.vue";
 import { useModal } from "~/composites/useModal";
 
 const { data, errors, loading, aborted, refetch } = useApi(endpoints.getStorages, {});

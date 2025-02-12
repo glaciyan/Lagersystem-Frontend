@@ -2,8 +2,8 @@
 import PageContainer from "~/components/PageContainer";
 import { endpoints } from "~/api/endpoints";
 import { useApi } from "~/lib/api/useApi";
-import ProductViewGrid from "~/components/ViewGrid/ProductViewGrid.vue";
-import StorageContentViewGrid from "~/components/ViewGrid/StorageContentViewGrid.vue";
+import ProductViewGrid from "~/components/Application/ViewGrid/ProductViewGrid.vue";
+import StorageContentViewGrid from "~/components/Application/ViewGrid/StorageContentViewGrid.vue";
 import ItemBreadcrumbs from "~/components/FetchedBreadcrumb.vue";
 import DownChevronIcon from "~/icons/DownChevronIcon.vue";
 import { Draggable, DragEvent } from "@shopify/draggable";
@@ -308,57 +308,3 @@ const setupDraggable = () => {
     :errors="resultErrors"
   />
 </template>
-
-<style scoped>
-.button-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  /* Abstand zwischen Buttons */
-  margin-top: 20px;
-}
-
-button {
-  margin: 10px;
-}
-
-.layout-horizontal {
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  gap: 20px;
-  margin-top: 20px;
-}
-
-/* Vertical Layout */
-.layout-vertical {
-  width: 45%;
-}
-
-/* Selectable List Styling */
-.selectable-list {
-  list-style: none;
-  color: black;
-  padding: 0;
-}
-
-.selectable-list li {
-  cursor: pointer;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  background-color: #f9f9f9;
-  transition: background-color 0.3s, transform 0.3s;
-}
-
-.selectable-list li:hover {
-  background-color: #e6f7ff;
-  transform: scale(1.02);
-}
-
-.selectable-list li.selected {
-  background-color: #1890ff;
-}
-</style>

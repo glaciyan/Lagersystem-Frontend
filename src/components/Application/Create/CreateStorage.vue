@@ -3,11 +3,11 @@ import ApiForm from "~/components/Form/ApiForm.vue";
 import { endpoints } from "~/api/endpoints";
 import FormInputTextArea from "~/components/Form/Input/FormInputTextArea.vue";
 import FormInput from "~/components/Form/Input/FormInput.vue";
-import ErrorModal from "../ErrorModal.vue";
+import ErrorModal from "~/components/ErrorModal.vue";
 import { useModal } from "~/composites/useModal";
 
-const props = defineProps<{ cancelButton?: boolean }>();
-const emit = defineEmits(["cancel"]);
+const props = defineProps<{ cancelButton?: boolean; parentId: string }>();
+const emit = defineEmits(["cancel", "success"]);
 
 const modal = useModal();
 </script>
@@ -15,20 +15,18 @@ const modal = useModal();
 <template>
   <ApiForm
     :endpoint="endpoints.postStorage"
-    :initialState="{ name: '', description: '' }"
-    submitText="Depot Erstellen"
+    :initialState="{ name: '', description: '', parentId: props.parentId }"
+    submitText="Storage Erstellen"
     :cancelText="props.cancelButton ? 'Abbrechen' : undefined"
     :validation="(values, errors) => {
       if (values.name.length < 3) {
         errors.name = {
-          message: 'Depot name ist zu kurz, mindestens 3 Zeichen',
+          message: 'Storage name ist zu kurz, mindestens 3 Zeichen',
           type: 'error'
         };
       }
     }"
-    @success="async (data) => {
-      await $router.push(`/storage/${data.id}`);
-    }"
+    @success="emit('success')"
     @failure="(err) => modal.openWithErrors(err)"
     @cancel="emit('cancel')"
   >
@@ -44,7 +42,7 @@ const modal = useModal();
   </ApiForm>
   <ErrorModal
     v-model:open="modal.isOpen.value"
-    title="Depot konnte nicht erstellt werden."
+    title="Storage konnte nicht erstellt werden."
     :errors="modal.errors.value"
   />
 </template>

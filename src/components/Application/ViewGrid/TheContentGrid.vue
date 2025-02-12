@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { z } from "zod";
-import SpaceCard from "../ItemCard/SpaceCard.vue";
-import StorageCard from "../ItemCard/StorageCard.vue";
+import SpaceCard from "~/components/Application/ItemCard/SpaceCard.vue";
+import StorageCard from "~/components/Application/ItemCard/StorageCard.vue";
 import { Space, Storage } from "~/api/types";
 
 const props = defineProps<{ data: z.infer<typeof Storage> | null }>();

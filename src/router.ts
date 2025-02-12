@@ -1,4 +1,3 @@
-import CreateDepot from "./components/Create/CreateDepot.vue";
 import Index from "./pages/Index.vue";
 
 import title from "./title";
@@ -13,38 +12,10 @@ const routes = [
     },
   },
   {
-    path: "/storage/create",
-    component: CreateDepot,
-    meta: {
-      title: title("Creating Depot"),
-    },
-  },
-  {
     path: "/storage/:id",
     component: () => import("./pages/StorageDisplay.vue"),
     meta: {
       title: title("Storage"),
-    },
-  },
-  {
-    path: "/storage/:id/newstorage",
-    component: () => import("./pages/NewStorage.vue"),
-    meta: {
-      title: title("Creating Storage"),
-    },
-  },
-  {
-    path: "/storage/:id/newspace",
-    component: () => import("./pages/NewSpace.vue"),
-    meta: {
-      title: title("Creating Storage"),
-    },
-  },
-  {
-    path: "/product/create",
-    component: () => import("./pages/NewProduct.vue"),
-    meta: {
-      title: title("Creating Storage"),
     },
   },
   {

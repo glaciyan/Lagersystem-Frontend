@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import StatefulDisplay from "~/components/ViewGrid/StatefulDisplay.vue";
+import StatefulDisplay from "~/components/Application/ViewGrid/StatefulDisplay.vue";
 import { ApiError } from "~/lib/api/core";
 import { Space, Storage, StoredProductArray } from "~/api/types";
 import { z } from "zod";
-import ViewGridHeader from "./ViewGridHeader.vue";
+import ViewGridHeader from "~/components/Application/ViewGrid/ViewGridHeader.vue";
 import { Modal } from "ant-design-vue";
-import ItemBreadcrumbs from "../FetchedBreadcrumb.vue";
-import IconButton from "../IconButton.vue";
+import ItemBreadcrumbs from "~/components/FetchedBreadcrumb.vue";
+import IconButton from "~/components/IconButton.vue";
 import AddIcon from "~/icons/AddIcon.vue";
 import FolderPlusIcon from "~/icons/FolderPlusIcon.vue";
 import TheContentGrid from "./TheContentGrid.vue";
-import StoredProductCard from "../ItemCard/StoredProductCard.vue";
+import StoredProductCard from "~/components/Application/ItemCard/StoredProductCard.vue";
 import { endpoints } from "~/api/endpoints";
 import { api } from "~/lib/api/api";
 import { match } from "~/lib/api/match";
 import { useModal } from "~/composites/useModal";
-import CreateStorage from "../Create/CreateStorage.vue";
-import CreateSpace from "../Create/CreateSpace.vue";
+import CreateStorage from "~/components/Application/Create/CreateStorage.vue";
+import CreateSpace from "~/components/Application/Create/CreateSpace.vue";
 
 const emit = defineEmits<{
   update: [];
