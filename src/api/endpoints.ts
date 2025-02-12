@@ -23,7 +23,7 @@ export const endpoints = {
 
   // Products
   getProduct: endpoint<{ id: string }>("GET", p => `/v1/products/${p.id}`).returns(Product),
-  postProduct: endpoint("POST", "/v1/products").withBody<{ name: string; description: string; unit: string; size: number }>().returns(Product),
+  postProduct: endpoint("POST", "/v1/products").withBody<{ name: string; description: string; unit: string; size: number; unique: boolean }>().returns(Product),
   getProducts: endpoint("GET", `/v1/products`).returns(ProductArray),
   deleteProduct: endpoint<{ id: string }>("DELETE", p => `/v1/products/${p.id}`).returns(Product),
   updateProduct: endpoint<{ id: string }>("PATCH", p => `/v1/products/${p.id}/update`).withBody<{ name: string; description: string; size: number }>().returns(Product),

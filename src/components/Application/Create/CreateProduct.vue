@@ -8,6 +8,8 @@ import { useModal } from "~/composites/useModal";
 import FormInputNumber from "~/components/Form/Input/FormInputNumber.vue";
 import LayoutHorizontal from "~/components/LayoutHorizontal.vue";
 import LayoutVertical from "~/components/LayoutVertical.vue";
+import FormCheckbox from "~/components/Form/Input/FormCheckbox.vue";
+import { Tooltip } from "ant-design-vue";
 
 const props = defineProps<{ cancelButton?: boolean }>();
 const emit = defineEmits(["cancel", "success"]);
@@ -19,7 +21,7 @@ const modal = useModal();
 <template>
   <ApiForm
     :endpoint="endpoints.postProduct"
-    :initialState="{ name: '', description: '', size: 1, unit: '' }"
+    :initialState="{ name: '', description: '', size: 1, unit: '', unique: false }"
     submitText="Produkt Erstellen"
     :cancelText="props.cancelButton ? 'Abbrechen' : undefined"
     :validation="(values, errors) => {
@@ -65,6 +67,13 @@ const modal = useModal();
         />
       </LayoutVertical>
     </LayoutHorizontal>
+
+    <FormCheckbox
+      for="unique"
+      tooltip="Dieses Produkt kann nur einmalig verwendet werden. Es kann sich nur in einem Space, mit einer Anzahl von 1, befinden."
+    >
+      Einzigartig
+    </FormCheckbox>
   </ApiForm>
   <ErrorModal
     v-model:open="modal.isOpen.value"
