@@ -6,6 +6,7 @@ import { scrollToAndMarkElement } from "~/lib/scrollToAndMarkElement";
 import { Product } from "~/api/types";
 import { z } from "zod";
 import IconWithText from "~/components/IconWithText.vue";
+import { formatUnit } from "~/lib/formatUnit";
 
 const props = defineProps<{
   type: string;
@@ -65,7 +66,7 @@ onMounted(() => {
       >
         <span v-if="props.products">Produkte: {{ props.products.length }}</span>
         <span class="px-3 text-base text-light-9">
-          {{ props.capacity.currentSize }}{{ props.capacity.unit }}/{{ props.capacity.totalSize }}{{ props.capacity.unit }}
+          {{ formatUnit(props.capacity.currentSize, props.capacity.unit ?? "") }} / {{ formatUnit(props.capacity.totalSize, props.capacity.unit ?? "") }}
         </span>
         <div class="min-w-[10rem]">
           <Progress :percent="Math.round(props.capacity.currentSize/props.capacity.totalSize * 100)" />
