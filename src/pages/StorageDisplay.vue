@@ -144,7 +144,7 @@ const setupDraggable = async () => {
         case "product":
           switch (oType) {
             case "space":
-              if (sUnit === oUnit && Number(oCapacity) > Number(sSize)) {
+              if (sUnit === oUnit && Number(oCapacity) >= Number(sSize)) {
                 return "assign";
               }
               break;
