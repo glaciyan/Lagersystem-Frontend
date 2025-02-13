@@ -61,7 +61,7 @@ onMounted(() => {
         v-if="props.sizing"
         class="px-3 pt-2 text-base text-gray-3/85"
       >
-        Größe: {{ props.sizing.size }}{{ props.sizing.unit }}
+        Größe: {{ formatUnit(props.sizing.size, props.sizing.unit ?? "") }}
       </div>
       <div
         v-if="props.capacity"
