@@ -77,7 +77,7 @@ const updateProductModal = useUpdateProductModal();
 
   <Modal
     v-model:open="createProductModal.isOpen"
-    title="Storage Erstellen"
+    title="Produkt Erstellen"
     destroyOnClose
     :footer="null"
   >
@@ -90,7 +90,7 @@ const updateProductModal = useUpdateProductModal();
 
   <Modal
     v-model:open="updateProductModal.isOpen"
-    title="Space Bearbeiten"
+    title="Produkt Bearbeiten"
     destroyOnClose
     :footer="null"
   >
