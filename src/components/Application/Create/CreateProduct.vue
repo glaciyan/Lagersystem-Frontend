@@ -46,11 +46,6 @@ const modal = useModal();
       title="Name"
     />
 
-    <FormInputTextArea
-      for="description"
-      title="Beschreibung"
-    />
-
     <LayoutHorizontal class="w-full">
       <LayoutVertical class="w-full">
         <FormInputNumber
@@ -65,6 +60,11 @@ const modal = useModal();
         />
       </LayoutVertical>
     </LayoutHorizontal>
+
+    <FormInputTextArea
+      for="description"
+      title="Beschreibung"
+    />
   </ApiForm>
   <ErrorModal
     v-model:open="modal.isOpen.value"
