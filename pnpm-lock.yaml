@@ -21,8 +21,8 @@ importers:
         specifier: ^12.5.0
         version: 12.5.0(typescript@5.7.3)
       '@vueuse/integrations':
-        specifier: ^12.5.0
-        version: 12.5.0(async-validator@4.2.5)(focus-trap@7.6.4)(fuse.js@7.1.0)(typescript@5.7.3)
+        specifier: ^12.6.1
+        version: 12.6.1(async-validator@4.2.5)(focus-trap@7.6.4)(fuse.js@7.1.0)(typescript@5.7.3)
       ant-design-vue:
         specifier: ^4.2.6
         version: 4.2.6(vue@3.5.13(typescript@5.7.3))
@@ -1288,8 +1288,11 @@ packages:
   '@vueuse/core@12.5.0':
     resolution: {integrity: sha512-GVyH1iYqNANwcahAx8JBm6awaNgvR/SwZ1fjr10b8l1HIgDp82ngNbfzJUgOgWEoxjL+URAggnlilAEXwCOZtg==}
 
-  '@vueuse/integrations@12.5.0':
-    resolution: {integrity: sha512-HYLt8M6mjUfcoUOzyBcX2RjpfapIwHPBmQJtTmXOQW845Y/Osu9VuTJ5kPvnmWJ6IUa05WpblfOwZ+P0G4iZsQ==}
+  '@vueuse/core@12.6.1':
+    resolution: {integrity: sha512-FpgM1tXGAHsAC5n4Tflyg0vSoJUmdevfKaAhKFdxiK9BTIdHOHOiWmo+xivwdzjYFIvI8cEeJWYuqs646jOM2w==}
+
+  '@vueuse/integrations@12.6.1':
+    resolution: {integrity: sha512-TsX9noygHqZGGoAcvvu+DoSGtbeuVl49V6gZZLgNxmKGeAxH2wQrlS3/7TM2wNczIkKV541bbOmhcQH6D+CM4Q==}
     peerDependencies:
       async-validator: ^4
       axios: ^1
@@ -1332,8 +1335,14 @@ packages:
   '@vueuse/metadata@12.5.0':
     resolution: {integrity: sha512-Ui7Lo2a7AxrMAXRF+fAp9QsXuwTeeZ8fIB9wsLHqzq9MQk+2gMYE2IGJW48VMJ8ecvCB3z3GsGLKLbSasQ5Qlg==}
 
+  '@vueuse/metadata@12.6.1':
+    resolution: {integrity: sha512-2094HNXGdsU3aqRbad0vmlRgGncMC4u2f6nFdW1mUn7b7ym4hORrDZfyeq8G5BfGvX4y0zZynWfCdtB2WwpyVw==}
+
   '@vueuse/shared@12.5.0':
     resolution: {integrity: sha512-vMpcL1lStUU6O+kdj6YdHDixh0odjPAUM15uJ9f7MY781jcYkIwFA4iv2EfoIPO6vBmvutI1HxxAwmf0cx5ISQ==}
+
+  '@vueuse/shared@12.6.1':
+    resolution: {integrity: sha512-ukTb2na19KT1/YVjj4CYBDOgiV/xmsSJRL6TcKeiz2db+P5bT3I0OJxy38eRR3WSN8CmSnt7MdVJ16vX6VZFxg==}
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -4202,10 +4211,19 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/integrations@12.5.0(async-validator@4.2.5)(focus-trap@7.6.4)(fuse.js@7.1.0)(typescript@5.7.3)':
+  '@vueuse/core@12.6.1(typescript@5.7.3)':
     dependencies:
-      '@vueuse/core': 12.5.0(typescript@5.7.3)
-      '@vueuse/shared': 12.5.0(typescript@5.7.3)
+      '@types/web-bluetooth': 0.0.20
+      '@vueuse/metadata': 12.6.1
+      '@vueuse/shared': 12.6.1(typescript@5.7.3)
+      vue: 3.5.13(typescript@5.7.3)
+    transitivePeerDependencies:
+      - typescript
+
+  '@vueuse/integrations@12.6.1(async-validator@4.2.5)(focus-trap@7.6.4)(fuse.js@7.1.0)(typescript@5.7.3)':
+    dependencies:
+      '@vueuse/core': 12.6.1(typescript@5.7.3)
+      '@vueuse/shared': 12.6.1(typescript@5.7.3)
       vue: 3.5.13(typescript@5.7.3)
     optionalDependencies:
       async-validator: 4.2.5
@@ -4216,7 +4234,15 @@ snapshots:
 
   '@vueuse/metadata@12.5.0': {}
 
+  '@vueuse/metadata@12.6.1': {}
+
   '@vueuse/shared@12.5.0(typescript@5.7.3)':
+    dependencies:
+      vue: 3.5.13(typescript@5.7.3)
+    transitivePeerDependencies:
+      - typescript
+
+  '@vueuse/shared@12.6.1(typescript@5.7.3)':
     dependencies:
       vue: 3.5.13(typescript@5.7.3)
     transitivePeerDependencies:
